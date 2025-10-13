@@ -1,0 +1,16 @@
+{
+  "name": "001devlopment",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clasp:status": "clasp status",
+    "clasp:push": "clasp push",
+    "clasp:version": "clasp version \"auto: update\"",
+    "deploy:stable": "clasp deploy -i AKfycbw_pqYq6-ckNmiN9cGa6-XFg_3ZURAOZ0EfghWIu_ukFHCH7TpQXqKOfbOyzWZMnmuB8A -d \"auto: stable deploy\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
