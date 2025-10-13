@@ -5,104 +5,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>カラコンアカデミア</title>
     <style>
+        /* デザイントークン */
+        :root{
+          --bg-start: #F8CFE3;      /* pastel pink */
+          --bg-end:   #B9D6F2;      /* pastel blue */
+          --surface: rgba(255,255,255,0.25);
+          --border:  rgba(255,255,255,0.35);
+          --shadow:  0 12px 30px rgba(0,0,0,0.18);
+          --accent-pink: #FF6EC7;
+          --accent-blue: #7DB9FF;
+          --text:  #2D2D2D;
+          --muted: #7A7A7A;
+        }
+
         /* 基本設定 */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Kaku Gothic ProN', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 16px;
+          color: var(--text);
+          background: linear-gradient(180deg, var(--bg-start), var(--bg-end)); /* 初期。実画像はJSで差し替え */
+          background-attachment: fixed;
         }
-        
-        .container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        /* 背景の上にうっすらグラデ被せ（可読性向上） */
+        body::before{
+          content: "";
+          position: fixed; inset: 0;
+          background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.12));
+          pointer-events: none; z-index: 0;
         }
-        
-        .title {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 30px;
-            color: #333;
+
+        .container{
+          position: relative; z-index: 1;
+          width: 100%;
+          max-width: 430px; /* SP優先 */
+          margin: 16px auto;
         }
-        
+
+        @media (min-width: 481px){
+          .container{ max-width: 520px; }
+        }
+
+        .title{ text-align:center; font-size:24px; margin-bottom:24px; color:var(--text); }
+
+        /* ガラスカード */
+        .glass-card{
+          background: var(--surface);
+          border: 1px solid var(--border);
+          border-radius: 16px;
+          box-shadow: var(--shadow);
+          -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+        }
+
+        /* ログインカード */
+        .login-card{ padding: 20px 16px 24px; }
+        .logo-wrap{ display:flex; justify-content:center; margin-bottom:16px; }
+        .app-logo{ width: 280px; height: 100px; object-fit: contain; }
+
         /* ページ切り替え */
         .page { display: none; }
         .page.active { display: block; }
         
-        /* 入力フォーム */
-        .input-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; color: #666; font-size: 14px; font-weight: 500; }
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #E0E0E0;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s ease;
+        /* 入力フォーム（ガラス風） */
+        .input-group{ margin: 16px 12px; }
+        label{ display:block; margin-bottom:8px; color:var(--muted); font-size:14px; font-weight:500; }
+        input{
+          width:100%; padding:14px 16px; font-size:16px;
+          background: var(--surface);
+          border: 1px solid var(--border);
+          border-radius: 16px; /* カード16px */
+          color: var(--text);
+          -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+          transition: box-shadow .2s ease, border-color .2s ease, transform .05s ease;
+          box-shadow: 0 6px 16px rgba(0,0,0,0.08);
         }
-        input:focus { outline: none; border-color: #FF6EC7; box-shadow: 0 0 0 3px rgba(255,110,199,0.1); }
+        input::placeholder{ color:#9AA0A6; }
+        input:focus{ outline:none; border-color: var(--accent-pink); box-shadow: 0 0 0 3px rgba(255,110,199,0.15), 0 10px 24px rgba(0,0,0,0.12); }
         
-        /* ボタン */
-        button {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #FF6EC7 0%, #FF9472 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: all 0.3s ease;
+        /* ボタン（角丸28px） */
+        button{ width:100%; padding:14px 16px; border:none; cursor:pointer; border-radius:28px; font-size:18px; font-weight:700; transition:filter .2s ease, transform .05s ease, box-shadow .2s ease; }
+        .btn-primary{
+          color:#fff;
+          background: linear-gradient(135deg, #FF6EC7 0%, #C093FF 100%);
+          box-shadow: 0 10px 26px rgba(174,110,255,0.35);
         }
-        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255,110,199,0.4); }
-        button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .btn-secondary { background: #E0E0E0 !important; color: #666 !important; }
+        .btn-primary:hover{ filter: brightness(1.03); }
+        .btn-primary:active{ transform: translateY(1px); }
+        .btn-secondary{ background: rgba(255,255,255,0.85); color:#3A3A3A; border:1px solid rgba(0,0,0,0.08); }
+        .btn-secondary:hover{ filter: brightness(0.98); }
+        button:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
         
         /* エラー表示 */
         .error { color: #FF4444; font-size: 14px; margin-top: 10px; padding: 10px; background: #FFE5E5; border-radius: 8px; display: none; }
         
-        /* ユーザー情報表示（ホーム画面） */
-        .user-info { text-align: center; margin-bottom: 30px; }
-        .user-avatar {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #FF6EC7 0%, #FF9472 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            margin: 0 auto 20px;
-        }
-        .user-name { font-size: 24px; font-weight: bold; margin-bottom: 5px; color: #333; }
-        .user-store { color: #666; font-size: 14px; }
-        
-        /* 統計表示 */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: #F8F9FA;
-            border-radius: 10px;
-        }
-        .stat { text-align: center; }
-        .stat-value { font-size: 24px; font-weight: bold; color: #FF6EC7; }
-        .stat-label { font-size: 12px; color: #666; margin-top: 5px; }
+        /* ホーム: プロフィール/ステータス/4ボタン */
+        .profile-card{ padding:16px; display:grid; grid-template-columns:56px 1fr auto; align-items:center; gap:12px; margin-bottom:16px; }
+        .user-avatar{ width:56px; height:56px; border-radius:50%; background: linear-gradient(135deg, #FF6EC7 0%, #FF9472 100%); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+        .user-name{ font-size:18px; font-weight:700; color:var(--text); }
+        .user-store{ color:var(--muted); font-size:12px; }
+        .user-title{ display:inline-block; font-size:11px; color:#fff; background: linear-gradient(135deg,#7DB9FF,#C093FF); padding:4px 8px; border-radius:12px; box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
 
-        /* クイズ画面（バージョン11から） */
+        .stats{ display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; margin: 16px 0 20px; padding:12px; }
+        .pill{ text-align:center; padding:10px 8px; background:var(--surface); border:1px solid var(--border); border-radius:28px; box-shadow: 0 8px 18px rgba(0,0,0,0.1); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+        .pill .value{ font-size:18px; font-weight:800; color:var(--text); }
+        .pill .label{ font-size:11px; color:var(--muted); margin-top:4px; }
+
+        .home-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap:12px; }
+        .home-btn{ position:relative; padding:0; height:164px; border-radius:24px; overflow:hidden; background: var(--surface); border:1px solid var(--border); box-shadow: var(--shadow); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+        .home-btn img{ width:100%; height:100%; object-fit:cover; display:block; }
+        .home-btn .btn-title{ position:absolute; left:8px; bottom:8px; right:8px; text-align:center; color:#fff; font-weight:900; text-shadow: 0 2px 6px rgba(0,0,0,0.35); letter-spacing: .5px; }
+
+        /* クイズ画面（既存） */
         .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 15px; background: #F8F9FA; border-radius: 10px; }
         .question-number { font-size: 18px; font-weight: bold; color: #333; }
         .quiz-score { font-size: 16px; color: #FF6EC7; font-weight: bold; }
@@ -282,68 +301,68 @@
     <div class="container">
         
         <!-- ログイン画面 -->
-        <div class="page active" id="loginPage">
-            <h1 class="title">🎓 カラコンアカデミア</h1>
-            
+        <div class="page active" id="loginPage" aria-label="ログインページ">
+          <div class="login-card glass-card" role="group" aria-labelledby="login-title">
+            <div class="logo-wrap">
+              <img id="appLogo" class="app-logo" src="" alt="アプリロゴ" width="280" height="100" onerror="console.warn('logo not found:', this.src)">
+            </div>
+            <h1 id="login-title" class="title" style="margin-bottom:8px;">カラコンアカデミア</h1>
             <div class="input-group">
-                <label>スタッフ番号</label>
-                <input type="text" id="userId" placeholder="例: 001" autocomplete="off">
+              <label for="userId">ユーザーID</label>
+              <input type="text" id="userId" placeholder="ユーザーID" autocomplete="off" aria-label="ユーザーID入力">
             </div>
-            
             <div class="input-group">
-                <label>お名前</label>
-                <input type="text" id="userName" placeholder="例: さくら" autocomplete="off">
+              <label for="userName">ユーザーネーム</label>
+              <input type="text" id="userName" placeholder="ユーザーネーム" autocomplete="off" aria-label="ユーザーネーム入力">
             </div>
-            
-            <button id="loginBtn" onclick="handleLogin()">ログイン</button>
-            
-            <div class="error" id="errorMsg"></div>
-            
-            <div class="loading" id="loginLoading">
-                <p>ログイン中...</p>
+            <div style="padding: 0 12px 6px;">
+              <button id="loginBtn" class="btn-primary" onclick="handleLogin()" aria-label="ログイン">ログイン</button>
             </div>
+            <div class="error" id="errorMsg" role="alert" aria-live="polite"></div>
+            <div class="loading" id="loginLoading" aria-live="polite"><p style="text-align:center;margin-top:8px;">ログイン中...</p></div>
+          </div>
         </div>
         
         <!-- ホーム画面 -->
-        <div class="page" id="homePage">
-            <h1 class="title">ホーム</h1>
-            
-            <div class="user-info">
-                <div class="user-avatar">👤</div>
-                <div class="user-name" id="displayName">読み込み中...</div>
-                <div class="user-store" id="displayStore">-</div>
-                <div class="user-store" id="displayTitle" style="font-size:12px;color:#888;margin-top:4px;">&nbsp;</div>
+        <div class="page" id="homePage" aria-label="ホームページ">
+          <div class="glass-card profile-card" role="group" aria-label="プロフィール">
+            <div class="user-avatar" aria-hidden="true">👤</div>
+            <div>
+              <div class="user-name" id="displayName">読み込み中...</div>
+              <div class="user-store" id="displayStore">-</div>
+              <div style="margin-top:6px;">
+                <span class="user-title" id="displayTitle" aria-label="称号" title="称号" style="display:none"></span>
+              </div>
             </div>
-            
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-value">Lv.<span id="userLevel">-</span></div>
-                    <div class="stat-label">レベル</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value"><span id="userPoints">-</span></div>
-                    <div class="stat-label">ポイント</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value"><span id="userStreak">-</span>日</div>
-                    <div class="stat-label">連続</div>
-                </div>
-            </div>
-            
-            <button onclick="startQuiz('practice')" style="background: linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%);">📚 練習モード（無制限）</button>
-            <button onclick="startQuiz('daily')" style="background: linear-gradient(135deg, #FF6EC7 0%, #FF9472 100%);">🏆 本番モード（1日1回）</button>
-            <button onclick="showRanking()">🏅 ランキング</button>
-            <button onclick="showMyStats()">📊 マイ成績</button>
-            <button onclick="showRanking()">🏅 ランキング</button>
-            <button onclick="showMyStats()">📊 マイ成績</button>
-            
-            <button class="btn-secondary" onclick="handleLogout()">
-                ログアウト
+            <img id="homeMiniLogo" alt="ロゴ" width="64" height="24" src="" onerror="console.warn('logo not found:', this.src)"/>
+          </div>
+          <div class="stats">
+            <div class="pill" aria-label="レベル"><div class="value">Lv.<span id="userLevel">-</span></div><div class="label">レベル</div></div>
+            <div class="pill" aria-label="ポイント"><div class="value"><span id="userPoints">-</span></div><div class="label">ポイント</div></div>
+            <div class="pill" aria-label="連続日数"><div class="value"><span id="userStreak">-</span>日</div><div class="label">連続ログイン</div></div>
+          </div>
+          <div class="home-grid" role="group" aria-label="メニュー">
+            <button class="home-btn" onclick="startQuiz('daily')" aria-label="本番モード">
+              <img id="btnDailyImg" alt="本番モード" width="180" height="164" src="" onerror="console.warn('asset not found:', this.src)">
+              <span class="btn-title">本番モード</span>
             </button>
-            
-            <div class="loading" id="homeLoading">
-                <p>データ読み込み中...</p>
-            </div>
+            <button class="home-btn" onclick="startQuiz('practice')" aria-label="練習モード">
+              <img id="btnPracticeImg" alt="練習モード" width="180" height="164" src="" onerror="console.warn('asset not found:', this.src)">
+              <span class="btn-title">練習モード</span>
+            </button>
+            <button class="home-btn" onclick="showRanking()" aria-label="ランキング">
+              <img id="btnRankingImg" alt="ランキング" width="180" height="164" src="" onerror="console.warn('asset not found:', this.src)">
+              <span class="btn-title">ランキング</span>
+            </button>
+            <button class="home-btn" onclick="showMyStats()" aria-label="マイ成績">
+              <img id="btnStatsImg" alt="マイ成績" width="180" height="164" src="" onerror="console.warn('asset not found:', this.src)">
+              <span class="btn-title">MY成績</span>
+            </button>
+          </div>
+          <div style="margin-top:16px; padding: 0 8px 8px;">
+            <button class="btn-secondary" onclick="handleLogout()" aria-label="ログアウト">ログアウト</button>
+          </div>
+          <div class="loading" id="homeLoading"><p style="text-align:center;">データ読み込み中...</p></div>
         </div>
 
         <!-- クイズ画面（バージョン11から） -->
@@ -458,35 +477,48 @@
     </div>
 
   <script>
-    // UI 画像のベースURLを取得して背景などを設定
+    // UI 画像のベースURLを取得して背景/アセットを設定
     (function(){
+      function applyBackground(base){
+        try {
+          var isPortrait = (window.innerHeight >= window.innerWidth);
+          var bg = base + (isPortrait ? 'haikei1080_1920.png' : 'haikei1440_1024.png');
+          document.body.style.backgroundImage = 'url(' + bg + ')';
+          document.body.style.backgroundSize = 'cover';
+          document.body.style.backgroundPosition = 'center';
+          document.body.style.backgroundAttachment = 'fixed';
+        } catch(e){ console.warn(e); }
+      }
+      function applyUiAssets(base){
+        try {
+          var set = function(id, file){
+            var el = document.getElementById(id); if(!el) return;
+            el.src = base + file;
+          };
+          set('appLogo','rogo.png');
+          set('homeMiniLogo','rogo.png');
+          set('btnDailyImg','btn-daily.png');
+          set('btnPracticeImg','btn-practice.png');
+          set('btnRankingImg','btn-ranking.png');
+          set('btnStatsImg','btn-stats.png');
+        } catch(e){ console.warn(e); }
+      }
+
       try {
         google.script.run
           .withSuccessHandler(function(res){
             if(!res || !res.success) return;
             var base = String(res.base || '');
-            // 画面比で背景を切替
-            var isPortrait = (window.innerHeight >= window.innerWidth);
-            var bg = base + (isPortrait ? 'haikei1080_1920.png' : 'haikei1440_1024.png');
-            document.body.style.backgroundImage = 'url(' + bg + ')';
-            document.body.style.backgroundSize = 'cover';
-            document.body.style.backgroundPosition = 'center';
-            document.body.style.backgroundAttachment = 'fixed';
+            window.UI_BASE = base;
+            applyBackground(base);
+            applyUiAssets(base);
           })
           .withFailureHandler(function(e){ console.warn('getUiBase failed', e); })
           .getUiBase();
       } catch(_){ }
+
       window.addEventListener('resize', function(){
-        // 画面回転時に背景を切替（再取得不要）
-        try {
-          google.script.run.withSuccessHandler(function(res){
-            if(!res || !res.success) return;
-            var base = String(res.base || '');
-            var isPortrait = (window.innerHeight >= window.innerWidth);
-            var bg = base + (isPortrait ? 'haikei1080_1920.png' : 'haikei1440_1024.png');
-            document.body.style.backgroundImage = 'url(' + bg + ')';
-          }).getUiBase();
-        } catch(_){ }
+        try { applyBackground(window.UI_BASE || ''); } catch(_){ }
       });
     })();
         // ========== グローバル変数 ==========
@@ -567,7 +599,13 @@
                 const user = result.user;
                 document.getElementById('displayName').textContent = user.name;
                 document.getElementById('displayStore').textContent = user.store;
-                try { document.getElementById('displayTitle').textContent = user.title ? ('称号: ' + user.title) : ''; } catch(_){}
+                try {
+                  const t = document.getElementById('displayTitle');
+                  if (t) {
+                    if (user.title) { t.textContent = user.title; t.style.display = 'inline-block'; }
+                    else { t.textContent = ''; t.style.display = 'none'; }
+                  }
+                } catch(_){}
                 document.getElementById('userLevel').textContent = user.level;
                 document.getElementById('userPoints').textContent = user.points;
                 document.getElementById('userStreak').textContent = user.streak;
@@ -588,7 +626,7 @@
             if (currentUser) {
                 document.getElementById('displayName').textContent = currentUser.name;
                 document.getElementById('displayStore').textContent = currentUser.store;
-                try { document.getElementById('displayTitle').textContent = ''; } catch(_){}
+                try { const t=document.getElementById('displayTitle'); if(t){ t.textContent=''; t.style.display='none'; } } catch(_){}
                 document.getElementById('userLevel').textContent = '1';
                 document.getElementById('userPoints').textContent = '0';
                 document.getElementById('userStreak').textContent = '0';
@@ -1291,9 +1329,6 @@
     }
     </script></body>
 </html>
-
-
-
 
 
 
