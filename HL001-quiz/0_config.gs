@@ -14,6 +14,14 @@ const CONFIG = {
         // [追加] ダッシュボード用スプレッドシート
     DASHBOARD: '1cfL0smJHoOAMp_H4IRsoUksoA0gBjksOKDfzJQjsjkc'
   },
+  
+  // UI/UX画像（このリポジトリから取得）
+  GITHUB_UI: {
+    USER: 'y4m4usr',
+    REPO: 'hl001-quiz-must1', // 拡張子 .git は不要
+    BRANCH: 'main',
+    UI_PATH: 'HL001-quiz/images/UI/' // 末尾スラッシュ必須
+  },
     
   // 参照用: 基本情報シート（外部にID一覧がある場合に上書きする）
   INFO: {
@@ -39,7 +47,7 @@ const CONFIG = {
     }
   },
   
-  // GitHub画像設定
+  // GitHub画像設定（クイズ用レンズ/サムネは別リポジトリ）
   GITHUB: {
     USER: 'y4m4usr',
     REPO: 'HL001-quiz-karacon-academia-new',
@@ -48,12 +56,12 @@ const CONFIG = {
     SAMUNE_PATH: 'imagesnew1/samune/samune1/'
   }
 };
- // GitHub画像設定
+ // GitHub画像設定2
   GITHUB: {
     USER: 'y4m4usr',
     REPO: 'hl001-quiz-must1.git',
     BRANCH: 'main',
-    ui_PATH: '',
+    ui_PATH: 'HL001-quiz/images/UI',
   }
 };
 
@@ -126,3 +134,18 @@ const CONFIG = {
     try { Logger.log('CONFIG override skipped: ' + e.message); } catch(_) {}
   }
 })();
+
+/**
+ * UI画像のRaw配信ベースURLを返す（frontから呼び出し可）
+ */
+function getUiBase() {
+  try {
+    var g = CONFIG.GITHUB_UI;
+    var base = 'https://raw.githubusercontent.com/'
+      + g.USER + '/' + g.REPO + '/' + g.BRANCH + '/' + g.UI_PATH;
+    return { success: true, base: base };
+  } catch (e) {
+    try { Logger.log('getUiBase error: ' + (e && e.message || e)); } catch(_){}
+    return { success: false, base: '' };
+  }
+}

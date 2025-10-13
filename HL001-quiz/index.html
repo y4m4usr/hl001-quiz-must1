@@ -276,7 +276,7 @@
         .tab-btn.active { background: linear-gradient(135deg, #FF6EC7 0%, #FF9472 100%); color: #fff; border-color: #FF6EC7; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255,110,199,0.3); }
         .tab-label { font-size: 16px; font-weight: bold; margin-bottom: 4px; }
         .tab-sublabel { font-size: 11px; opacity: 0.8; }
-    </style>
+  </style>
 </head>
 <body>
     <div class="container">
@@ -457,7 +457,38 @@
         </div>
     </div>
 
-    <script>
+  <script>
+    // UI 画像のベースURLを取得して背景などを設定
+    (function(){
+      try {
+        google.script.run
+          .withSuccessHandler(function(res){
+            if(!res || !res.success) return;
+            var base = String(res.base || '');
+            // 画面比で背景を切替
+            var isPortrait = (window.innerHeight >= window.innerWidth);
+            var bg = base + (isPortrait ? 'haikei1080_1920.png' : 'haikei1440_1024.png');
+            document.body.style.backgroundImage = 'url(' + bg + ')';
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundPosition = 'center';
+            document.body.style.backgroundAttachment = 'fixed';
+          })
+          .withFailureHandler(function(e){ console.warn('getUiBase failed', e); })
+          .getUiBase();
+      } catch(_){ }
+      window.addEventListener('resize', function(){
+        // 画面回転時に背景を切替（再取得不要）
+        try {
+          google.script.run.withSuccessHandler(function(res){
+            if(!res || !res.success) return;
+            var base = String(res.base || '');
+            var isPortrait = (window.innerHeight >= window.innerWidth);
+            var bg = base + (isPortrait ? 'haikei1080_1920.png' : 'haikei1440_1024.png');
+            document.body.style.backgroundImage = 'url(' + bg + ')';
+          }).getUiBase();
+        } catch(_){ }
+      });
+    })();
         // ========== グローバル変数 ==========
         let currentUser = null;
         
@@ -1081,7 +1112,7 @@
             });
         }
         function onStatsFailure(error){ try{ document.getElementById("statsLoading").classList.remove("show"); }catch(_){ } alert("マイ成績取得エラー: "+(error && (error.message||error))); }
-    </script>
+  </script>
     <script>
     (function(){
       // Remove duplicate Home buttons (keep first)
@@ -1260,7 +1291,6 @@
     }
     </script></body>
 </html>
-
 
 
 
