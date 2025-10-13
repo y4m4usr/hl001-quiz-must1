@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HL001 努力度ダッシュボード</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; min-height: 100vh; }
+    .container { max-width: 1400px; margin: 0 auto; }
+    .header { background: white; padding: 30px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 30px; }
+    h1 { color: #2c3e50; margin-bottom: 10px; font-size: 32px; display: flex; align-items: center; gap: 15px; }
+    .subtitle { color: #7f8c8d; font-size: 16px; }
+    .filter-section { background: white; padding: 25px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 30px; display: flex; gap: 25px; align-items: center; flex-wrap: wrap; }
+    .filter-group { display: flex; flex-direction: column; gap: 8px; }
+    .filter-group label { font-weight: 600; color: #2c3e50; font-size: 14px; }
+    .filter-section select { padding: 12px 20px; border: 2px solid #667eea; border-radius: 10px; font-size: 16px; background: white; cursor: pointer; min-width: 220px; transition: all 0.3s; }
+    .filter-section select:hover { border-color: #764ba2; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2); }
+    .ranking-section { background: white; padding: 35px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 30px; }
+    .ranking-title { font-size: 24px; color: #2c3e50; margin-bottom: 25px; font-weight: 600; display: flex; align-items: center; gap: 12px; }
+    .medal { font-size: 32px; }
+    .chart-container { margin-bottom: 30px; position: relative; height: 500px; }
+    .table-container { overflow-x: auto; max-height: 600px; overflow-y: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 16px; text-align: left; border-bottom: 1px solid #eee; }
+    th { background: #f8f9fa; font-weight: 600; color: #2c3e50; position: sticky; top: 0; z-index: 10; }
+    tr:hover { background: #f8f9fa; }
+    .rank-1 { background: linear-gradient(135deg, #fff9e6 0%, #ffe8b3 100%); font-weight: bold; }
+    .rank-2 { background: linear-gradient(135deg, #f0f4ff 0%, #d9e5ff 100%); }
+    .rank-3 { background: linear-gradient(135deg, #fff0f0 0%, #ffd9d9 100%); }
+    .badge { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+    .badge-practice { background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); color: #1565c0; }
+    .badge-exam { background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%); color: #c2185b; }
+    .badge-score { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); color: #2e7d32; font-weight: bold; font-size: 15px; }
+    .loading { text-align: center; padding: 80px; font-size: 20px; color: white; background: rgba(255,255,255,0.1); border-radius: 16px; backdrop-filter: blur(10px); }
+    .spinner { border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid white; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 20px auto; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1><span>🏆</span>クイズアカデミア 努力度ダッシュボード</h1>
+      <div class="subtitle">誰が頑張っているかを可視化 - 店舗別ランキング</div>
+    </div>
+    <div class="loading" id="loading"><div class="spinner"></div>データ読み込み中...</div>
+    <div class="filter-section" style="display:none;" id="filterSection">
+      <div class="filter-group">
+        <label for="storeSelect">📍 店舗を選択</label>
+        <select id="storeSelect"><option value="all">全店舗</option></select>
+      </div>
+      <div class="filter-group">
+        <label for="metricSelect">📊 表示指標</label>
+        <select id="metricSelect">
+          <option value="totalAttempts">総受験回数</option>
+          <option value="practiceAttempts">練習回数</option>
+          <option value="averageScore">平均スコア</option>
+        </select>
+      </div>
+    </div>
+    <div class="ranking-section" style="display:none;" id="rankingSection">
+      <div class="ranking-title"><span class="medal">🥇</span><span id="rankingTitle">全店舗 - 総受験回数ランキング TOP10</span></div>
+      <div class="chart-container"><canvas id="rankingChart"></canvas></div>
+    </div>
+    <div class="ranking-section" style="display:none;" id="tableSection">
+      <div class="ranking-title">📋 詳細データ</div>
+      <div class="table-container">
+        <table><thead><tr>
+          <th>順位</th><th>社員番号</th><th>氏名</th><th>所属</th><th>総受験回数</th><th>練習回数</th><th>本番回数</th><th>平均スコア</th><th>最終受験日</th>
+        </tr></thead><tbody id="tableBody"></tbody></table>
+      </div>
+    </div>
+  </div>
+  <script>
+    let allData = [];
+    let currentChart = null;
+
+    async function fetchData() {
+      try {
+        const response = await fetch('<?!= getScriptUrl() ?>?action=getDashboardData');
+        if (!response.ok) throw new Error('データ取得失敗');
+        return await response.json();
+      } catch (error) {
+        console.error('Error:', error);
+        alert('データの読み込みに失敗しました。\n' + error.message);
+        return null;
+      }
+    }
+
+    function initFilters(stores) {
+      const sel = document.getElementById('storeSelect');
+      (stores || []).sort().forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; sel.appendChild(o); });
+      sel.addEventListener('change', updateDashboard);
+      document.getElementById('metricSelect').addEventListener('change', updateDashboard);
+    }
+
+    function updateDashboard() {
+      const store = document.getElementById('storeSelect').value;
+      const metric = document.getElementById('metricSelect').value;
+      let filtered = allData;
+      if (store !== 'all') filtered = allData.filter(u => u.store === store);
+      filtered.sort((a,b)=> (b[metric]||0) - (a[metric]||0));
+      const top10 = filtered.slice(0, 10);
+      renderChart(top10, metric, store);
+      renderTable(filtered);
+    }
+
+    function renderChart(data, metric, store) {
+      const ctx = document.getElementById('rankingChart').getContext('2d');
+      if (currentChart) currentChart.destroy();
+      const labels = { totalAttempts: '総受験回数', practiceAttempts: '練習回数', averageScore: '平均スコア' };
+      document.getElementById('rankingTitle').textContent = `${store === 'all' ? '全店舗' : store} - ${labels[metric]}ランキング TOP10`;
+      currentChart = new Chart(ctx, {
+        type: 'bar',
+        data: { labels: data.map(u=>u.employeeName), datasets: [{ label: labels[metric], data: data.map(u=>u[metric]||0), backgroundColor: [ 'rgba(255,215,0,0.8)','rgba(192,192,192,0.8)','rgba(205,127,50,0.8)',...Array(7).fill('rgba(102,126,234,0.7)') ], borderColor: [ 'rgba(255,215,0,1)','rgba(192,192,192,1)','rgba(205,127,50,1)',...Array(7).fill('rgba(102,126,234,1)') ], borderWidth: 2, borderRadius: 8 }] },
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: 'rgba(0,0,0,0.8)', padding: 12, bodyFont: { size: 14 }, callbacks: { label: (ctx)=>{ const u=data[ctx.dataIndex]; return [`${labels[metric]}: ${ctx.parsed.x}`, `所属: ${u.store}`, `総受験: ${u.totalAttempts}回`, `練習: ${u.practiceAttempts}回`, `平均: ${Number(u.averageScore||0).toFixed(1)}点`]; } } } }, scales: { x: { beginAtZero: true, title: { display: true, text: labels[metric], font: { size: 14, weight: 'bold' } }, grid: { color: 'rgba(0,0,0,0.05)' } }, y: { grid: { display: false } } } }
+      });
+    }
+
+    function renderTable(data) {
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+      data.forEach((u, idx) => {
+        const tr = document.createElement('tr');
+        if (idx===0) tr.className='rank-1'; else if (idx===1) tr.className='rank-2'; else if (idx===2) tr.className='rank-3';
+        const medal = idx===0?'🥇':idx===1?'🥈':idx===2?'🥉':'';
+        const lastDate = u.lastAttemptDate ? new Date(u.lastAttemptDate).toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit'}) : '-';
+        tr.innerHTML = `<td style="font-size:20px;">${medal} <strong>${idx+1}</strong></td><td>${u.employeeId||''}</td><td><strong>${u.employeeName||''}</strong></td><td>${u.store||''}</td><td><strong style=\"font-size:18px;\">${u.totalAttempts||0}</strong> 回</td><td><span class=\"badge badge-practice\">${u.practiceAttempts||0}回</span></td><td><span class=\"badge badge-exam\">${u.examAttempts||0}回</span></td><td><span class=\"badge badge-score\">${Number(u.averageScore||0).toFixed(1)}点</span></td><td>${lastDate}</td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function init() {
+      const data = await fetchData();
+      if (!data) return;
+      allData = data.effortData || [];
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('filterSection').style.display = 'flex';
+      document.getElementById('rankingSection').style.display = 'block';
+      document.getElementById('tableSection').style.display = 'block';
+      initFilters(data.stores || []);
+      updateDashboard();
+    }
+
+    window.addEventListener('load', init);
+  </script>
+</body>
+</html>
