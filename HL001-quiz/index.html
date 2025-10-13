@@ -45,7 +45,8 @@
         .container{
           position: relative; z-index: 1;
           width: min(100%, 560px);
-          max-width: calc(100vw - clamp(20px, 7vw, 40px)); /* 画面左右の余白を確保しつつ拡大 */
+          /* 画面左右の余白を確保しつつ広げる（bodyのパディングと整合） */
+          max-width: calc(100vw - 2 * clamp(12px, 4vw, 18px));
           margin: 16px auto;
         }
 
