@@ -8,7 +8,8 @@
     "clasp:push": "clasp push",
     "clasp:version": "clasp version \"auto: update\"",
     "deploy:stable": "clasp deploy -i AKfycbw_pqYq6-ckNmiN9cGa6-XFg_3ZURAOZ0EfghWIu_ukFHCH7TpQXqKOfbOyzWZMnmuB8A -d \"auto: stable deploy\"",
-    "deploy:gas": "node scripts/deploy-gas.js"
+    "deploy:gas": "node scripts/deploy-gas.js",
+    "deploy:all": "node scripts/deploy-all.js"
   },
   "keywords": [],
   "author": "",
