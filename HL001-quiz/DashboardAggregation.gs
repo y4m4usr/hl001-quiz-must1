@@ -27,6 +27,11 @@ function getFilterStartDate(scope) {
       startDate = new Date(now.getFullYear(), 0, 1);
       startDate.setHours(0, 0, 0, 0);
       break;
+    case 'all':
+      // 累計：過去すべてのデータを対象とするため、十分に古い日付を設定
+      startDate = new Date(2000, 0, 1);
+      startDate.setHours(0, 0, 0, 0);
+      break;
     case 'monthly':
     default:
       startDate = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -52,6 +57,8 @@ function getPeriodLabel(scope) {
       return Utilities.formatDate(startDate, tz, 'yyyy年MM月第') + Math.ceil(now.getDate() / 7) + '週';
     case 'yearly':
       return Utilities.formatDate(now, tz, 'yyyy年');
+    case 'all':
+      return '累計';
     case 'monthly':
     default:
       return Utilities.formatDate(now, tz, 'yyyy年MM月');
@@ -692,32 +699,50 @@ function recordLoginHistory(userId) {
  */
 function testAllAggregations() {
   Logger.log('=== 全集計処理テスト開始 ===\n');
-  
+
   const period = 'monthly'; // テスト期間
-  
+
   Logger.log('1. DASHBOARD_SUMMARY更新');
   const r1 = updateDashboardSummary(period);
   Logger.log(JSON.stringify(r1, null, 2) + '\n');
-  
+
   Logger.log('2. STORE_STATS更新');
   const r2 = updateStoreStats(period);
   Logger.log(JSON.stringify(r2, null, 2) + '\n');
-  
+
   Logger.log('3. USER_ANALYTICS更新');
   const r3 = updateUserAnalytics(period);
   Logger.log(JSON.stringify(r3, null, 2) + '\n');
-  
+
   Logger.log('4. QUESTION_ANALYSIS更新');
   const r4 = updateQuestionAnalysis(period);
   Logger.log(JSON.stringify(r4, null, 2) + '\n');
-  
+
   Logger.log('5. LOGIN_HISTORY記録（テストユーザー: 001）');
   const r5 = recordLoginHistory('001');
   Logger.log(JSON.stringify(r5, null, 2) + '\n');
-  
+
   Logger.log('=== ✅ 全集計処理テスト完了 ===');
   Logger.log('ダッシュボードスプレッドシートを開いて確認してください:');
   Logger.log('https://docs.google.com/spreadsheets/d/' + CONFIG.SHEET_IDS.DASHBOARD + '/edit');
+}
+
+/**
+ * [テスト] 累計期間の集計処理を実行
+ */
+function testAllPeriod() {
+  Logger.log('=== 累計テスト ===');
+  const result = updateDashboardSummary('all');
+  Logger.log(JSON.stringify(result, null, 2));
+
+  if (result.success) {
+    Logger.log('✅ 累計期間の集計が成功しました');
+    Logger.log('期間ラベル: ' + getPeriodLabel('all'));
+  } else {
+    Logger.log('❌ 累計期間の集計が失敗しました');
+  }
+
+  return result;
 }
 
 /**
@@ -726,7 +751,7 @@ function testAllAggregations() {
 function updateAllPeriods() {
   Logger.log('=== 全期間集計開始 ===\n');
   
-  const periods = ['weekly', 'monthly', 'yearly'];
+  const periods = ['weekly', 'monthly', 'yearly', 'all'];
   
   periods.forEach(period => {
     Logger.log(`--- ${period}の集計 ---`);
