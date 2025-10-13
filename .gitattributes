@@ -1,1 +1,10 @@
 * text=auto eol=lf
+
+# Treat images as binary
+*.png -text
+*.jpg -text
+*.jpeg -text
+*.webp -text
+*.gif -text
+*.psd -text
+
