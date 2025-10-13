@@ -56,14 +56,6 @@ const CONFIG = {
     SAMUNE_PATH: 'imagesnew1/samune/samune1/'
   }
 };
- // GitHub画像設定2
-  GITHUB: {
-    USER: 'y4m4usr',
-    REPO: 'hl001-quiz-must1.git',
-    BRANCH: 'main',
-    ui_PATH: 'HL001-quiz/images/UI',
-  }
-};
 
 /**
  * 基本情報シートからIDを読み取り、CONFIG.SHEET_IDS を上書き
