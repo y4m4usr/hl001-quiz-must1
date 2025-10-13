@@ -70,7 +70,8 @@
         .login-card{ padding: calc(18px * var(--s)) calc(14px * var(--s)) calc(22px * var(--s)); }
         .login-card.frame{ border: 1.2px solid rgba(0,0,0,0.15); box-shadow: 0 14px 34px rgba(0,0,0,0.22); }
         .logo-wrap{ display:flex; justify-content:center; margin-bottom:16px; }
-        .app-logo{ width: calc(320px * var(--s)); height: calc(120px * var(--s)); object-fit: contain; }
+        /* ロゴは端末幅に応じて控えめに拡大。実機で大きすぎ問題の対処 */
+        .app-logo{ width: clamp(220px, 68vw, 280px); height: auto; object-fit: contain; }
 
         /* ページ切り替え */
         .page { display: none; }
