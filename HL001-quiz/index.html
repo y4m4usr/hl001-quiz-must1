@@ -42,7 +42,7 @@
         .container{
           position: relative; z-index: 1;
           width: 100%;
-          max-width: 430px; /* SP優先 */
+          max-width: 420px; /* SP最優先（375〜430px想定） */
           margin: 16px auto;
         }
 
@@ -64,8 +64,9 @@
 
         /* ログインカード */
         .login-card{ padding: 20px 16px 24px; }
+        .login-card.frame{ border: 1.2px solid rgba(0,0,0,0.15); box-shadow: 0 14px 34px rgba(0,0,0,0.22); }
         .logo-wrap{ display:flex; justify-content:center; margin-bottom:16px; }
-        .app-logo{ width: 280px; height: 100px; object-fit: contain; }
+        .app-logo{ width: 300px; height: 110px; object-fit: contain; }
 
         /* ページ切り替え */
         .page { display: none; }
@@ -83,7 +84,7 @@
           -webkit-backdrop-filter: blur(8px);
           backdrop-filter: blur(8px);
           transition: box-shadow .2s ease, border-color .2s ease, transform .05s ease;
-          box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+          box-shadow: 0 6px 16px rgba(0,0,0,0.10), inset 0 0 0 1px rgba(255,255,255,0.2);
         }
         input::placeholder{ color:#9AA0A6; }
         input:focus{ outline:none; border-color: var(--accent-pink); box-shadow: 0 0 0 3px rgba(255,110,199,0.15), 0 10px 24px rgba(0,0,0,0.12); }
@@ -111,15 +112,22 @@
         .user-store{ color:var(--muted); font-size:12px; }
         .user-title{ display:inline-block; font-size:11px; color:#fff; background: linear-gradient(135deg,#7DB9FF,#C093FF); padding:4px 8px; border-radius:12px; box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
 
-        .stats{ display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; margin: 16px 0 20px; padding:12px; }
-        .pill{ text-align:center; padding:10px 8px; background:var(--surface); border:1px solid var(--border); border-radius:28px; box-shadow: 0 8px 18px rgba(0,0,0,0.1); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
-        .pill .value{ font-size:18px; font-weight:800; color:var(--text); }
-        .pill .label{ font-size:11px; color:var(--muted); margin-top:4px; }
+        /* ステータスを1本のピルに（3分割） */
+        .stats-rail{ display:grid; grid-template-columns: repeat(3,1fr); gap:0; align-items:center; margin: 10px 8px 18px; padding: 10px 8px; border-radius: 28px; background: var(--surface); border: 1px solid var(--border); box-shadow: 0 10px 22px rgba(0,0,0,.12); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+        .stats-rail .seg{ text-align:center; padding: 6px 4px; position: relative; }
+        .stats-rail .seg + .seg{ border-left: 1px solid rgba(255,255,255,0.35); }
+        .stats-rail .value{ font-size:16px; font-weight:800; color:var(--text); letter-spacing:.2px; }
+        .stats-rail .label{ font-size:10px; color:var(--muted); margin-top:2px; display:block; }
 
-        .home-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap:12px; }
-        .home-btn{ position:relative; padding:0; height:164px; border-radius:24px; overflow:hidden; background: var(--surface); border:1px solid var(--border); box-shadow: var(--shadow); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+        .home-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap:12px; padding: 0 6px; }
+        .home-btn{ position:relative; padding:0; height:176px; border-radius:24px; overflow:hidden; background: var(--surface); border:1px solid var(--border); box-shadow: var(--shadow); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
         .home-btn img{ width:100%; height:100%; object-fit:cover; display:block; }
         .home-btn .btn-title{ position:absolute; left:8px; bottom:8px; right:8px; text-align:center; color:#fff; font-weight:900; text-shadow: 0 2px 6px rgba(0,0,0,0.35); letter-spacing: .5px; }
+
+        /* フッター（ログアウト/HELP） */
+        .home-footer{ display:flex; justify-content:space-between; align-items:center; gap:8px; padding: 10px 8px; }
+        .help-link{ color:#2d6cdf; text-decoration:none; font-weight:600; font-size:14px; background: rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.06); padding:8px 12px; border-radius:20px; box-shadow:0 6px 16px rgba(0,0,0,0.08); }
+        .help-link:hover{ filter: brightness(0.98); }
 
         /* クイズ画面（既存） */
         .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 15px; background: #F8F9FA; border-radius: 10px; }
@@ -302,7 +310,7 @@
         
         <!-- ログイン画面 -->
         <div class="page active" id="loginPage" aria-label="ログインページ">
-          <div class="login-card glass-card" role="group" aria-labelledby="login-title">
+          <div class="login-card glass-card frame" role="group" aria-labelledby="login-title">
             <div class="logo-wrap">
               <img id="appLogo" class="app-logo" src="" alt="アプリロゴ" width="280" height="100" onerror="console.warn('logo not found:', this.src)">
             </div>
@@ -336,10 +344,10 @@
             </div>
             <img id="homeMiniLogo" alt="ロゴ" width="64" height="24" src="" onerror="console.warn('logo not found:', this.src)"/>
           </div>
-          <div class="stats">
-            <div class="pill" aria-label="レベル"><div class="value">Lv.<span id="userLevel">-</span></div><div class="label">レベル</div></div>
-            <div class="pill" aria-label="ポイント"><div class="value"><span id="userPoints">-</span></div><div class="label">ポイント</div></div>
-            <div class="pill" aria-label="連続日数"><div class="value"><span id="userStreak">-</span>日</div><div class="label">連続ログイン</div></div>
+          <div class="stats-rail" role="group" aria-label="ステータス">
+            <div class="seg" aria-label="レベル"><div class="value">LV.<span id="userLevel">-</span></div><span class="label">レベル</span></div>
+            <div class="seg" aria-label="ポイント"><div class="value"><span id="userPoints">-</span></div><span class="label">ポイント</span></div>
+            <div class="seg" aria-label="連続ログイン"><div class="value"><span id="userStreak">-</span>日</div><span class="label">連続ログイン</span></div>
           </div>
           <div class="home-grid" role="group" aria-label="メニュー">
             <button class="home-btn" onclick="startQuiz('daily')" aria-label="本番モード">
@@ -359,8 +367,9 @@
               <span class="btn-title">MY成績</span>
             </button>
           </div>
-          <div style="margin-top:16px; padding: 0 8px 8px;">
+          <div class="home-footer">
             <button class="btn-secondary" onclick="handleLogout()" aria-label="ログアウト">ログアウト</button>
+            <a href="#" class="help-link" aria-label="ヘルプ" onclick="alert('HELP準備中です');return false;">HELP</a>
           </div>
           <div class="loading" id="homeLoading"><p style="text-align:center;">データ読み込み中...</p></div>
         </div>
@@ -1329,8 +1338,5 @@
     }
     </script></body>
 </html>
-
-
-
 
 
