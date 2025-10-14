@@ -71,9 +71,9 @@
         .login-stage{ width: var(--stage-w); margin: 0 auto; }
         .login-card{ width: clamp(280px, calc(var(--stage-w) - 48px), 320px); margin: 0 auto; padding: 16px 16px 18px; }
         .login-card.frame{ border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 14px 34px rgba(0,0,0,0.22); background: rgba(255,255,255,0.75); }
-        .logo-wrap{ display:flex; justify-content:center; margin: 14px 0 12px; }
-        /* ロゴは端末幅に応じて控えめに拡大。実機で大きすぎ問題の対処 */
-        .app-logo{ width: clamp(220px, 68vw, 280px); height: auto; object-fit: contain; }
+        /* ヒーローロゴ（カード外） */
+        .hero-wrap{ display:flex; justify-content:center; }
+        .logo-hero{ width: clamp(260px, 92vw, 362px); height:auto; object-fit:contain; margin: clamp(20px, 8vh, 80px) auto 12px; filter: drop-shadow(0 10px 24px rgba(0,0,0,.25)); }
 
         /* ページ切り替え */
         .page { display: none; }
@@ -323,10 +323,10 @@
         <!-- ログイン画面 -->
         <div class="page active" id="loginPage" aria-label="ログインページ">
           <div class="login-stage">
-          <div class="login-card glass-card frame" role="group" aria-labelledby="login-title">
-            <div class="logo-wrap">
-              <img id="appLogo" class="app-logo" src="" alt="アプリロゴ" width="320" height="120" onerror="console.warn('logo not found:', this.src)">
+            <div class="hero-wrap">
+              <img id="heroLogo" class="logo-hero" src="" alt="アプリロゴ" onerror="console.warn('logo not found:', this.src)">
             </div>
+          <div class="login-card glass-card frame" role="group" aria-labelledby="login-title">
             <h1 id="login-title" class="title" style="margin-bottom:8px;">カラコンアカデミア</h1>
             <div class="input-group">
               <label for="userId">ユーザーID</label>
@@ -518,7 +518,7 @@
             var el = document.getElementById(id); if(!el) return;
             el.src = base + file;
           };
-          set('appLogo','rogo.png');
+          set('heroLogo','rogo.png');
           set('homeMiniLogo','rogo.png');
           set('btnDailyImg','btn-daily.png');
           set('btnPracticeImg','btn-practice.png');
