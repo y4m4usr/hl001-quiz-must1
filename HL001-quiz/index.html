@@ -67,13 +67,17 @@
           backdrop-filter: blur(8px);
         }
 
-        /* ログインカード */
-        .login-stage{ width: var(--stage-w); margin: 0 auto; }
-        .login-card{ width: clamp(280px, calc(var(--stage-w) - 48px), 320px); margin: 0 auto; padding: 16px 16px 18px; }
+        /* ログイン: ピクセルキャンバス（393x851基準で絶対配置し、等比スケール） */
+        .login-stage{ width: 100%; display:flex; justify-content:center; }
+        .login-canvas{ position:relative; width:393px; height:851px; transform-origin: top center; margin:0 auto; }
+        .login-canvas{ transform: scale(calc(min((100vw - 24px)/393, (100dvh - 24px)/851))); }
+        @supports not (height: 100dvh){ .login-canvas{ transform: scale(calc(min((100vw - 24px)/393, (100vh - 24px)/851))); } }
+        /* 要素のデフォルト配置（数値は注釈に基づきつつ、横は中央寄せ） */
+        :root{ --logo-left: 16px; --logo-top: 160px; --card-left: 36px; --card-top: 300px; --btn-left: 26px; --btn-top: 654px; }
+        .logo-hero{ position:absolute; left: var(--logo-left); top: var(--logo-top); width:362px; height:auto; filter: drop-shadow(0 10px 24px rgba(0,0,0,.25)); }
+        .login-card{ position:absolute; left: var(--card-left); top: var(--card-top); width:320px; padding: 16px 16px 18px; }
         .login-card.frame{ border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 14px 34px rgba(0,0,0,0.22); background: rgba(255,255,255,0.75); }
-        /* ヒーローロゴ（カード外） */
-        .hero-wrap{ display:flex; justify-content:center; }
-        .logo-hero{ width: clamp(260px, 92vw, 362px); height:auto; object-fit:contain; margin: clamp(20px, 8vh, 80px) auto 12px; filter: drop-shadow(0 10px 24px rgba(0,0,0,.25)); }
+        .btn-image{ position:absolute; left: var(--btn-left); top: var(--btn-top); width:342px; height:127px; background-size:cover; background-position:center; border-radius: 32px; margin:0; display:block; color:#fff; text-shadow:0 2px 8px rgba(0,0,0,.35); box-shadow:0 14px 28px rgba(0,0,0,.18); }
 
         /* ページ切り替え */
         .page { display: none; }
@@ -323,25 +327,23 @@
         <!-- ログイン画面 -->
         <div class="page active" id="loginPage" aria-label="ログインページ">
           <div class="login-stage">
-            <div class="hero-wrap">
+            <div class="login-canvas" aria-label="login-canvas">
               <img id="heroLogo" class="logo-hero" src="" alt="アプリロゴ" onerror="console.warn('logo not found:', this.src)">
+              <div class="login-card glass-card frame" role="group" aria-labelledby="login-title">
+                <h1 id="login-title" class="title" style="margin:0 0 8px;">カラコンアカデミア</h1>
+                <div class="input-group">
+                  <label for="userId">ユーザーID</label>
+                  <input type="text" id="userId" placeholder="ユーザーID" autocomplete="off" aria-label="ユーザーID入力">
+                </div>
+                <div class="input-group">
+                  <label for="userName">ユーザーネーム</label>
+                  <input type="text" id="userName" placeholder="ユーザーネーム" autocomplete="off" aria-label="ユーザーネーム入力">
+                </div>
+                <div class="error" id="errorMsg" role="alert" aria-live="polite"></div>
+                <div class="loading" id="loginLoading" aria-live="polite"><p style="text-align:center;margin-top:8px;">ログイン中...</p></div>
+              </div>
+              <button id="loginBtn" class="btn-image" onclick="handleLogin()" aria-label="ログイン" title="ログイン"></button>
             </div>
-          <div class="login-card glass-card frame" role="group" aria-labelledby="login-title">
-            <h1 id="login-title" class="title" style="margin-bottom:8px;">カラコンアカデミア</h1>
-            <div class="input-group">
-              <label for="userId">ユーザーID</label>
-              <input type="text" id="userId" placeholder="ユーザーID" autocomplete="off" aria-label="ユーザーID入力">
-            </div>
-            <div class="input-group">
-              <label for="userName">ユーザーネーム</label>
-              <input type="text" id="userName" placeholder="ユーザーネーム" autocomplete="off" aria-label="ユーザーネーム入力">
-            </div>
-            <div style="display:flex;justify-content:center;align-items:center;">
-              <button id="loginBtn" class="btn-image" onclick="handleLogin()" aria-label="ログイン">ログイン</button>
-            </div>
-            <div class="error" id="errorMsg" role="alert" aria-live="polite"></div>
-            <div class="loading" id="loginLoading" aria-live="polite"><p style="text-align:center;margin-top:8px;">ログイン中...</p></div>
-          </div>
           </div>
         </div>
         
