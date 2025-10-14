@@ -132,12 +132,45 @@ const CONFIG = {
  */
 function getUiBase() {
   try {
-    var g = CONFIG.GITHUB_UI;
-    var base = 'https://raw.githubusercontent.com/'
-      + g.USER + '/' + g.REPO + '/' + g.BRANCH + '/' + g.UI_PATH;
+    // 1) Script Properties があれば最優先
+    try {
+      var props = PropertiesService.getScriptProperties();
+      var propBase = props && props.getProperty('UI_BASE_URL');
+      if (propBase && typeof propBase === 'string' && propBase.trim()) {
+        var fixed = String(propBase).trim();
+        if (fixed[fixed.length - 1] !== '/') fixed += '/';
+        return { success: true, base: fixed };
+      }
+    } catch (ignore) {}
+
+    // 2) CONFIG.GITHUB_UI から生成
+    var g = CONFIG.GITHUB_UI || {};
+    if (!g.USER || !g.REPO || !g.BRANCH || !g.UI_PATH) {
+      return { success: false, message: 'CONFIG.GITHUB_UI が未設定です' };
+    }
+    var base = 'https://raw.githubusercontent.com/' + g.USER + '/' + g.REPO + '/' + g.BRANCH + '/' + g.UI_PATH;
     return { success: true, base: base };
   } catch (e) {
     try { Logger.log('getUiBase error: ' + (e && e.message || e)); } catch(_){}
-    return { success: false, base: '' };
+    return { success: false, message: (e && e.message) || String(e) };
   }
+}
+
+/**
+ * スクリプトプロパティ UI_BASE_URL を設定（開発/検証用のワンタイム関数）
+ * 例: setUiBaseUrl('https://raw.githubusercontent.com/y4m4usr/hl001-quiz-must1/feature/ui-login/HL001-quiz/images/UI/')
+ */
+function setUiBaseUrl(url) {
+  var v = String(url || '').trim();
+  if (!v) return { success: false, message: 'URLが空です' };
+  if (v[v.length - 1] !== '/') v += '/';
+  PropertiesService.getScriptProperties().setProperty('UI_BASE_URL', v);
+  return { success: true, base: v };
+}
+
+/**
+ * getUiBase の戻りを確認する簡易テスト
+ */
+function testGetUiBase() {
+  return getUiBase();
 }
