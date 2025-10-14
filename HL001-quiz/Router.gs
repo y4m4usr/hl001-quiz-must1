@@ -7,18 +7,41 @@ function doGet(e) {
   try {
     e = e || { parameter: {} };
     var p = e.parameter || {};
+
+    // API: getDashboardData (努力度ダッシュボード用)
     if (String(p.action || '') === 'getDashboardData') {
       var data = getDashboardData();
       return ContentService.createTextOutput(JSON.stringify(data))
         .setMimeType(ContentService.MimeType.JSON);
     }
+
+    // API: getDashboardSummary (管理者ダッシュボード用)
+    if (String(p.action || '') === 'getDashboardSummary') {
+      var period = String(p.period || 'monthly');
+      var data = getDashboardSummary(period);
+      return ContentService.createTextOutput(JSON.stringify(data))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // ページ: 努力度ダッシュボード
     if (String(p.page || '') === 'dashboard') {
       return HtmlService.createTemplateFromFile('dashboard')
+        .evaluate()
+        .setTitle('努力度ダッシュボード')
+        .addMetaTag('viewport', 'width=device-width, initial-scale=1')
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    }
+
+    // ページ: 管理者ダッシュボード
+    if (String(p.page || '') === 'admin-dashboard') {
+      return HtmlService.createTemplateFromFile('admin-dashboard')
         .evaluate()
         .setTitle('管理者ダッシュボード')
         .addMetaTag('viewport', 'width=device-width, initial-scale=1')
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
     }
+
+    // デフォルト: ログイン画面
     return HtmlService.createHtmlOutputFromFile('index')
       .setTitle('カラコンアカデミア')
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
