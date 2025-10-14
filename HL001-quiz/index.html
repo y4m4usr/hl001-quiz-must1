@@ -601,17 +601,38 @@
       }
 
       try {
-        google.script.run
-          .withSuccessHandler(function(res){
-            if(!res || !res.success) return;
-            var base = String(res.base || '');
-            window.UI_BASE = base;
-            applyBackground(base);
-            applyUiAssets(base);
-          })
-          .withFailureHandler(function(e){ console.warn('getUiBase failed', e); })
-          .getUiBase();
-      } catch(_){ }
+        if (window.google && google.script && google.script.run && typeof google.script.run.getUiBase === 'function') {
+          google.script.run
+            .withSuccessHandler(function(res){
+              if(!res || !res.success){
+                console.warn('[UI_BASE] GASレスポンス異常:', res);
+                // フォールバック: テスト用URL（背景のみ表示確認用）
+                window.UI_BASE = 'https://images.unsplash.com/photo-1522441815192-d9f04eb0615c?w=1200&';
+                applyBackground(window.UI_BASE);
+                // アセットはスキップ（存在しないため）
+                return;
+              }
+              var base = String(res.base || '');
+              console.log('[UI_BASE] 取得成功:', base);
+              window.UI_BASE = base;
+              applyBackground(base);
+              applyUiAssets(base);
+            })
+            .withFailureHandler(function(e){
+              console.error('[UI_BASE] GAS呼び出し失敗:', e);
+              window.UI_BASE = 'https://images.unsplash.com/photo-1522441815192-d9f04eb0615c?w=1200&';
+              applyBackground(window.UI_BASE);
+            })
+            .getUiBase();
+        } else {
+          throw new Error('google.script.run not available');
+        }
+      } catch(err){
+        console.error('[UI_BASE] 予期しないエラー:', err);
+        // ローカル/非GAS環境でのフォールバック
+        window.UI_BASE = 'https://images.unsplash.com/photo-1522441815192-d9f04eb0615c?w=1200&';
+        applyBackground(window.UI_BASE);
+      }
 
       // resizeでも同じ背景（縦横で変わらない）
       window.addEventListener('resize', function(){ try { applyBackground(window.UI_BASE || ''); } catch(_){ } });
