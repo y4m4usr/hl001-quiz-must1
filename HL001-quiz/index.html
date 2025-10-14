@@ -21,6 +21,55 @@
           --stage-w: clamp(320px, 92vw, 393px); /* ログイン基準幅 */
         }
 
+        /* ===== 背景レイヤーシステム（Phase 1） ===== */
+        /* body要素に背景画像を設定する準備 */
+        body.has-bg-image {
+          background-image: url(''); /* JavaScriptで後から設定 */
+          background-size: cover;
+          background-position: center;
+          background-attachment: fixed;
+        }
+
+        /* ページ全体のレイヤー基準点（スクロール阻害を避ける） */
+        .page { position: relative; }
+
+        /* 背景レイヤー（最下層：全画面固定） */
+        .bg-layer-bottom {
+          position: fixed;
+          top: 0; left: 0;
+          width: 100vw; height: 100vh;
+          object-fit: cover;
+          z-index: 0; /* body::beforeの下層/同層想定 */
+          opacity: 0.3; /* 背景として薄く表示 */
+          pointer-events: none; /* クリック無効化 */
+        }
+
+        /* 背景ぼかしレイヤー（中層） */
+        .bg-layer-blur {
+          position: fixed;
+          top: 50%; left: 50%; transform: translate(-50%, -50%);
+          width: 636px; height: 636px;
+          max-width: 90%; max-height: 90%;
+          background: radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.15) 0%,
+            rgba(255, 255, 255, 0.05) 50%,
+            transparent 100%
+          );
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border-radius: 50%;
+          z-index: 1; /* 背景より上、コンテンツより下 */
+          pointer-events: none;
+        }
+
+        /* コンテンツレイヤー（最上層） */
+        .content-layer { position: relative; z-index: 10; }
+
+        /* ログイン/ホームの背景濃度微調整 */
+        #loginPage .bg-layer-bottom { opacity: 0.25; }
+        #homePage  .bg-layer-bottom { opacity: 0.3; }
+
         /* 基本設定 */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -325,9 +374,15 @@
     <div class="container">
         
         <!-- ログイン画面 -->
-        <div class="page active" id="loginPage" aria-label="ログインページ">
-          <div class="login-stage">
-            <div class="login-canvas" aria-label="login-canvas">
+        <div class="page active login-page" id="loginPage" aria-label="ログインページ">
+          <!-- 背景レイヤー（最下層） -->
+          <img src="" alt="" class="bg-layer-bottom" id="loginBgImage" aria-hidden="true" style="display:none;" />
+          <!-- ぼかしレイヤー（中層） -->
+          <div class="bg-layer-blur"></div>
+          <!-- コンテンツレイヤー（最上層） -->
+          <div class="content-layer">
+            <div class="login-stage">
+              <div class="login-canvas" aria-label="login-canvas">
               <img id="heroLogo" class="logo-hero" src="" alt="アプリロゴ" onerror="console.warn('logo not found:', this.src)">
               <div class="login-card glass-card frame" role="group" aria-labelledby="login-title">
                 <h1 id="login-title" class="title" style="margin:0 0 8px;">カラコンアカデミア</h1>
@@ -344,11 +399,18 @@
               </div>
               <button id="loginBtn" class="btn-image" onclick="handleLogin()" aria-label="ログイン" title="ログイン"></button>
             </div>
+            </div>
           </div>
         </div>
         
         <!-- ホーム画面 -->
-        <div class="page" id="homePage" aria-label="ホームページ">
+        <div class="page home-page" id="homePage" aria-label="ホームページ">
+          <!-- 背景レイヤー（最下層） -->
+          <img src="" alt="" class="bg-layer-bottom" id="homeBgImage" aria-hidden="true" style="display:none;" />
+          <!-- ぼかしレイヤー（中層） -->
+          <div class="bg-layer-blur"></div>
+          <!-- コンテンツレイヤー（最上層） -->
+          <div class="content-layer">
           <div class="glass-card profile-card" role="group" aria-label="プロフィール">
             <div class="user-avatar" aria-hidden="true">👤</div>
             <div>
@@ -444,8 +506,9 @@
                         <div class="result-stat-item">
                             <div class="result-stat-label">正解数</div>
                             <div class="result-stat-value" id="resultScore">0</div>
-                        </div>
-                    </div>
+          </div>
+          </div>
+        </div>
                 </div>
                 <p class="result-message" id="resultMessage">-</p>
                 <button id="backToHomeBtn" onclick="backToHome()">ホームに戻る</button>
@@ -506,12 +569,18 @@
     (function(){
       function applyBackground(base){
         try {
-          // ログインは専用背景（haikei1.png）
-          var bg = base + 'haikei1.png';
-          document.body.style.backgroundImage = 'url(' + bg + ')';
-          document.body.style.backgroundSize = 'cover';
-          document.body.style.backgroundPosition = 'center';
-          document.body.style.backgroundAttachment = 'fixed';
+          // 背景画像をレイヤーの<img>に設定（固定配置）
+          var loginBg = document.getElementById('loginBgImage');
+          var homeBg  = document.getElementById('homeBgImage');
+          if (loginBg) {
+            loginBg.src = base + 'haikei1.png';
+            loginBg.onload = function(){ loginBg.style.display = 'block'; };
+          }
+          if (homeBg) {
+            // 現状は同一画像。haikei2.pngが用意できたら差し替え可
+            homeBg.src = base + 'haikei1.png';
+            homeBg.onload = function(){ homeBg.style.display = 'block'; };
+          }
         } catch(e){ console.warn(e); }
       }
       function applyUiAssets(base){
