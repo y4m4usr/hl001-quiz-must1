@@ -18,6 +18,7 @@
           --muted: #7A7A7A;
           /* スマホ幅に応じたスケール（基準390px） */
           --s: clamp(0.95, 100vw / 390, 1.15);
+          --stage-w: clamp(320px, 92vw, 393px); /* ログイン基準幅 */
         }
 
         /* 基本設定 */
@@ -67,9 +68,10 @@
         }
 
         /* ログインカード */
-        .login-card{ padding: calc(18px * var(--s)) calc(14px * var(--s)) calc(22px * var(--s)); }
-        .login-card.frame{ border: 1.2px solid rgba(0,0,0,0.15); box-shadow: 0 14px 34px rgba(0,0,0,0.22); }
-        .logo-wrap{ display:flex; justify-content:center; margin-bottom:16px; }
+        .login-stage{ width: var(--stage-w); margin: 0 auto; }
+        .login-card{ width: clamp(280px, calc(var(--stage-w) - 48px), 320px); margin: 0 auto; padding: 16px 16px 18px; }
+        .login-card.frame{ border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 14px 34px rgba(0,0,0,0.22); background: rgba(255,255,255,0.75); }
+        .logo-wrap{ display:flex; justify-content:center; margin: 14px 0 12px; }
         /* ロゴは端末幅に応じて控えめに拡大。実機で大きすぎ問題の対処 */
         .app-logo{ width: clamp(220px, 68vw, 280px); height: auto; object-fit: contain; }
 
@@ -78,7 +80,7 @@
         .page.active { display: block; }
         
         /* 入力フォーム（ガラス風） */
-        .input-group{ margin: calc(14px * var(--s)) calc(12px * var(--s)); }
+        .input-group{ margin: 12px 8px; }
         label{ display:block; margin-bottom:8px; color:var(--muted); font-size:14px; font-weight:500; }
         input{
           width:100%; padding: calc(14px * var(--s)) calc(16px * var(--s)); font-size: calc(16px * var(--s));
@@ -106,6 +108,11 @@
         .btn-secondary{ background: rgba(255,255,255,0.85); color:#3A3A3A; border:1px solid rgba(0,0,0,0.08); }
         .btn-secondary:hover{ filter: brightness(0.98); }
         button:disabled{ opacity:.55; cursor:not-allowed; transform:none; }
+
+        /* 画像ボタン（roginbtn.png） */
+        .btn-image{ width: clamp(260px, calc(var(--stage-w) * 0.87), 342px); aspect-ratio: 342 / 127; background-size: cover; background-position: center; border-radius: 32px; margin: 6px auto 4px; display:block; color:#fff; text-shadow:0 2px 8px rgba(0,0,0,.35); box-shadow:0 14px 28px rgba(0,0,0,.18); }
+        .btn-image:hover{ filter: brightness(1.03); }
+        .btn-image:active{ transform: translateY(1px); }
         
         /* エラー表示 */
         .error { color: #FF4444; font-size: 14px; margin-top: 10px; padding: 10px; background: #FFE5E5; border-radius: 8px; display: none; }
@@ -315,6 +322,7 @@
         
         <!-- ログイン画面 -->
         <div class="page active" id="loginPage" aria-label="ログインページ">
+          <div class="login-stage">
           <div class="login-card glass-card frame" role="group" aria-labelledby="login-title">
             <div class="logo-wrap">
               <img id="appLogo" class="app-logo" src="" alt="アプリロゴ" width="320" height="120" onerror="console.warn('logo not found:', this.src)">
@@ -328,11 +336,12 @@
               <label for="userName">ユーザーネーム</label>
               <input type="text" id="userName" placeholder="ユーザーネーム" autocomplete="off" aria-label="ユーザーネーム入力">
             </div>
-            <div style="padding: 0 12px 6px;">
-              <button id="loginBtn" class="btn-primary" onclick="handleLogin()" aria-label="ログイン">ログイン</button>
+            <div style="display:flex;justify-content:center;align-items:center;">
+              <button id="loginBtn" class="btn-image" onclick="handleLogin()" aria-label="ログイン">ログイン</button>
             </div>
             <div class="error" id="errorMsg" role="alert" aria-live="polite"></div>
             <div class="loading" id="loginLoading" aria-live="polite"><p style="text-align:center;margin-top:8px;">ログイン中...</p></div>
+          </div>
           </div>
         </div>
         
@@ -495,8 +504,8 @@
     (function(){
       function applyBackground(base){
         try {
-          var isPortrait = (window.innerHeight >= window.innerWidth);
-          var bg = base + (isPortrait ? 'haikei1080_1920.png' : 'haikei1440_1024.png');
+          // ログインは専用背景（haikei1.png）
+          var bg = base + 'haikei1.png';
           document.body.style.backgroundImage = 'url(' + bg + ')';
           document.body.style.backgroundSize = 'cover';
           document.body.style.backgroundPosition = 'center';
@@ -515,6 +524,8 @@
           set('btnPracticeImg','btn-practice.png');
           set('btnRankingImg','btn-ranking.png');
           set('btnStatsImg','btn-stats.png');
+          // ログインボタン画像（背景）
+          try { var loginBtn=document.getElementById('loginBtn'); if(loginBtn){ loginBtn.style.backgroundImage = 'url(' + base + 'roginbtn.png)'; } } catch(_){ }
         } catch(e){ console.warn(e); }
       }
 
@@ -531,9 +542,8 @@
           .getUiBase();
       } catch(_){ }
 
-      window.addEventListener('resize', function(){
-        try { applyBackground(window.UI_BASE || ''); } catch(_){ }
-      });
+      // resizeでも同じ背景（縦横で変わらない）
+      window.addEventListener('resize', function(){ try { applyBackground(window.UI_BASE || ''); } catch(_){ } });
     })();
         // ========== グローバル変数 ==========
         let currentUser = null;
