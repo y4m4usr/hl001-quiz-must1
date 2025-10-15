@@ -7,6 +7,7 @@
     <style>
         /* デザイントークン */
         :root{
+          /* カラートークン */
           --bg-start: #F8CFE3;      /* pastel pink */
           --bg-end:   #B9D6F2;      /* pastel blue */
           --surface: rgba(255,255,255,0.25);
@@ -16,9 +17,21 @@
           --accent-blue: #7DB9FF;
           --text:  #2D2D2D;
           --muted: #7A7A7A;
-          /* スマホ幅に応じたスケール（基準390px） */
+
+          /* スマホ幅に応じたスケール（旧：390px） → Figma: 430×817 を基準とする */
           --s: clamp(0.95, 100vw / 390, 1.15);
-          --stage-w: clamp(320px, 92vw, 393px); /* ログイン基準幅 */
+
+          /* Figma基準サイズ */
+          --base-w: 430px;
+          --base-h: 817px;
+
+          /* ログイン画面の要素座標（Figma仕様） */
+          --logo-x: 16px;  --logo-y: 160px;  --logo-w: 392px; --logo-h: 242px;
+          --card-x: 57px;  --card-y: 383px;  --card-w: 315px; --card-h: 165px;
+          --btn-x:  42px;  --btn-y:  580px;  --btn-w:  346px; --btn-h:  128px;
+
+          /* レスポンシブ用（ホーム等他画面の最大幅） */
+          --stage-w: clamp(320px, 92vw, 430px);
         }
 
         /* ===== 背景レイヤーシステム（Phase 1） ===== */
@@ -66,9 +79,13 @@
         /* コンテンツレイヤー（最上層） */
         .content-layer { position: relative; z-index: 10; }
 
-        /* ログイン/ホームの背景濃度微調整 */
-        #loginPage .bg-layer-bottom { opacity: 0.25; }
+        /* 背景濃度: ログインは原画そのまま、ホームは薄め */
+        #loginPage .bg-layer-bottom { opacity: 1; }
         #homePage  .bg-layer-bottom { opacity: 0.3; }
+
+        /* 背景が読み込まれたらオーバーレイを無効化（白っぽさ解消） */
+        body.bg-ready::before { background: none !important; }
+        body.bg-ready #loginPage .bg-layer-blur { display: none; }
 
         /* 基本設定 */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -116,38 +133,39 @@
           backdrop-filter: blur(8px);
         }
 
-        /* ログイン: ピクセルキャンバス（393x851基準で絶対配置し、等比スケール） */
-        .login-stage{ width: 100%; display:flex; justify-content:center; }
-        .login-canvas{ position:relative; width:393px; height:851px; transform-origin: top center; margin:0 auto; }
-        .login-canvas{ transform: scale(calc(min((100vw - 24px)/393, (100dvh - 24px)/851))); }
-        @supports not (height: 100dvh){ .login-canvas{ transform: scale(calc(min((100vw - 24px)/393, (100vh - 24px)/851))); } }
-        /* 要素のデフォルト配置（数値は注釈に基づきつつ、横は中央寄せ） */
-        :root{ --logo-left: 16px; --logo-top: 160px; --card-left: 36px; --card-top: 300px; --btn-left: 26px; --btn-top: 654px; }
-        .logo-hero{ position:absolute; left: var(--logo-left); top: var(--logo-top); width:362px; height:auto; filter: drop-shadow(0 10px 24px rgba(0,0,0,.25)); }
-        .login-card{ position:absolute; left: var(--card-left); top: var(--card-top); width:320px; padding: 16px 16px 18px; }
-        .login-card.frame{ border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 14px 34px rgba(0,0,0,0.22); background: rgba(255,255,255,0.75); }
-        .btn-image{ position:absolute; left: var(--btn-left); top: var(--btn-top); width:342px; height:127px; background-size:cover; background-position:center; border-radius: 32px; margin:0; display:block; color:#fff; text-shadow:0 2px 8px rgba(0,0,0,.35); box-shadow:0 14px 28px rgba(0,0,0,.18); }
+        /* ログイン: ピクセルキャンバス（430×817基準で絶対配置し、等比スケール） */
+        .login-stage{ width: 100%; display:flex; justify-content:center; align-items:center; min-height:100vh; min-height:100dvh; }
+        .login-canvas{ position:relative; width:var(--base-w); height:var(--base-h); transform-origin: top center; margin:0 auto; }
+        .login-canvas{ transform: scale(calc(min((100vw - 40px)/var(--base-w), (100dvh - 40px)/var(--base-h)))); }
+        @supports not (height: 100dvh){ .login-canvas{ transform: scale(calc(min((100vw - 40px)/var(--base-w), (100vh - 40px)/var(--base-h)))); } }
+
+        /* 要素の配置（Figma座標） */
+        .logo-hero{ position:absolute; left: var(--logo-x); top: var(--logo-y); width:var(--logo-w); height:var(--logo-h); filter: drop-shadow(0 10px 24px rgba(0,0,0,.25)); }
+        .login-card{ position:absolute; left: var(--card-x); top: var(--card-y); width:var(--card-w); min-height:var(--card-h); padding: 16px 20px 18px; }
+        .login-card.frame{ border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 14px 34px rgba(0,0,0,0.22); background: rgba(255,255,255,0.85); border-radius: 16px; }
+        .btn-image{ position:absolute; left: var(--btn-x); top: var(--btn-y); width:var(--btn-w); height:var(--btn-h); background-size:cover; background-position:center; border-radius: 32px; margin:0; display:block; border:none; cursor:pointer; color:#fff; text-shadow:0 2px 8px rgba(0,0,0,.35); box-shadow:0 14px 28px rgba(0,0,0,.18); transition: filter .2s ease, transform .05s ease; }
 
         /* ページ切り替え */
         .page { display: none; }
         .page.active { display: block; }
         
-        /* 入力フォーム（ガラス風） */
-        .input-group{ margin: 12px 8px; }
-        label{ display:block; margin-bottom:8px; color:var(--muted); font-size:14px; font-weight:500; }
+        /* 入力フォーム（Figma寄せ） */
+        .input-group{ margin: 12px 0; }
+        .input-group:first-of-type{ margin-top: 0; }
+        label{ display:block; margin-bottom:6px; color:#999; font-size:13px; font-weight:500; }
         input{
-          width:100%; padding: calc(14px * var(--s)) calc(16px * var(--s)); font-size: calc(16px * var(--s));
+          width:100%; padding: 14px 16px; font-size: 15px;
           background: var(--surface);
           border: 1px solid var(--border);
-          border-radius: 16px; /* カード16px */
+          border-radius: 12px;
           color: var(--text);
           -webkit-backdrop-filter: blur(8px);
           backdrop-filter: blur(8px);
-          transition: box-shadow .2s ease, border-color .2s ease, transform .05s ease;
-          box-shadow: 0 8px 18px rgba(0,0,0,0.12), inset 0 0 0 1px rgba(255,255,255,0.2);
+          transition: box-shadow .2s ease, border-color .2s ease;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,0.15);
         }
-        input::placeholder{ color:#9AA0A6; }
-        input:focus{ outline:none; border-color: var(--accent-pink); box-shadow: 0 0 0 3px rgba(255,110,199,0.15), 0 10px 24px rgba(0,0,0,0.12); }
+        input::placeholder{ color:#999; opacity:.8; }
+        input:focus{ outline:none; border-color: var(--accent-pink); box-shadow: 0 0 0 3px rgba(255,110,199,0.15), 0 6px 16px rgba(0,0,0,0.12); }
         
         /* ボタン（角丸28px） */
         button{ width:100%; padding: calc(14px * var(--s)) calc(16px * var(--s)); border:none; cursor:pointer; border-radius:28px; font-size: calc(18px * var(--s)); font-weight:700; transition:filter .2s ease, transform .05s ease, box-shadow .2s ease; }
@@ -385,7 +403,7 @@
               <div class="login-canvas" aria-label="login-canvas">
               <img id="heroLogo" class="logo-hero" src="" alt="アプリロゴ" onerror="console.warn('logo not found:', this.src)">
               <div class="login-card glass-card frame" role="group" aria-labelledby="login-title">
-                <h1 id="login-title" class="title" style="margin:0 0 8px;">カラコンアカデミア</h1>
+                <h1 id="login-title" class="title" style="margin:0 0 12px; font-size:16px; color:#666;">ログイン</h1>
                 <div class="input-group">
                   <label for="userId">ユーザーID</label>
                   <input type="text" id="userId" placeholder="ユーザーID" autocomplete="off" aria-label="ユーザーID入力">
@@ -573,12 +591,26 @@
           var loginBg = document.getElementById('loginBgImage');
           var homeBg  = document.getElementById('homeBgImage');
           if (loginBg) {
-            loginBg.src = base + 'haikei1.png';
-            loginBg.onload = function(){ loginBg.style.display = 'block'; };
+            var url = base + 'haikei1.png';
+            if (loginBg.dataset.src !== url) {
+              loginBg.style.opacity = 0; // フェード防止
+              loginBg.dataset.src = url;
+              loginBg.src = url;
+            }
+            loginBg.onload = function(){
+              loginBg.style.display = 'block';
+              loginBg.style.transition = 'opacity .35s ease';
+              requestAnimationFrame(function(){ loginBg.style.opacity = 1; });
+              document.body.classList.add('bg-ready');
+            };
           }
           if (homeBg) {
             // 現状は同一画像。haikei2.pngが用意できたら差し替え可
-            homeBg.src = base + 'haikei1.png';
+            var url2 = base + 'haikei1.png';
+            if (homeBg.dataset.src !== url2) {
+              homeBg.dataset.src = url2;
+              homeBg.src = url2;
+            }
             homeBg.onload = function(){ homeBg.style.display = 'block'; };
           }
         } catch(e){ console.warn(e); }
@@ -634,8 +666,7 @@
         applyBackground(window.UI_BASE);
       }
 
-      // resizeでも同じ背景（縦横で変わらない）
-      window.addEventListener('resize', function(){ try { applyBackground(window.UI_BASE || ''); } catch(_){ } });
+      // resizeでの再読込は不要（固定）。何もしない。
     })();
         // ========== グローバル変数 ==========
         let currentUser = null;
