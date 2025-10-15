@@ -32,6 +32,35 @@
 
           /* レスポンシブ用（ホーム等他画面の最大幅） */
           --stage-w: clamp(320px, 92vw, 430px);
+
+          /* ===== Home (430x817) Figma-based coordinates ===== */
+          --home-profile-x: 27px;
+          --home-profile-y: 37px;
+          --home-profile-w: 373px;
+          --home-profile-h: 108px;
+
+          --home-stats-x: 43px;
+          --home-stats-y: 152px;
+          --home-stats-w: 341px;
+          --home-stats-h: 76px;
+
+          --home-grid-x: 35px;
+          --home-grid-y: 249px;
+          --home-grid-w: 410px;
+          --home-btn-size: 227px;
+          --home-grid-gap: 5px;
+
+          --home-footer-x: 10px;
+          --home-footer-y: 710px; /* grid終了+間隔で調整 */
+          --home-footer-btn-w: 146px;
+          --home-footer-btn-h: 46px;
+
+          --avatar-size: 100px;
+          --username-size: 32px;
+          --store-size: 22px;
+          --title-size: 16px;
+          --stat-value-size: 29px;
+          --stat-label-size: 22px;
         }
 
         /* ===== 背景レイヤーシステム（Phase 1） ===== */
@@ -211,6 +240,41 @@
         .home-footer{ display:flex; justify-content:space-between; align-items:center; gap:8px; padding: 10px 8px; }
         .help-link{ color:#2d6cdf; text-decoration:none; font-weight:600; font-size:14px; background: rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.06); padding:8px 12px; border-radius:20px; box-shadow:0 6px 16px rgba(0,0,0,0.08); }
         .help-link:hover{ filter: brightness(0.98); }
+
+        /* ===== Home canvas (430x817基準の絶対配置) ===== */
+        .home-stage { width:100%; display:flex; justify-content:center; align-items:center; min-height:100vh; min-height:100dvh; padding:20px 0; }
+        .home-canvas { position:relative; width:var(--base-w); height:var(--base-h); transform-origin: top center; margin:0 auto; }
+        .home-canvas { transform: scale(calc(min((100vw - 40px)/var(--base-w), (100dvh - 40px)/var(--base-h)))); }
+        @supports not (height: 100dvh){ .home-canvas { transform: scale(calc(min((100vw - 40px)/var(--base-w), (100vh - 40px)/var(--base-h)))); } }
+        @media (max-width: 360px){ .home-canvas { transform: scale(calc(min((100vw - 20px)/var(--base-w), (100dvh - 20px)/var(--base-h)))); } }
+
+        /* プロフィールカード（絶対配置） */
+        .profile-card{ position:absolute; left:var(--home-profile-x); top:var(--home-profile-y); width:var(--home-profile-w); height:var(--home-profile-h); padding:16px 20px; display:grid; grid-template-columns: var(--avatar-size) 1fr; align-items:center; gap:16px; background: rgba(255,255,255,0.5); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+        .user-avatar{ width:var(--avatar-size); height:var(--avatar-size); border-radius:50%; background: linear-gradient(135deg, #FF6EC7 0%, #FF9472 100%); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:40px; box-shadow:0 6px 16px rgba(0,0,0,0.12); flex-shrink:0; }
+        .user-info{ display:flex; flex-direction:column; gap:4px; min-width:0; }
+        .user-name{ font-size:var(--username-size); font-weight:700; color:#605b66; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .user-store{ font-size:var(--store-size); color:#605b66; line-height:1.2; }
+        .user-title{ display:inline-block; font-size:var(--title-size); color:#fff; background: linear-gradient(135deg, #7DB9FF, #C093FF); padding:6px 12px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.15); margin-top:4px; white-space:nowrap; align-self:flex-start; }
+
+        /* ステータスピル（絶対配置） */
+        .stats-rail{ position:absolute; left:var(--home-stats-x); top:var(--home-stats-y); width:var(--home-stats-w); height:var(--home-stats-h); display:grid; grid-template-columns:repeat(3, 1fr); gap:0; align-items:center; border-radius:28px; background: rgba(255,255,255,0.5); border:1px solid var(--border); box-shadow:0 10px 22px rgba(0,0,0,.12); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); padding:12px 8px; }
+        .stats-rail .seg{ text-align:center; padding:6px 4px; position:relative; }
+        .stats-rail .seg + .seg{ border-left:1px solid rgba(255,255,255,0.35); }
+        .stats-rail .value{ font-size:var(--stat-value-size); font-weight:800; color:var(--text); letter-spacing:.3px; line-height:1.2; }
+        .stats-rail .label{ font-size:var(--stat-label-size); color:var(--muted); margin-top:2px; display:block; line-height:1.2; }
+
+        /* ボタングリッド（絶対配置） */
+        .home-grid{ position:absolute; left:var(--home-grid-x); top:var(--home-grid-y); width:var(--home-grid-w); display:grid; grid-template-columns:repeat(2, 1fr); gap:var(--home-grid-gap); }
+        .home-btn{ position:relative; width:var(--home-btn-size); height:var(--home-btn-size); border-radius:24px; overflow:hidden; background:var(--surface); border:1px solid var(--border); box-shadow:var(--shadow); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); cursor:pointer; transition:filter .2s ease, transform .05s ease; padding:0; }
+        .home-btn:hover{ filter:brightness(1.05); transform:translateY(-2px); box-shadow:0 16px 36px rgba(0,0,0,.24); }
+        .home-btn:active{ transform:translateY(0); }
+        .home-btn img{ width:100%; height:100%; object-fit:cover; display:block; }
+        .home-btn .btn-title{ position:absolute; left:8px; bottom:12px; right:8px; text-align:center; color:#fff; font-weight:900; font-size:18px; text-shadow:0 2px 6px rgba(0,0,0,0.4); letter-spacing:.5px; line-height:1.2; }
+
+        /* フッター（絶対配置） */
+        .home-footer{ position:absolute; left:var(--home-footer-x); right:var(--home-footer-x); top:var(--home-footer-y); display:flex; justify-content:space-between; align-items:center; gap:20px; height:var(--home-footer-btn-h); }
+        .footer-btn{ width:var(--home-footer-btn-w); height:var(--home-footer-btn-h); background-size:cover; background-position:center; border-radius:20px; border:none; cursor:pointer; transition:filter .2s ease, transform .05s ease; box-shadow:0 6px 16px rgba(0,0,0,0.15); padding:0; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:600; color:#555; }
+        .footer-btn:hover{ filter:brightness(.98); transform:translateY(-1px); }
 
         /* クイズ画面（既存） */
         .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 15px; background: #F8F9FA; border-radius: 10px; }
@@ -429,43 +493,49 @@
           <div class="bg-layer-blur"></div>
           <!-- コンテンツレイヤー（最上層） -->
           <div class="content-layer">
-          <div class="glass-card profile-card" role="group" aria-label="プロフィール">
-            <div class="user-avatar" aria-hidden="true">👤</div>
-            <div>
-              <div class="user-name" id="displayName">読み込み中...</div>
-              <div class="user-store" id="displayStore">-</div>
-              <div style="margin-top:6px;">
-                <span class="user-title" id="displayTitle" aria-label="称号" title="称号" style="display:none"></span>
+            <div class="home-stage">
+              <div class="home-canvas" aria-label="home-canvas">
+                <!-- プロフィールカード -->
+                <div class="glass-card profile-card" role="group" aria-label="プロフィール">
+                  <div class="user-avatar" aria-hidden="true">👤</div>
+                  <div class="user-info">
+                    <div class="user-name" id="displayName">読み込み中...</div>
+                    <div class="user-store" id="displayStore">-</div>
+                    <span class="user-title" id="displayTitle" aria-label="称号" title="称号" style="display:none"></span>
+                  </div>
+                </div>
+                <!-- ステータスバー -->
+                <div class="stats-rail" role="group" aria-label="ステータス">
+                  <div class="seg" aria-label="レベル"><div class="value">LV.<span id="userLevel">-</span></div><span class="label">レベル</span></div>
+                  <div class="seg" aria-label="ポイント"><div class="value"><span id="userPoints">-</span></div><span class="label">ポイント</span></div>
+                  <div class="seg" aria-label="連続ログイン"><div class="value"><span id="userStreak">-</span>日</div><span class="label">連続ログイン</span></div>
+                </div>
+                <!-- メニューグリッド -->
+                <div class="home-grid" role="group" aria-label="メニュー">
+                  <button class="home-btn" onclick="startQuiz('daily')" aria-label="本番モード">
+                    <img id="btnDailyImg" alt="本番モード" src="" onerror="console.warn('asset not found:', this.src)">
+                    <span class="btn-title">本番モード</span>
+                  </button>
+                  <button class="home-btn" onclick="startQuiz('practice')" aria-label="練習モード">
+                    <img id="btnPracticeImg" alt="練習モード" src="" onerror="console.warn('asset not found:', this.src)">
+                    <span class="btn-title">練習モード</span>
+                  </button>
+                  <button class="home-btn" onclick="showRanking()" aria-label="ランキング">
+                    <img id="btnRankingImg" alt="ランキング" src="" onerror="console.warn('asset not found:', this.src)">
+                    <span class="btn-title">ランキング</span>
+                  </button>
+                  <button class="home-btn" onclick="showMyStats()" aria-label="マイ成績">
+                    <img id="btnStatsImg" alt="マイ成績" src="" onerror="console.warn('asset not found:', this.src)">
+                    <span class="btn-title">MY成績</span>
+                  </button>
+                </div>
+                <!-- フッター -->
+                <div class="home-footer">
+                  <button id="logoutBtnHome" class="footer-btn" onclick="handleLogout()" aria-label="ログアウト"></button>
+                  <button id="helpBtnHome" class="footer-btn" onclick="alert('HELP準備中です');return false;" aria-label="ヘルプ"></button>
+                </div>
               </div>
             </div>
-            <img id="homeMiniLogo" alt="ロゴ" width="64" height="24" src="" onerror="console.warn('logo not found:', this.src)"/>
-          </div>
-          <div class="stats-rail" role="group" aria-label="ステータス">
-            <div class="seg" aria-label="レベル"><div class="value">LV.<span id="userLevel">-</span></div><span class="label">レベル</span></div>
-            <div class="seg" aria-label="ポイント"><div class="value"><span id="userPoints">-</span></div><span class="label">ポイント</span></div>
-            <div class="seg" aria-label="連続ログイン"><div class="value"><span id="userStreak">-</span>日</div><span class="label">連続ログイン</span></div>
-          </div>
-          <div class="home-grid" role="group" aria-label="メニュー">
-            <button class="home-btn" onclick="startQuiz('daily')" aria-label="本番モード">
-              <img id="btnDailyImg" alt="本番モード" width="180" height="164" src="" onerror="console.warn('asset not found:', this.src)">
-              <span class="btn-title">本番モード</span>
-            </button>
-            <button class="home-btn" onclick="startQuiz('practice')" aria-label="練習モード">
-              <img id="btnPracticeImg" alt="練習モード" width="180" height="164" src="" onerror="console.warn('asset not found:', this.src)">
-              <span class="btn-title">練習モード</span>
-            </button>
-            <button class="home-btn" onclick="showRanking()" aria-label="ランキング">
-              <img id="btnRankingImg" alt="ランキング" width="180" height="164" src="" onerror="console.warn('asset not found:', this.src)">
-              <span class="btn-title">ランキング</span>
-            </button>
-            <button class="home-btn" onclick="showMyStats()" aria-label="マイ成績">
-              <img id="btnStatsImg" alt="マイ成績" width="180" height="164" src="" onerror="console.warn('asset not found:', this.src)">
-              <span class="btn-title">MY成績</span>
-            </button>
-          </div>
-          <div class="home-footer">
-            <button class="btn-secondary" onclick="handleLogout()" aria-label="ログアウト">ログアウト</button>
-            <a href="#" class="help-link" aria-label="ヘルプ" onclick="alert('HELP準備中です');return false;">HELP</a>
           </div>
           <div class="loading" id="homeLoading"><p style="text-align:center;">データ読み込み中...</p></div>
         </div>
@@ -629,6 +699,13 @@
           set('btnStatsImg','btn-stats.png');
           // ログインボタン画像（背景）
           try { var loginBtn=document.getElementById('loginBtn'); if(loginBtn){ loginBtn.style.backgroundImage = 'url(' + base + 'roginbtn.png)'; } } catch(_){ }
+          // ホームフッターのボタン画像
+          try {
+            var logoutBtn = document.getElementById('logoutBtnHome');
+            if (logoutBtn) { logoutBtn.style.backgroundImage = 'url(' + base + 'logoutbtn.png)'; }
+            var helpBtn = document.getElementById('helpBtnHome');
+            if (helpBtn) { helpBtn.style.backgroundImage = 'url(' + base + 'helpbtn.png)'; }
+          } catch(_){ }
         } catch(e){ console.warn(e); }
       }
 
