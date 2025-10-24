@@ -342,6 +342,289 @@
         .tab-btn.active { background: linear-gradient(135deg, #FF6EC7 0%, #FF9472 100%); color: #fff; border-color: #FF6EC7; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255,110,199,0.3); }
         .tab-label { font-size: 16px; font-weight: bold; margin-bottom: 4px; }
         .tab-sublabel { font-size: 11px; opacity: 0.8; }
+
+        /* マイ成績ページ専用スタイル */
+        .stats-profile-card {
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .stats-profile-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .stats-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+        .stats-profile-info {
+            flex: 1;
+        }
+        .stats-profile-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .stats-profile-store {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 2px;
+        }
+        .stats-profile-title {
+            font-size: 12px;
+            color: var(--accent-pink);
+            font-weight: 600;
+        }
+        .stats-profile-status {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .stats-status-item {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 8px;
+        }
+        .stats-status-label {
+            display: block;
+            font-size: 11px;
+            color: var(--muted);
+            margin-bottom: 2px;
+        }
+        .stats-status-value {
+            display: block;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text);
+        }
+        .stats-level-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 4px;
+        }
+        .stats-level-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-blue));
+            transition: width 0.3s ease;
+        }
+        .stats-level-text {
+            font-size: 11px;
+            color: var(--muted);
+            text-align: right;
+        }
+
+        /* 期間タブ */
+        .stats-period-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .stats-tab-btn {
+            flex: 1;
+            padding: 10px 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .stats-tab-btn.active {
+            background: linear-gradient(135deg, var(--accent-pink), #FF9472);
+            color: #fff;
+            border-color: var(--accent-pink);
+            box-shadow: 0 2px 8px rgba(255,110,199,0.3);
+        }
+
+        /* サマリー統計カード */
+        .stats-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .stats-summary-card {
+            padding: 16px 12px;
+            text-align: center;
+        }
+        .stats-summary-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent-pink);
+            margin-bottom: 4px;
+        }
+        .stats-summary-label {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        /* セクションタイトル */
+        .stats-section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text);
+            margin: 20px 0 12px;
+        }
+
+        /* セッションリスト */
+        .stats-sessions-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .stats-session-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            transition: all 0.2s;
+        }
+        .stats-session-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+        }
+        .stats-session-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .stats-session-date {
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--text);
+        }
+        .stats-session-mode {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .stats-session-mode.daily {
+            background: linear-gradient(135deg, #FF6EC7, #FF9472);
+            color: #fff;
+        }
+        .stats-session-mode.practice {
+            background: rgba(125,185,255,0.2);
+            color: #4A90E2;
+        }
+        .stats-session-score {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 6px;
+        }
+        .stats-session-score-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--accent-pink);
+        }
+        .stats-session-score-detail {
+            font-size: 12px;
+            color: var(--muted);
+        }
+        .stats-session-breakdown {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4px;
+            font-size: 11px;
+            color: var(--muted);
+            padding-top: 8px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        .stats-session-breakdown-item {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* グラフコンテナ */
+        .stats-totals-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        .stats-total-item {
+            flex: 1;
+            font-size: 12px;
+            color: var(--muted);
+        }
+        .stats-total-label {
+            margin-right: 4px;
+        }
+        .stats-total-value {
+            font-weight: bold;
+            color: var(--text);
+        }
+        .stats-chart-container {
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        .stats-chart-row {
+            margin-bottom: 16px;
+        }
+        .stats-chart-label {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+        .stats-chart-bars {
+            display: flex;
+            gap: 6px;
+            height: 60px;
+            align-items: flex-end;
+        }
+        .stats-chart-bar {
+            flex: 1;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+            opacity: 0.9;
+        }
+        .stats-chart-bar:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        .stats-chart-bar.exp {
+            background: linear-gradient(180deg, #4CAF50, #66BB6A);
+        }
+        .stats-chart-bar.rp {
+            background: linear-gradient(180deg, #FF6EC7, #FF9472);
+        }
+
+        @media (max-width: 480px) {
+            .stats-summary-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+            .stats-summary-card {
+                padding: 12px 8px;
+            }
+            .stats-summary-value {
+                font-size: 20px;
+            }
+            .stats-summary-label {
+                font-size: 10px;
+            }
+            .stats-session-breakdown {
+                grid-template-columns: 1fr;
+            }
+        }
   </style>
 </head>
 <body>
@@ -505,7 +788,83 @@
         </div>
 
         <!-- マイ成績画面 -->
-        <div class="page" id="statsPage"><h1 class="title">📊 マイ成績</h1><div id="statsSummary" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0;"></div><div id="statsCharts" style="display:grid;grid-template-columns:1fr;gap:10px;margin:10px 0;"></div><div id="statsList"></div><button class="btn-secondary" onclick="backToHome()">戻る</button><div class="loading" id="statsLoading"><p>読み込み中...</p></div>
+        <div class="page" id="statsPage">
+            <h1 class="title">📊 マイ成績</h1>
+
+            <!-- プロフィールカード -->
+            <div class="stats-profile-card glass-card" id="statsProfileCard">
+                <div class="stats-profile-header">
+                    <div class="stats-avatar">👤</div>
+                    <div class="stats-profile-info">
+                        <div class="stats-profile-name" id="statsUserName">-</div>
+                        <div class="stats-profile-store" id="statsUserStore">-</div>
+                        <div class="stats-profile-title" id="statsUserTitle">称号: -</div>
+                    </div>
+                </div>
+                <div class="stats-profile-status">
+                    <div class="stats-status-item">
+                        <span class="stats-status-label">Lv</span>
+                        <span class="stats-status-value" id="statsUserLevel">1</span>
+                    </div>
+                    <div class="stats-status-item">
+                        <span class="stats-status-label">ポイント</span>
+                        <span class="stats-status-value" id="statsUserPoints">0</span>
+                    </div>
+                    <div class="stats-status-item">
+                        <span class="stats-status-label">連続</span>
+                        <span class="stats-status-value" id="statsUserStreak">0日</span>
+                    </div>
+                </div>
+                <div class="stats-level-bar">
+                    <div class="stats-level-progress" id="statsLevelProgress"></div>
+                </div>
+                <div class="stats-level-text" id="statsLevelText">次まで 0pt</div>
+            </div>
+
+            <!-- 期間選択タブ -->
+            <div class="stats-period-tabs">
+                <button class="stats-tab-btn active" data-period="week">週間</button>
+                <button class="stats-tab-btn" data-period="month">月間</button>
+                <button class="stats-tab-btn" data-period="year">年間</button>
+                <button class="stats-tab-btn" data-period="all">累計</button>
+            </div>
+
+            <!-- サマリー統計カード -->
+            <div class="stats-summary-grid">
+                <div class="stats-summary-card glass-card">
+                    <div class="stats-summary-value" id="statsTotalExp">0</div>
+                    <div class="stats-summary-label">総EXP</div>
+                </div>
+                <div class="stats-summary-card glass-card">
+                    <div class="stats-summary-value" id="statsTotalCorrect">0</div>
+                    <div class="stats-summary-label">総正解</div>
+                </div>
+                <div class="stats-summary-card glass-card">
+                    <div class="stats-summary-value" id="statsMaxStreak">0</div>
+                    <div class="stats-summary-label">最長</div>
+                </div>
+            </div>
+
+            <!-- 直近10セッション -->
+            <div class="stats-section-title">📈 直近10セッション</div>
+            <div class="stats-sessions-container" id="statsSessionsList"></div>
+
+            <!-- EXP/RP推移グラフ -->
+            <div class="stats-section-title">📊 直近EXP/RP推移</div>
+            <div class="stats-totals-row">
+                <div class="stats-total-item">
+                    <span class="stats-total-label">直近EXP合計:</span>
+                    <span class="stats-total-value" id="statsRecentExpTotal">0pt</span>
+                </div>
+                <div class="stats-total-item">
+                    <span class="stats-total-label">直近RP合計:</span>
+                    <span class="stats-total-value" id="statsRecentRpTotal">0pt</span>
+                </div>
+            </div>
+            <div class="stats-chart-container glass-card" id="statsChartsCanvas"></div>
+
+            <button class="btn-secondary" onclick="backToHome()">戻る</button>
+            <div class="loading" id="statsLoading"><p>読み込み中...</p></div>
         </div>
 
     </div>
@@ -533,70 +892,10 @@
   <script>
     // UI 画像のベースURLを取得して背景/アセットを設定
     (function(){
-      var REQUIRED_LAYOUT_ASSETS = {
-        screen_login: {
-          source: 'images/screen_login.json',
-          assets: [
-            'global_screen_login_rogo_01',
-            'global_screen_login_l_login_btn_01'
-          ]
-        },
-        screen_home: {
-          source: 'images/screen_home.json',
-          assets: [
-            'global_screen_home_image_01',
-            'global_screen_home_h_btn_daily_01',
-            'global_screen_home_h_btn_practice_01',
-            'global_screen_home_h_btn_ranking_01',
-            'global_screen_home_h_btn_stats_01',
-            'global_screen_home_icon_01'
-          ]
-        }
-      };
-
-      function verifyLayoutAssets(){
-        try {
-          if (typeof fetch !== 'function') {
-            console.warn('[layout] fetch API is unavailable in this environment');
-            return;
-          }
-          Object.keys(REQUIRED_LAYOUT_ASSETS).forEach(function(key){
-            var cfg = REQUIRED_LAYOUT_ASSETS[key];
-            fetch(cfg.source)
-              .then(function(res){
-                if (!res.ok) throw new Error('HTTP ' + res.status);
-                return res.json();
-              })
-              .then(function(layout){
-                if (!layout || !Array.isArray(layout.objects)) {
-                  console.warn('[layout] unexpected format for ' + cfg.source);
-                  return;
-                }
-                var found = {};
-                layout.objects.forEach(function(obj){
-                  if (obj && obj.image && obj.image.id) {
-                    found[obj.image.id] = true;
-                  }
-                });
-                cfg.assets.forEach(function(id){
-                  if (!found[id]) {
-                    console.warn('[layout] asset "' + id + '" not present in ' + cfg.source);
-                  }
-                });
-              })
-              .catch(function(err){
-                console.warn('[layout] failed to load ' + cfg.source, err);
-              });
-          });
-        } catch(err) {
-          console.warn('[layout] verification error', err);
-        }
-      }
-
       function applyBackground(base){
         try {
-          var normalizedBase = base && base.endsWith('/') ? base : (base ? base + '/' : '');
-          var bg = normalizedBase + 'screene_home/global_screen_home_image_01.png';
+          var normalizedBase = normalizeBase(base);
+          var bg = normalizedBase + 'haikei1.png';
           document.body.style.backgroundImage = 'url(' + bg + ')';
           document.body.style.backgroundSize = 'cover';
           document.body.style.backgroundPosition = 'center';
@@ -605,21 +904,21 @@
       }
       function applyUiAssets(base){
         try {
-          var normalizedBase = base && base.endsWith('/') ? base : (base ? base + '/' : '');
+          var normalizedBase = normalizeBase(base);
           var set = function(id, file){
             var el = document.getElementById(id); if(!el) return;
             el.src = normalizedBase + file;
           };
-          set('appLogo','global_screen_login_rogo_01.png');
-          set('homeMiniLogo','screene_home/global_screen_home_icon_01.png');
-          set('btnDailyImg','screene_home/global_screen_home_h_btn_daily_01.png');
-          set('btnPracticeImg','screene_home/global_screen_home_h_btn_practice_01.png');
-          set('btnRankingImg','screene_home/global_screen_home_h_btn_ranking_01.png');
-          set('btnStatsImg','screene_home/global_screen_home_h_btn_stats_01.png');
+          set('appLogo','rogo.png');
+          set('homeMiniLogo','rogo.png');
+          set('btnDailyImg','btn-daily.png');
+          set('btnPracticeImg','btn-practice.png');
+          set('btnRankingImg','btn-ranking.png');
+          set('btnStatsImg','btn-stats.png');
           try {
             var loginBtn = document.getElementById('loginBtn');
             if (loginBtn) {
-              loginBtn.style.backgroundImage = 'url(' + normalizedBase + 'global_screen_login_l_login_btn_01.png)';
+              loginBtn.style.backgroundImage = 'url(' + normalizedBase + 'roginbtn.png)';
               loginBtn.style.backgroundSize = 'cover';
               loginBtn.style.backgroundPosition = 'center';
               loginBtn.style.backgroundRepeat = 'no-repeat';
@@ -628,24 +927,12 @@
         } catch(e){ console.warn(e); }
       }
 
-      verifyLayoutAssets();
-      applyBackground('images/');
-      applyUiAssets('images/');
+      function normalizeBase(base){
+        if (!base) return '';
+        return base.endsWith('/') ? base : base + '/';
+      }
 
-      try {
-        google.script.run
-          .withSuccessHandler(function(res){
-            if(!res || !res.success) return;
-            var base = String(res.base || '');
-            window.UI_BASE = base;
-            applyBackground(base);
-            applyUiAssets(base);
-          })
-          .withFailureHandler(function(e){ console.warn('getUiBase failed', e); })
-          .getUiBase();
-      } catch(_){ }
-
-      window.addEventListener('resize', function(){ try { applyBackground(window.UI_BASE || 'images/'); } catch(_){ } });
+      window.addEventListener('resize', function(){ try { applyBackground(window.UI_BASE || ''); } catch(_){ } });
     })();
         // ========== グローバル変数 ==========
         let currentUser = null;
@@ -1192,6 +1479,22 @@
         function showMyStats(){
             document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
             document.getElementById('statsPage').classList.add('active');
+
+            // 期間選択タブの初期化（イベントリスナーが未設定の場合のみ）
+            const tabButtons = document.querySelectorAll('.stats-tab-btn');
+            if (tabButtons.length > 0 && !tabButtons[0].hasAttribute('data-listener')) {
+                tabButtons.forEach(btn => {
+                    btn.setAttribute('data-listener', 'true');
+                    btn.addEventListener('click', function() {
+                        tabButtons.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        // TODO: 期間フィルタリング実装
+                        // const period = this.getAttribute('data-period');
+                        // loadStatsByPeriod(period);
+                    });
+                });
+            }
+
             const loading=document.getElementById('statsLoading');
             loading.classList.add('show');
             google.script.run
@@ -1202,78 +1505,128 @@
         function onStatsSuccess(result){
             const loading=document.getElementById('statsLoading');
             loading.classList.remove('show');
-            const container=document.getElementById('statsList');
-            const summary=document.getElementById('statsSummary');
-            const charts=document.getElementById('statsCharts');
-            container.innerHTML='';
-            if (summary) summary.innerHTML='';
-            if (charts) charts.innerHTML='';
+
             if(!result || !result.success){
-                container.innerHTML='<p style="text-align:center;color:#666;padding:20px;">取得に失敗しました</p>';
+                alert('データ取得に失敗しました');
                 return;
             }
+
+            // プロフィールカード更新
+            if (currentUser) {
+                document.getElementById('statsUserName').textContent = currentUser.name || '-';
+                document.getElementById('statsUserStore').textContent = currentUser.store || '-';
+                document.getElementById('statsUserTitle').textContent = `称号: ${currentUser.title || 'カラコンルーキー'}`;
+                document.getElementById('statsUserLevel').textContent = currentUser.level || '1';
+                document.getElementById('statsUserPoints').textContent = (currentUser.points || 0) + 'pt';
+                document.getElementById('statsUserStreak').textContent = (currentUser.streak || 0) + '日';
+
+                // レベルバー進捗（仮実装: 次のレベルまで）
+                const currentPoints = currentUser.points || 0;
+                const currentLevel = currentUser.level || 1;
+                const nextLevelPoints = Math.round(Math.pow(currentLevel, 1.5) * 100); // 簡易計算
+                const progress = (currentPoints % nextLevelPoints) / nextLevelPoints * 100;
+                document.getElementById('statsLevelProgress').style.width = progress + '%';
+                document.getElementById('statsLevelText').textContent = `次まで ${Math.round(nextLevelPoints - (currentPoints % nextLevelPoints))}pt`;
+            }
+
+            // サマリー統計（TODO: APIから実データを取得）
+            document.getElementById('statsTotalExp').textContent = currentUser.points || '0';
+            document.getElementById('statsTotalCorrect').textContent = '-'; // 今後実装
+            document.getElementById('statsMaxStreak').textContent = currentUser.streak || '0';
+
+            // 直近10セッションがない場合
             if(!result.recent10 || result.recent10.length===0){
-                container.innerHTML='<p style="text-align:center;color:#666;padding:20px;">まだデータがありません</p>';
+                document.getElementById('statsSessionsList').innerHTML='<p style="text-align:center;color:#666;padding:20px;">まだデータがありません</p>';
                 return;
             }
 
-            // summary（合計）+ 簡易バーグラフ
-            try {
-              const items = result.recent10.slice().reverse(); // 古い→新しいの順にして並べる
-              const exps = items.map(r => (r.expEarned!=null?r.expEarned:r.baseExp)||0);
-              const rps  = items.map(r => (r.rpEarned!=null?r.rpEarned:r.baseRp)||0);
-              const sum = arr => arr.reduce((a,b)=>a+Number(b||0),0);
-              if (summary) {
-                summary.innerHTML = `
-                  <div style="background:#F8F9FA;padding:12px;border-radius:10px;text-align:center;">
-                    <div style="font-size:12px;color:#666;">直近EXP合計</div>
-                    <div style="font-size:20px;font-weight:bold;color:#4CAF50;">${sum(exps)}</div>
-                  </div>
-                  <div style="background:#F8F9FA;padding:12px;border-radius:10px;text-align:center;">
-                    <div style="font-size:12px;color:#666;">直近RP合計</div>
-                    <div style="font-size:20px;font-weight:bold;color:#FF6EC7;">${sum(rps)}</div>
-                  </div>`;
-              }
-              if (charts) {
-                const makeBar = (vals,color,label)=>{
-                  const max = Math.max(1,...vals.map(v=>Number(v||0)));
-                  const wrap=document.createElement('div');
-                  wrap.innerHTML=`<div style="font-size:12px;color:#666;margin:2px 0;">${label}</div>`;
-                  const row=document.createElement('div');
-                  row.style.cssText='display:flex;gap:4px;height:56px;align-items:flex-end;';
-                  vals.forEach(v=>{
-                    const bar=document.createElement('div');
-                    const h=Math.round((Number(v||0)/max)*52);
-                    bar.style.cssText=`flex:1;background:${color};height:${h}px;border-radius:4px;opacity:.9;`;
-                    row.appendChild(bar);
-                  });
-                  wrap.appendChild(row);
-                  charts.appendChild(wrap);
-                };
-                makeBar(exps,'#4CAF50','EXP 推移（古→新）');
-                makeBar(rps ,'#FF6EC7','RP 推移（古→新）');
-              }
-            } catch(_){ }
+            // 直近10セッション描画
+            const sessionsList = document.getElementById('statsSessionsList');
+            sessionsList.innerHTML = '';
 
-            // リスト
-            result.recent10.forEach(stat=>{
-                const div=document.createElement('div');
-                div.style.cssText='background:#F8F9FA;padding:15px;margin:10px 0;border-radius:10px;display:flex;justify-content:space-between;align-items:center;';
-                const left = document.createElement('div');
-                left.innerHTML = `<div style=\"font-size:16px;font-weight:bold;\">${stat.date}</div>`;
-                const detail = document.createElement('div');
-                detail.style.cssText = 'font-size:11px;color:#777;margin-top:4px;';
-                const expShown = (stat.expEarned != null ? stat.expEarned : (stat.baseExp||0));
-                const rpShown = (stat.rpEarned != null ? stat.rpEarned : (stat.baseRp||0));
-                detail.textContent = `内訳: 正答率 ${stat.accuracy}% / ヒント ${stat.hintBonus||0} / タイム ${stat.timeBonus||0} / EXP ${expShown} / RP ${rpShown}`;
-                left.appendChild(detail);
-                const right = document.createElement('div');
-                right.style.cssText = 'text-align:right;';
-                right.innerHTML = `<div style=\\"font-size:18px;font-weight:bold;color:#FF6EC7;\\">${stat.score}点</div><div style=\\"font-size:12px;color:#666;\\">正答率 ${stat.accuracy}%</div>`;
-                div.appendChild(left);
-                div.appendChild(right);
-                container.appendChild(div);
+            result.recent10.forEach(stat => {
+                const card = document.createElement('div');
+                card.className = 'stats-session-card';
+
+                const modeClass = stat.mode === 'daily' ? 'daily' : 'practice';
+                const modeLabel = stat.mode === 'daily' ? '本番' : '練習';
+                const expValue = stat.expEarned != null ? stat.expEarned : (stat.baseExp || 0);
+                const rpValue = stat.rpEarned != null ? stat.rpEarned : (stat.baseRp || 0);
+
+                card.innerHTML = `
+                    <div class="stats-session-header">
+                        <div class="stats-session-date">${stat.date}</div>
+                        <div class="stats-session-mode ${modeClass}">${modeLabel}</div>
+                    </div>
+                    <div class="stats-session-score">
+                        <div class="stats-session-score-value">${stat.score}点</div>
+                        <div class="stats-session-score-detail">${stat.correctCount || 0}/${stat.totalQuestions || 10}正解</div>
+                    </div>
+                    <div class="stats-session-breakdown">
+                        <div class="stats-session-breakdown-item">
+                            <span>├ 正答率:</span>
+                            <span>${stat.accuracy}点</span>
+                        </div>
+                        <div class="stats-session-breakdown-item">
+                            <span>├ ヒント:</span>
+                            <span>${stat.hintBonus || 0}点</span>
+                        </div>
+                        <div class="stats-session-breakdown-item">
+                            <span>├ タイム:</span>
+                            <span>${stat.timeBonus || 0}点</span>
+                        </div>
+                        <div class="stats-session-breakdown-item">
+                            <span>├ EXP:</span>
+                            <span>+${expValue}</span>
+                        </div>
+                        ${stat.mode === 'daily' ? `<div class="stats-session-breakdown-item"><span>└ RP:</span><span>+${rpValue}</span></div>` : ''}
+                    </div>
+                `;
+                sessionsList.appendChild(card);
             });
+
+            // EXP/RP推移グラフ
+            const items = result.recent10.slice().reverse(); // 古い→新しい
+            const exps = items.map(r => (r.expEarned != null ? r.expEarned : r.baseExp) || 0);
+            const rps = items.map(r => (r.rpEarned != null ? r.rpEarned : r.baseRp) || 0);
+            const sumExp = exps.reduce((a,b)=>a+Number(b||0),0);
+            const sumRp = rps.reduce((a,b)=>a+Number(b||0),0);
+
+            document.getElementById('statsRecentExpTotal').textContent = sumExp + 'pt';
+            document.getElementById('statsRecentRpTotal').textContent = sumRp + 'pt';
+
+            // グラフ描画
+            const chartsCanvas = document.getElementById('statsChartsCanvas');
+            chartsCanvas.innerHTML = '';
+
+            const renderChart = (values, label, cssClass) => {
+                const chartRow = document.createElement('div');
+                chartRow.className = 'stats-chart-row';
+
+                const chartLabel = document.createElement('div');
+                chartLabel.className = 'stats-chart-label';
+                chartLabel.textContent = label;
+                chartRow.appendChild(chartLabel);
+
+                const chartBars = document.createElement('div');
+                chartBars.className = 'stats-chart-bars';
+
+                const maxVal = Math.max(1, ...values);
+                values.forEach(val => {
+                    const bar = document.createElement('div');
+                    bar.className = `stats-chart-bar ${cssClass}`;
+                    const height = Math.round((val / maxVal) * 60);
+                    bar.style.height = height + 'px';
+                    bar.title = `${val}pt`;
+                    chartBars.appendChild(bar);
+                });
+
+                chartRow.appendChild(chartBars);
+                chartsCanvas.appendChild(chartRow);
+            };
+
+            renderChart(exps, 'EXP推移（古→新）', 'exp');
+            renderChart(rps, 'RP推移（古→新）', 'rp');
         }
         function onStatsFailure(error){ try{ document.getElementById("statsLoading").classList.remove("show"); }catch(_){ } alert("マイ成績取得エラー: "+(error && (error.message||error))); }
   </script>
