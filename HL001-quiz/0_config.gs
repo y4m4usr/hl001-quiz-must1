@@ -20,7 +20,7 @@ const CONFIG = {
     USER: 'y4m4usr',
     REPO: 'hl001-quiz-must1', // 拡張子 .git は不要
     BRANCH: 'main',
-    UI_PATH: 'HL001-quiz/images/UI/' // 末尾スラッシュ必須
+    UI_PATH: 'HL001-quiz/images/' // 末尾スラッシュ必須
   },
     
   // 参照用: 基本情報シート（外部にID一覧がある場合に上書きする）

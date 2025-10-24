@@ -1,0 +1,487 @@
+{
+  "meta": {
+    "layoutName": "screen_login",
+    "canvasWidth": 390,
+    "canvasHeight": 844,
+    "generatedAt": "2025-10-23T09:12:36.339Z",
+    "backgroundColor": "#d9d9d9"
+  },
+  "objects": [
+    {
+      "id": "account_circle",
+      "type": "group",
+      "x": 13,
+      "y": 707,
+      "width": 24,
+      "height": 24,
+      "name": "account_circle",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "l5_login_btn_3",
+      "type": "image",
+      "x": 20,
+      "y": 572,
+      "width": 363,
+      "height": 135,
+      "name": "L5_login_btn 3",
+      "opacity": 1,
+      "imageId": "global_screen_login_l_login_btn_01",
+      "image": {
+        "id": "global_screen_login_l_login_btn_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_login",
+        "assetName": "global_screen_login_l_login_btn_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "rogo_2",
+      "type": "image",
+      "x": 30,
+      "y": 156,
+      "width": 329,
+      "height": 208,
+      "name": "rogo 2",
+      "opacity": 1,
+      "imageId": "global_screen_login_rogo_01",
+      "image": {
+        "id": "global_screen_login_rogo_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_login",
+        "assetName": "global_screen_login_rogo_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "input_text",
+      "type": "group",
+      "x": 44,
+      "y": 475,
+      "width": 315,
+      "height": 66,
+      "name": "Input Text",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "group_834",
+      "type": "group",
+      "x": 44,
+      "y": 379,
+      "width": 317,
+      "height": 73,
+      "name": "Group 834",
+      "opacity": 1
+    },
+    {
+      "id": "frame",
+      "type": "group",
+      "x": 44,
+      "y": 475,
+      "width": 315,
+      "height": 66,
+      "name": "Frame",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_8",
+      "type": "group",
+      "x": 44,
+      "y": 412,
+      "width": 315,
+      "height": 40,
+      "name": "Input Text",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "name",
+      "type": "text",
+      "x": 46,
+      "y": 379,
+      "width": 315,
+      "height": 20,
+      "name": "Name",
+      "opacity": 1,
+      "characters": "User  Id",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 14,
+          "fontName": {
+            "family": "Plus Jakarta Sans",
+            "style": "Bold"
+          },
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 20
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": -0.6000000238418579
+          }
+        },
+        "textColor": "#1b1b1b8c",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_10",
+      "type": "text",
+      "x": 44,
+      "y": 475,
+      "width": 315,
+      "height": 20,
+      "name": "Name",
+      "opacity": 1,
+      "characters": "User  Name",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 14,
+          "fontName": {
+            "family": "Plus Jakarta Sans",
+            "style": "Bold"
+          },
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 20
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": -0.6000000238418579
+          }
+        },
+        "textColor": "#1b1b1b8c",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "inputtextbase",
+      "type": "group",
+      "x": 44,
+      "y": 501,
+      "width": 315,
+      "height": 40,
+      "name": "_InputTextBase",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      },
+      "fill": "#ffffff"
+    },
+    {
+      "id": "node_12",
+      "type": "group",
+      "x": 44,
+      "y": 412,
+      "width": 315,
+      "height": 40,
+      "name": "Frame",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_15",
+      "type": "group",
+      "x": 56,
+      "y": 510,
+      "width": 291,
+      "height": 22,
+      "name": "Frame",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      },
+      "fill": "#ffffff"
+    },
+    {
+      "id": "node_18",
+      "type": "group",
+      "x": 44,
+      "y": 412,
+      "width": 315,
+      "height": 40,
+      "name": "_InputTextBase",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      },
+      "fill": "#ffffff"
+    },
+    {
+      "id": "progressbaratom",
+      "type": "group",
+      "x": 44,
+      "y": 484,
+      "width": 77,
+      "height": 4,
+      "name": "_ProgressBarAtom",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      },
+      "fill": "#22c55e"
+    },
+    {
+      "id": "node_20",
+      "type": "group",
+      "x": 125,
+      "y": 484,
+      "width": 77,
+      "height": 4,
+      "name": "_ProgressBarAtom",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      },
+      "fill": "#22c55e"
+    },
+    {
+      "id": "node_21",
+      "type": "group",
+      "x": 206,
+      "y": 484,
+      "width": 77,
+      "height": 4,
+      "name": "_ProgressBarAtom",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      },
+      "fill": "#22c55e"
+    },
+    {
+      "id": "node_22",
+      "type": "group",
+      "x": 287,
+      "y": 484,
+      "width": 77,
+      "height": 4,
+      "name": "_ProgressBarAtom",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      },
+      "fill": "#cbd5e1"
+    },
+    {
+      "id": "user",
+      "type": "group",
+      "x": 56,
+      "y": 511,
+      "width": 20,
+      "height": 20,
+      "name": "User",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "text",
+      "type": "text",
+      "x": 84,
+      "y": 510,
+      "width": 263,
+      "height": 22,
+      "name": "Text",
+      "opacity": 1,
+      "characters": "",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 16,
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": -0.699999988079071
+          }
+        },
+        "textColor": "#515253",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "vector",
+      "type": "shape",
+      "x": 333.5625,
+      "y": 512.5625,
+      "width": 16.875001907348633,
+      "height": 16.875001907348633,
+      "name": "Vector",
+      "opacity": 1,
+      "fill": "#cbd5e1",
+      "metadata": {
+        "constraints": {
+          "horizontal": "SCALE",
+          "vertical": "SCALE"
+        }
+      }
+    },
+    {
+      "id": "node_26",
+      "type": "group",
+      "x": 56,
+      "y": 422,
+      "width": 291,
+      "height": 20,
+      "name": "Frame",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_28",
+      "type": "shape",
+      "x": 57.547698974609375,
+      "y": 512.5601806640625,
+      "width": 16.874221801757812,
+      "height": 16.278697967529297,
+      "name": "Vector",
+      "opacity": 1,
+      "fill": "#475569",
+      "metadata": {
+        "constraints": {
+          "horizontal": "SCALE",
+          "vertical": "SCALE"
+        }
+      }
+    },
+    {
+      "id": "icon",
+      "type": "group",
+      "x": 56,
+      "y": 422,
+      "width": 20,
+      "height": 20,
+      "name": "Icon",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_31",
+      "type": "shape",
+      "x": 332.31005859375,
+      "y": 424.1791687011719,
+      "width": 19.378108978271484,
+      "height": 15.627344131469727,
+      "name": "Vector",
+      "opacity": 1,
+      "fill": "#cbd5e1",
+      "metadata": {
+        "constraints": {
+          "horizontal": "SCALE",
+          "vertical": "SCALE"
+        }
+      }
+    },
+    {
+      "id": "node_32",
+      "type": "shape",
+      "x": 58.1875,
+      "y": 422.3125,
+      "width": 15.625,
+      "height": 17.5,
+      "name": "Vector",
+      "opacity": 1,
+      "fill": "#475569",
+      "metadata": {
+        "constraints": {
+          "horizontal": "SCALE",
+          "vertical": "SCALE"
+        }
+      }
+    }
+  ]
+}

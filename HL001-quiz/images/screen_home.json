@@ -1,0 +1,1964 @@
+{
+  "meta": {
+    "layoutName": "screen_home",
+    "canvasWidth": 390,
+    "canvasHeight": 844,
+    "generatedAt": "2025-10-22T21:00:53.099Z"
+  },
+  "objects": [
+    {
+      "id": "8_3",
+      "type": "image",
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844,
+      "name": "8 3",
+      "opacity": 1,
+      "imageId": "global_screen_home_image_01",
+      "image": {
+        "id": "global_screen_home_image_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_image_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_1",
+      "type": "text",
+      "x": 42.00000000000006,
+      "y": 456,
+      "width": 114,
+      "height": 19,
+      "name": "本番モード",
+      "opacity": 1,
+      "characters": "本番モード",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 16,
+          "fontName": {
+            "family": "Inter",
+            "style": "Extra Bold"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 6
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "my",
+      "type": "text",
+      "x": 248.00000000000006,
+      "y": 645,
+      "width": 77,
+      "height": 19,
+      "name": "MY成績",
+      "opacity": 1,
+      "characters": "MY成績",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 16,
+          "fontName": {
+            "family": "Inter",
+            "style": "Extra Bold"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 6
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_3",
+      "type": "text",
+      "x": 47.00000000000006,
+      "y": 645,
+      "width": 104,
+      "height": 19,
+      "name": "ランキング",
+      "opacity": 1,
+      "characters": "ランキング",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 16,
+          "fontName": {
+            "family": "Inter",
+            "style": "Extra Bold"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 6
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_4",
+      "type": "text",
+      "x": 207.00000000000006,
+      "y": 451,
+      "width": 155,
+      "height": 33,
+      "name": "練習モード",
+      "opacity": 1,
+      "characters": "練習モード",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 16,
+          "fontName": {
+            "family": "Inter",
+            "style": "Extra Bold"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 6
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "liquid_glass_clear_light",
+      "type": "group",
+      "x": 16.000000000000057,
+      "y": 113,
+      "width": 346,
+      "height": 185,
+      "name": "Liquid Glass - Clear/Light",
+      "opacity": 0.8999999761581421,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_6",
+      "type": "text",
+      "x": 138.00000000000006,
+      "y": 171,
+      "width": 192,
+      "height": 68,
+      "name": "称号 カラコンルーキー",
+      "opacity": 1,
+      "characters": "称号 カラコンルーキー",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 16,
+          "fontName": {
+            "family": "Inter",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "PERCENT",
+            "value": 139.9999976158142
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": 0
+          }
+        },
+        "textColor": "#000000",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_7",
+      "type": "text",
+      "x": 137.00000000000006,
+      "y": 168,
+      "width": 48,
+      "height": 22,
+      "name": "渋谷店",
+      "opacity": 1,
+      "characters": "渋谷店",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 16,
+          "fontName": {
+            "family": "Inter",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "PERCENT",
+            "value": 139.9999976158142
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": 0
+          }
+        },
+        "textColor": "#000000",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "icon_2",
+      "type": "image",
+      "x": 42.00000000000006,
+      "y": 131,
+      "width": 80,
+      "height": 80,
+      "name": "icon 2",
+      "opacity": 1,
+      "imageId": "global_screen_home_icon_01",
+      "image": {
+        "id": "global_screen_home_icon_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_icon_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "text",
+      "type": "text",
+      "x": 134.00000000000006,
+      "y": 133,
+      "width": 191,
+      "height": 33,
+      "name": "Text",
+      "opacity": 1,
+      "characters": "ホテル  ラバーズ",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 24,
+          "fontName": {
+            "family": "Roboto",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 32
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 0
+          }
+        },
+        "textColor": "#475569",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "group_802",
+      "type": "group",
+      "x": 16.000000000000057,
+      "y": 702,
+      "width": 351,
+      "height": 60,
+      "name": "Group 802",
+      "opacity": 1
+    },
+    {
+      "id": "group_831",
+      "type": "group",
+      "x": 22.000000000000057,
+      "y": 221,
+      "width": 334,
+      "height": 59,
+      "name": "Group 831",
+      "opacity": 1
+    },
+    {
+      "id": "19",
+      "type": "image",
+      "x": 322.00000000000006,
+      "y": 55,
+      "width": 40,
+      "height": 40,
+      "name": "19",
+      "opacity": 1,
+      "imageId": "global_screen_home_image_02",
+      "image": {
+        "id": "global_screen_home_image_02",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_image_02",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "icon_logout_5",
+      "type": "image",
+      "x": 16.000000000000057,
+      "y": 55,
+      "width": 40,
+      "height": 40,
+      "name": "icon_logout 5",
+      "opacity": 1,
+      "imageId": "global_screen_home_icon_logout_01",
+      "image": {
+        "id": "global_screen_home_icon_logout_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_icon_logout_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_14",
+      "type": "group",
+      "x": 22.000000000000057,
+      "y": 702,
+      "width": 346,
+      "height": 60,
+      "name": "Liquid Glass - Clear/Light",
+      "opacity": 0.8999999761581421,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "icon_my_4",
+      "type": "image",
+      "x": 137.00000000000006,
+      "y": 712,
+      "width": 40,
+      "height": 40,
+      "name": "icon_my 4",
+      "opacity": 1,
+      "imageId": "global_screen_home_icon_my_01",
+      "image": {
+        "id": "global_screen_home_icon_my_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_icon_my_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "icon_home",
+      "type": "image",
+      "x": 297.00000000000006,
+      "y": 712,
+      "width": 40,
+      "height": 40,
+      "name": "icon_home",
+      "opacity": 1,
+      "imageId": "global_screen_home_icon_home_01",
+      "image": {
+        "id": "global_screen_home_icon_home_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_icon_home_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "icon_help_6",
+      "type": "image",
+      "x": 217.00000000000006,
+      "y": 712,
+      "width": 40,
+      "height": 40,
+      "name": "icon_help 6",
+      "opacity": 1,
+      "imageId": "global_screen_home_icon_help_01",
+      "image": {
+        "id": "global_screen_home_icon_help_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_icon_help_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "icon_bell_4",
+      "type": "image",
+      "x": 251.00000000000006,
+      "y": 55,
+      "width": 40,
+      "height": 40,
+      "name": "icon_bell 4",
+      "opacity": 1,
+      "imageId": "global_screen_home_icon_bell_01",
+      "image": {
+        "id": "global_screen_home_icon_bell_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_icon_bell_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "icon_ranking_3",
+      "type": "image",
+      "x": 57.00000000000006,
+      "y": 712,
+      "width": 40,
+      "height": 40,
+      "name": "icon_ranking 3",
+      "opacity": 1,
+      "imageId": "global_screen_home_icon_ranking_01",
+      "image": {
+        "id": "global_screen_home_icon_ranking_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_icon_ranking_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "h17_btn_daily",
+      "type": "image",
+      "x": 22.000000000000057,
+      "y": 324,
+      "width": 176,
+      "height": 176,
+      "name": "H17_btn-daily",
+      "opacity": 1,
+      "imageId": "global_screen_home_h_btn_daily_01",
+      "image": {
+        "id": "global_screen_home_h_btn_daily_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_h_btn_daily_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "h18_btn_practice",
+      "type": "image",
+      "x": 195.00000000000006,
+      "y": 324,
+      "width": 176,
+      "height": 176,
+      "name": "H18_btn-practice",
+      "opacity": 1,
+      "imageId": "global_screen_home_h_btn_practice_01",
+      "image": {
+        "id": "global_screen_home_h_btn_practice_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_h_btn_practice_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "h19_btn_ranking",
+      "type": "image",
+      "x": 16.000000000000057,
+      "y": 500,
+      "width": 176,
+      "height": 176,
+      "name": "H19_btn-ranking",
+      "opacity": 1,
+      "imageId": "global_screen_home_h_btn_ranking_01",
+      "image": {
+        "id": "global_screen_home_h_btn_ranking_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_h_btn_ranking_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "h20_btn_stats",
+      "type": "image",
+      "x": 189.00000000000006,
+      "y": 500,
+      "width": 176,
+      "height": 176,
+      "name": "H20_btn-stats",
+      "opacity": 1,
+      "imageId": "global_screen_home_h_btn_stats_01",
+      "image": {
+        "id": "global_screen_home_h_btn_stats_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_h_btn_stats_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "measurements",
+      "type": "group",
+      "x": 0,
+      "y": 0,
+      "width": 497,
+      "height": 844,
+      "name": "📐 Measurements",
+      "opacity": 1
+    },
+    {
+      "id": "shadow",
+      "type": "group",
+      "x": -9.999999999999943,
+      "y": 87,
+      "width": 398,
+      "height": 237,
+      "name": "Shadow",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      }
+    },
+    {
+      "id": "glass_effect",
+      "type": "group",
+      "x": 16.000000000000057,
+      "y": 113,
+      "width": 346,
+      "height": 185,
+      "name": "Glass Effect",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      },
+      "fill": "#ffffff12"
+    },
+    {
+      "id": "node_27",
+      "type": "group",
+      "x": 16.000000000000057,
+      "y": 702,
+      "width": 351,
+      "height": 60,
+      "name": "Liquid Glass - Clear/Light",
+      "opacity": 0.8999999761581421,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "group_803",
+      "type": "group",
+      "x": 22.000000000000057,
+      "y": 221,
+      "width": 334,
+      "height": 59,
+      "name": "Group 803",
+      "opacity": 1
+    },
+    {
+      "id": "node_29",
+      "type": "group",
+      "x": -3.999999999999943,
+      "y": 676,
+      "width": 398,
+      "height": 112,
+      "name": "Shadow",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      }
+    },
+    {
+      "id": "node_30",
+      "type": "group",
+      "x": 22.000000000000057,
+      "y": 702,
+      "width": 346,
+      "height": 60,
+      "name": "Glass Effect",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      },
+      "fill": "#ffffff12"
+    },
+    {
+      "id": "tooltip_8_3",
+      "type": "group",
+      "x": 405.00000000000006,
+      "y": 364,
+      "width": 92,
+      "height": 116,
+      "name": "Tooltip 8 3",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "line",
+      "type": "group",
+      "x": 378.50000000000006,
+      "y": 0,
+      "width": 45,
+      "height": 844,
+      "name": "line",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_33",
+      "type": "group",
+      "x": 0,
+      "y": 412.5,
+      "width": 390,
+      "height": 18,
+      "name": "line",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_34",
+      "type": "group",
+      "x": 173.00000000000006,
+      "y": 0,
+      "width": 45,
+      "height": 844,
+      "name": "line",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "mask",
+      "type": "group",
+      "x": -59.99999999999994,
+      "y": 37,
+      "width": 498,
+      "height": 337,
+      "name": "Mask",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      },
+      "fill": "#ffffff"
+    },
+    {
+      "id": "blur",
+      "type": "group",
+      "x": 16.000000000000057,
+      "y": 118,
+      "width": 346,
+      "height": 185,
+      "name": "Blur",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      },
+      "fill": "#00000014"
+    },
+    {
+      "id": "node_37",
+      "type": "group",
+      "x": -9.999999999999943,
+      "y": 676,
+      "width": 403,
+      "height": 112,
+      "name": "Shadow",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      }
+    },
+    {
+      "id": "node_38",
+      "type": "group",
+      "x": 16.000000000000057,
+      "y": 702,
+      "width": 351,
+      "height": 60,
+      "name": "Glass Effect",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      },
+      "fill": "#ffffff12"
+    },
+    {
+      "id": "node_39",
+      "type": "group",
+      "x": 22.000000000000057,
+      "y": 221,
+      "width": 334,
+      "height": 59,
+      "name": "Liquid Glass - Clear/Light",
+      "opacity": 0.8999999761581421,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_40",
+      "type": "text",
+      "x": 155.00000000000006,
+      "y": 257,
+      "width": 66.23056030273438,
+      "height": 17.167943954467773,
+      "name": "ポイント",
+      "opacity": 1,
+      "characters": "ポイント",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 14,
+          "fontName": {
+            "family": "Inter",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "PERCENT",
+            "value": 139.9999976158142
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": 0
+          }
+        },
+        "textColor": "#bfb8b8",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "lv_1",
+      "type": "text",
+      "x": 59.00000000000006,
+      "y": 229,
+      "width": 41.394100189208984,
+      "height": 22.63047218322754,
+      "name": "Lv.1",
+      "opacity": 1,
+      "characters": "Lv.1",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 24,
+          "fontName": {
+            "family": "Inter",
+            "style": "Semi Bold"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "PERCENT",
+            "value": 120.00000476837158
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": -2
+          }
+        },
+        "textColor": "#000000",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "3",
+      "type": "text",
+      "x": 265.00000000000006,
+      "y": 229,
+      "width": 41.394100189208984,
+      "height": 22.63047218322754,
+      "name": "3日",
+      "opacity": 1,
+      "characters": "3日",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 24,
+          "fontName": {
+            "family": "Inter",
+            "style": "Semi Bold"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "PERCENT",
+            "value": 120.00000476837158
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": -2
+          }
+        },
+        "textColor": "#fc59ff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "900",
+      "type": "text",
+      "x": 159.00000000000006,
+      "y": 229,
+      "width": 48.63806915283203,
+      "height": 22.63047218322754,
+      "name": "900",
+      "opacity": 1,
+      "characters": "900",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 24,
+          "fontName": {
+            "family": "Inter",
+            "style": "Semi Bold"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "PERCENT",
+            "value": 120.00000476837158
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": -2
+          }
+        },
+        "textColor": "#000000",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_44",
+      "type": "text",
+      "x": 241.00000000000006,
+      "y": 257,
+      "width": 99.3458480834961,
+      "height": 17.167943954467773,
+      "name": "連続ログイン",
+      "opacity": 1,
+      "characters": "連続ログイン",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 14,
+          "fontName": {
+            "family": "Inter",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "PERCENT",
+            "value": 139.9999976158142
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": 0
+          }
+        },
+        "textColor": "#bfb8b8",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_45",
+      "type": "text",
+      "x": 57.00000000000006,
+      "y": 257,
+      "width": 49.67292404174805,
+      "height": 17.167943954467773,
+      "name": "レベル",
+      "opacity": 1,
+      "characters": "レベル",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 14,
+          "fontName": {
+            "family": "Inter",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "PERCENT",
+            "value": 139.9999976158142
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": 0
+          }
+        },
+        "textColor": "#bfb8b8",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_46",
+      "type": "group",
+      "x": -53.99999999999994,
+      "y": 626,
+      "width": 498,
+      "height": 212,
+      "name": "Mask",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      },
+      "fill": "#ffffff"
+    },
+    {
+      "id": "node_47",
+      "type": "group",
+      "x": 22.000000000000057,
+      "y": 707,
+      "width": 346,
+      "height": 60,
+      "name": "Blur",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      },
+      "fill": "#00000014"
+    },
+    {
+      "id": "frame",
+      "type": "group",
+      "x": 405.00000000000006,
+      "y": 364,
+      "width": 92,
+      "height": 116,
+      "name": "Frame",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      },
+      "fill": "#ffffff"
+    },
+    {
+      "id": "arrow",
+      "type": "group",
+      "x": 399.50000000000006,
+      "y": 416.5,
+      "width": 5.5,
+      "height": 11,
+      "name": "Arrow",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "vector",
+      "type": "shape",
+      "x": 400.50000000000006,
+      "y": 0,
+      "width": 1,
+      "height": 844,
+      "name": "Vector",
+      "opacity": 1,
+      "stroke": {
+        "color": "#ef5533",
+        "weight": 1
+      },
+      "metadata": {
+        "constraints": {
+          "horizontal": "CENTER",
+          "vertical": "STRETCH"
+        }
+      }
+    },
+    {
+      "id": "label",
+      "type": "group",
+      "x": 378.50000000000006,
+      "y": 413,
+      "width": 45,
+      "height": 18,
+      "name": "label",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "CENTER",
+          "vertical": "CENTER"
+        }
+      },
+      "fill": "#ef5533"
+    },
+    {
+      "id": "node_52",
+      "type": "shape",
+      "x": 0,
+      "y": 422,
+      "width": 390,
+      "height": 1,
+      "name": "Vector",
+      "opacity": 1,
+      "stroke": {
+        "color": "#ef5533",
+        "weight": 1
+      },
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "CENTER"
+        }
+      }
+    },
+    {
+      "id": "node_53",
+      "type": "group",
+      "x": 173.00000000000006,
+      "y": 412.5,
+      "width": 44,
+      "height": 18,
+      "name": "label",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "CENTER",
+          "vertical": "CENTER"
+        }
+      },
+      "fill": "#ef5533"
+    },
+    {
+      "id": "node_54",
+      "type": "shape",
+      "x": 195.00000000000006,
+      "y": 0,
+      "width": 1,
+      "height": 844,
+      "name": "Vector",
+      "opacity": 1,
+      "stroke": {
+        "color": "#ef5533",
+        "weight": 1
+      },
+      "metadata": {
+        "constraints": {
+          "horizontal": "CENTER",
+          "vertical": "STRETCH"
+        }
+      }
+    },
+    {
+      "id": "node_55",
+      "type": "group",
+      "x": 173.00000000000006,
+      "y": 413,
+      "width": 45,
+      "height": 18,
+      "name": "label",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "CENTER",
+          "vertical": "CENTER"
+        }
+      },
+      "fill": "#ef5533"
+    },
+    {
+      "id": "shape",
+      "type": "shape",
+      "x": 16.000000000000057,
+      "y": 113,
+      "width": 346,
+      "height": 185,
+      "name": "Shape",
+      "opacity": 1,
+      "fill": "#000000",
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      }
+    },
+    {
+      "id": "node_57",
+      "type": "group",
+      "x": -59.99999999999994,
+      "y": 626,
+      "width": 503,
+      "height": 212,
+      "name": "Mask",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      },
+      "fill": "#ffffff"
+    },
+    {
+      "id": "node_58",
+      "type": "group",
+      "x": 16.000000000000057,
+      "y": 707,
+      "width": 351,
+      "height": 60,
+      "name": "Blur",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      },
+      "fill": "#00000014"
+    },
+    {
+      "id": "node_59",
+      "type": "group",
+      "x": -3.999999999999943,
+      "y": 195,
+      "width": 386,
+      "height": 111,
+      "name": "Shadow",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      }
+    },
+    {
+      "id": "node_60",
+      "type": "group",
+      "x": 22.000000000000057,
+      "y": 221,
+      "width": 334,
+      "height": 59,
+      "name": "Glass Effect",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      },
+      "fill": "#ffffff12"
+    },
+    {
+      "id": "node_61",
+      "type": "shape",
+      "x": 22.000000000000057,
+      "y": 702,
+      "width": 346,
+      "height": 60,
+      "name": "Shape",
+      "opacity": 1,
+      "fill": "#000000",
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      }
+    },
+    {
+      "id": "group",
+      "type": "group",
+      "x": 415.00000000000006,
+      "y": 376,
+      "width": 37,
+      "height": 16,
+      "name": "Group",
+      "opacity": 1
+    },
+    {
+      "id": "node_63",
+      "type": "group",
+      "x": 415.00000000000006,
+      "y": 395,
+      "width": 54,
+      "height": 16,
+      "name": "Group",
+      "opacity": 1
+    },
+    {
+      "id": "node_64",
+      "type": "group",
+      "x": 415.00000000000006,
+      "y": 414,
+      "width": 54,
+      "height": 16,
+      "name": "Group",
+      "opacity": 1
+    },
+    {
+      "id": "node_65",
+      "type": "group",
+      "x": 415.00000000000006,
+      "y": 433,
+      "width": 72,
+      "height": 16,
+      "name": "Group",
+      "opacity": 1
+    },
+    {
+      "id": "node_66",
+      "type": "group",
+      "x": 415.00000000000006,
+      "y": 452,
+      "width": 48,
+      "height": 16,
+      "name": "Group",
+      "opacity": 1
+    },
+    {
+      "id": "rectangle",
+      "type": "shape",
+      "x": 399.50000000000006,
+      "y": 414.2218248844147,
+      "width": 15.556350231170654,
+      "height": 15.556350231170654,
+      "name": "Rectangle",
+      "rotation": 45,
+      "opacity": 1,
+      "fill": "#ffffff",
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "844px",
+      "type": "text",
+      "x": 384.50000000000006,
+      "y": 416,
+      "width": 33,
+      "height": 12,
+      "name": "844px",
+      "opacity": 1,
+      "characters": "844px",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 10,
+          "fontName": {
+            "family": "Inter",
+            "style": "Bold"
+          },
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": 0
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "390px",
+      "type": "text",
+      "x": 179.00000000000006,
+      "y": 415.5,
+      "width": 32,
+      "height": 12,
+      "name": "390px",
+      "opacity": 1,
+      "characters": "390px",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 10,
+          "fontName": {
+            "family": "Inter",
+            "style": "Bold"
+          },
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": 0
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_70",
+      "type": "text",
+      "x": 179.00000000000006,
+      "y": 416,
+      "width": 33,
+      "height": 12,
+      "name": "844px",
+      "opacity": 1,
+      "characters": "844px",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 10,
+          "fontName": {
+            "family": "Inter",
+            "style": "Bold"
+          },
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": 0
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_71",
+      "type": "shape",
+      "x": 16.000000000000057,
+      "y": 702,
+      "width": 351,
+      "height": 60,
+      "name": "Shape",
+      "opacity": 1,
+      "fill": "#000000",
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      }
+    },
+    {
+      "id": "node_72",
+      "type": "group",
+      "x": -53.99999999999994,
+      "y": 145,
+      "width": 486,
+      "height": 211,
+      "name": "Mask",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      },
+      "fill": "#ffffff"
+    },
+    {
+      "id": "node_73",
+      "type": "group",
+      "x": 22.000000000000057,
+      "y": 226,
+      "width": 334,
+      "height": 59,
+      "name": "Blur",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      },
+      "fill": "#00000014"
+    },
+    {
+      "id": "node_74",
+      "type": "group",
+      "x": 415.00000000000006,
+      "y": 376,
+      "width": 16,
+      "height": 16,
+      "name": "Frame",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_75",
+      "type": "text",
+      "x": 435.00000000000006,
+      "y": 377.5,
+      "width": 17,
+      "height": 13,
+      "name": "8 3",
+      "opacity": 1,
+      "characters": "8 3",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 11,
+          "fontName": {
+            "family": "Inter",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": 0
+          }
+        },
+        "textColor": "#000000",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_76",
+      "type": "group",
+      "x": 415.00000000000006,
+      "y": 395,
+      "width": 16,
+      "height": 16,
+      "name": "Frame",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_77",
+      "type": "text",
+      "x": 435.00000000000006,
+      "y": 396.5,
+      "width": 34,
+      "height": 13,
+      "name": "390px",
+      "opacity": 1,
+      "characters": "390px",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 11,
+          "fontName": {
+            "family": "Inter",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": 0
+          }
+        },
+        "textColor": "#000000",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_78",
+      "type": "group",
+      "x": 415.00000000000006,
+      "y": 414,
+      "width": 16,
+      "height": 16,
+      "name": "Frame",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_79",
+      "type": "text",
+      "x": 435.00000000000006,
+      "y": 415.5,
+      "width": 34,
+      "height": 13,
+      "name": "844px",
+      "opacity": 1,
+      "characters": "844px",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 11,
+          "fontName": {
+            "family": "Inter",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": 0
+          }
+        },
+        "textColor": "#000000",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_80",
+      "type": "group",
+      "x": 415.00000000000006,
+      "y": 433,
+      "width": 16,
+      "height": 16,
+      "name": "Frame",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "image",
+      "type": "text",
+      "x": 455.00000000000006,
+      "y": 434.5,
+      "width": 32,
+      "height": 13,
+      "name": "Image",
+      "opacity": 1,
+      "characters": "Image",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 11,
+          "fontName": {
+            "family": "Inter",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": 0
+          }
+        },
+        "textColor": "#000000",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_82",
+      "type": "image",
+      "x": 435.00000000000006,
+      "y": 433,
+      "width": 16,
+      "height": 16,
+      "name": "Rectangle",
+      "opacity": 1,
+      "imageId": "global_measurements_rectangle_01",
+      "image": {
+        "id": "global_measurements_rectangle_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "measurements",
+        "assetName": "global_measurements_rectangle_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_83",
+      "type": "group",
+      "x": 415.00000000000006,
+      "y": 452,
+      "width": 16,
+      "height": 16,
+      "name": "Frame",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "100",
+      "type": "text",
+      "x": 435.00000000000006,
+      "y": 453.5,
+      "width": 28,
+      "height": 13,
+      "name": "100%",
+      "opacity": 1,
+      "characters": "100%",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 11,
+          "fontName": {
+            "family": "Inter",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PERCENT",
+            "value": 0
+          }
+        },
+        "textColor": "#000000",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_85",
+      "type": "shape",
+      "x": 22.000000000000057,
+      "y": 221,
+      "width": 334,
+      "height": 59,
+      "name": "Shape",
+      "opacity": 1,
+      "fill": "#000000",
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      }
+    },
+    {
+      "id": "node_86",
+      "type": "shape",
+      "x": 421.00000000000006,
+      "y": 378,
+      "width": 4,
+      "height": 12.000006675720215,
+      "name": "Vector",
+      "opacity": 1,
+      "fill": "#0000004d",
+      "metadata": {
+        "constraints": {
+          "horizontal": "SCALE",
+          "vertical": "SCALE"
+        }
+      }
+    },
+    {
+      "id": "node_87",
+      "type": "shape",
+      "x": 417.95849609375006,
+      "y": 399.5,
+      "width": 9.968700408935547,
+      "height": 8,
+      "name": "Vector",
+      "opacity": 1,
+      "fill": "#0000004d",
+      "metadata": {
+        "constraints": {
+          "horizontal": "SCALE",
+          "vertical": "SCALE"
+        }
+      }
+    },
+    {
+      "id": "node_88",
+      "type": "shape",
+      "x": 419.84228515625006,
+      "y": 418.5,
+      "width": 6.2031097412109375,
+      "height": 8,
+      "name": "Vector",
+      "opacity": 1,
+      "fill": "#0000004d",
+      "metadata": {
+        "constraints": {
+          "horizontal": "SCALE",
+          "vertical": "SCALE"
+        }
+      }
+    },
+    {
+      "id": "node_89",
+      "type": "shape",
+      "x": 419.00000000000006,
+      "y": 436,
+      "width": 8.000014305114746,
+      "height": 10,
+      "name": "Vector",
+      "opacity": 1,
+      "fill": "#8c8c8c",
+      "metadata": {
+        "constraints": {
+          "horizontal": "SCALE",
+          "vertical": "SCALE"
+        }
+      }
+    },
+    {
+      "id": "node_90",
+      "type": "shape",
+      "x": 418.00000000000006,
+      "y": 455,
+      "width": 10,
+      "height": 10,
+      "name": "Vector",
+      "opacity": 1,
+      "fill": "#8c8c8c",
+      "metadata": {
+        "constraints": {
+          "horizontal": "SCALE",
+          "vertical": "SCALE"
+        }
+      }
+    }
+  ]
+}
