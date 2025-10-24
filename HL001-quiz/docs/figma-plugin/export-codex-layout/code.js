@@ -1,3 +1,18 @@
+/**
+ * HL001 Figma Export Plugin Guideline
+ * -----------------------------------
+ * 1. すべてのアセットは layout JSON の `imageId` と同じ命名規則
+ *    (例: global_screen_home_h_btn_daily_01) にリネームして書き出す。
+ * 2. layout JSON には参照画像 ID / section / area を必ず記録し、
+ *    Codex / CloudCode が座標と PNG を 1:1 で突き合わせられる形にする。
+ * 3. エクスポート完了時に UI は
+ *      `codex ui-assets sync ./exports/<layout>.zip`
+ *    を実行するよう案内し、Zip 内に JSON + PNG を格納する。
+ *    Codex / CloudCode 側はこのコマンドを受け取ったら GitHub への push と
+ *    GAS デプロイまで自動で行う前提でワークフローを設計している。
+ * 4. ユーザーの確認は最終チェックのみ。差し戻しが出ないレベルで
+ *    プラグインと Codex が連携して成果物を渡す。
+ */
 "use strict";
 figma.showUI(__html__, { width: 360, height: 340 });
 figma.ui.onmessage = (msg) => {

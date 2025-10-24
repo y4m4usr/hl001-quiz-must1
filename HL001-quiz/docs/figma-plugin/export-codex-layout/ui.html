@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Codex Layout Exporter</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        background: #f7f7f9;
+        color: #1f1f24;
+      }
+      body {
+        margin: 0;
+        padding: 16px;
+        font-size: 13px;
+        background: inherit;
+        color: inherit;
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: 16px;
+      }
+      h2 {
+        margin: 20px 0 8px;
+        font-size: 13px;
+      }
+      .status {
+        border-radius: 6px;
+        padding: 10px 12px;
+        margin: 0 0 12px;
+        line-height: 1.5;
+        border: 1px solid transparent;
+      }
+      .status--info {
+        background: #eef4ff;
+        border-color: #c2d4ff;
+      }
+      .status--success {
+        background: #eefff4;
+        border-color: #c1f4d9;
+      }
+      .status--error {
+        background: #fff2f0;
+        border-color: #ffcdc2;
+        color: #c2392b;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+      button {
+        cursor: pointer;
+        border: 1px solid #4d73ff;
+        background: #4d73ff;
+        color: #ffffff;
+        border-radius: 4px;
+        font-size: 12px;
+        padding: 6px 10px;
+        transition: background 0.2s ease, border-color 0.2s ease;
+      }
+      button:disabled {
+        cursor: default;
+        opacity: 0.6;
+      }
+      .command-line {
+        background: rgba(77, 115, 255, 0.08);
+        border: 1px dashed rgba(77, 115, 255, 0.4);
+        padding: 8px 10px;
+        border-radius: 4px;
+        font-family: "Consolas", "SFMono-Regular", monospace;
+        font-size: 12px;
+        overflow-x: auto;
+        margin-bottom: 8px;
+      }
+      button.secondary {
+        background: transparent;
+        color: #4d73ff;
+      }
+      .summary {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 4px 12px;
+        margin: 0 0 16px;
+        padding: 0;
+        list-style: none;
+      }
+      .summary li {
+        display: contents;
+      }
+      .summary span {
+        display: block;
+      }
+      .summary .label {
+        font-weight: 600;
+        color: #474752;
+      }
+      .assets {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-height: 160px;
+        overflow-y: auto;
+        padding-right: 4px;
+      }
+      .asset-card {
+        border: 1px solid #d4d7e5;
+        border-radius: 6px;
+        padding: 8px;
+        background: #ffffff;
+      }
+      .asset-card header {
+        font-weight: 600;
+        margin-bottom: 4px;
+        word-break: break-all;
+      }
+      .asset-meta {
+        font-size: 11px;
+        color: #585a6b;
+        margin-bottom: 6px;
+        line-height: 1.4;
+      }
+      .asset-actions {
+        display: flex;
+        justify-content: flex-start;
+        gap: 6px;
+      }
+      footer {
+        margin-top: 20px;
+        font-size: 11px;
+        color: #7a7b8c;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          background: #1a1d24;
+          color: #f2f4f8;
+        }
+        .status--info {
+          background: #1d2a44;
+          border-color: #304a7c;
+        }
+        .status--success {
+          background: #1b3326;
+          border-color: #2f5c41;
+        }
+        .status--error {
+          background: #3c1f1d;
+          border-color: #6b2d28;
+          color: #ffb3a8;
+        }
+        .summary .label {
+          color: #d5d6db;
+        }
+        .asset-card {
+          background: #242731;
+          border-color: #343846;
+        }
+        .asset-meta {
+          color: #afb3c1;
+        }
+        footer {
+          color: #9da2b3;
+        }
+      }
+    </style>
+      <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  </head>
+  <body>
+    <main>
+      <h1>Codex Layout Exporter</h1>
+      <p id="status" class="status status--info">フレームを解析しています…</p>
+      <section id="error" class="status status--error" hidden></section>
+      <section id="result" hidden>
+        <ul class="summary">
+          <li><span class="label">レイアウト名</span><span id="layout-name">-</span></li>
+          <li><span class="label">キャンバス</span><span id="canvas-size">-</span></li>
+          <li><span class="label">オブジェクト数</span><span id="object-count">0</span></li>
+          <li><span class="label">画像アセット</span><span id="asset-count">0</span></li>
+          <li><span class="label">生成日時</span><span id="generated-at">-</span></li>
+        </ul>
+        <div class="actions">
+          <button id="download-layout" type="button" disabled>layout.json を保存</button>
+          <button id="download-bundle" type="button" disabled>Zip��ۑ�</button>
+          <button id="copy-summary" type="button" class="secondary" disabled>概要をコピー</button>
+          <button id="close-plugin" type="button" class="secondary">閉じる</button>
+        </div>
+                <section id="sync-section" hidden>
+          <h2>Codex / CloudCode �ڍs</h2>
+          <p>Zip ��ۑ������́A�ȉ��̑��������s���Ă��������B</p>
+          <pre id="sync-command" class="command-line">codex ui-assets sync ./exports/layout.ui-assets.zip</pre>
+          <button id="copy-command" type="button" class="secondary" disabled>��������R�s�[</button>
+        </section>
+<h2>画像アセット</h2>
+        <p id="no-assets" hidden>エクスポート対象の画像は見つかりませんでした。</p>
+        <div id="asset-list" class="assets"></div>
+      </section>
+      <footer>選択したフレームの情報と画像を抽出し、レイアウト JSON と画像ファイルのダウンロードをサポートします。</footer>
+    </main>
+    <script>
+      (function () {
+        const state = {
+          layout: null,
+          assets: [],
+          bundleName: ""
+        };
+
+        const statusEl = document.getElementById("status");
+        const errorEl = document.getElementById("error");
+        const resultSection = document.getElementById("result");
+        const layoutNameEl = document.getElementById("layout-name");
+        const canvasSizeEl = document.getElementById("canvas-size");
+        const objectCountEl = document.getElementById("object-count");
+        const assetCountEl = document.getElementById("asset-count");
+        const generatedAtEl = document.getElementById("generated-at");
+        const noAssetsEl = document.getElementById("no-assets");
+        const assetListEl = document.getElementById("asset-list");
+        const downloadLayoutBtn = document.getElementById("download-layout");
+        const downloadBundleBtn = document.getElementById("download-bundle");
+        const copySummaryBtn = document.getElementById("copy-summary");
+        const copyCommandBtn = document.getElementById("copy-command");
+        const closeBtn = document.getElementById("close-plugin");
+        const syncSection = document.getElementById("sync-section");
+        const syncCommandEl = document.getElementById("sync-command");
+
+        window.addEventListener("message", (event) => {
+          const message = event.data && event.data.pluginMessage;
+          if (!message || !message.type) {
+            return;
+          }
+          switch (message.type) {
+            case "EXPORT_ERROR":
+              showError(String(message.message || "エクスポートに失敗しました。"));
+              break;
+            case "EXPORT_RESULT":
+              renderExportResult(message.payload);
+              break;
+            default:
+              break;
+          }
+        });
+
+        downloadLayoutBtn.addEventListener("click", () => downloadLayout());
+        downloadBundleBtn.addEventListener("click", () => downloadBundle());
+        copySummaryBtn.addEventListener("click", () => copySummary());
+        copyCommandBtn.addEventListener("click", () => copyCommand());
+        closeBtn.addEventListener("click", () => {
+          parent.postMessage({ pluginMessage: { type: "CLOSE" } }, "*");
+        });
+
+        function showError(text) {
+          errorEl.textContent = text;
+          errorEl.hidden = false;
+          resultSection.hidden = true;
+          statusEl.textContent = "処理を完了できませんでした。";
+          statusEl.className = "status status--error";
+          downloadLayoutBtn.disabled = true;
+          copySummaryBtn.disabled = true;
+        }
+
+        function renderExportResult(payload) {
+          if (!payload || !payload.layout) {
+            showError("レイアウト情報を取得できませんでした。");
+            return;
+          }
+          state.layout = payload.layout;
+          state.assets = Array.isArray(payload.assets)
+            ? payload.assets.map((asset) => ({
+                id: asset.id || asset.fileName || "asset",
+                fileName: asset.fileName || generateDefaultFileName(asset),
+                format: asset.format || "PNG",
+                section: asset.section || "",
+                area: asset.area || "",
+                baseName: asset.baseName || "",
+                data: base64ToUint8Array(asset.base64)
+              }))
+            : [];
+
+          statusEl.textContent = "エクスポート結果を確認できます。";
+          statusEl.className = "status status--success";
+          errorEl.hidden = true;
+          resultSection.hidden = false;
+          downloadLayoutBtn.disabled = false;
+          downloadBundleBtn.disabled = false;
+          copySummaryBtn.disabled = false;
+          copyCommandBtn.disabled = false;
+
+          const meta = state.layout.meta || {};
+          layoutNameEl.textContent = meta.layoutName || "-";
+          const width = meta.canvasWidth != null ? Number(meta.canvasWidth) : null;
+          const height = meta.canvasHeight != null ? Number(meta.canvasHeight) : null;
+          canvasSizeEl.textContent = width && height ? `${round(width)} × ${round(height)}` : "-";
+          objectCountEl.textContent = Array.isArray(state.layout.objects) ? String(state.layout.objects.length) : "0";
+          assetCountEl.textContent = String(state.assets.length);
+          generatedAtEl.textContent = meta.generatedAt || new Date().toISOString();
+
+          const slug = slugify(meta.layoutName || "layout");
+          state.bundleName = `${slug}.ui-assets.zip`;
+          syncCommandEl.textContent = `codex ui-assets sync ./exports/${state.bundleName}`;
+          syncSection.hidden = false;
+
+          renderAssetList(state.assets);
+        }
+
+        function renderAssetList(assets) {
+          assetListEl.textContent = "";
+          if (!assets || assets.length === 0) {
+            noAssetsEl.hidden = false;
+            return;
+          }
+          noAssetsEl.hidden = true;
+          assets.forEach((asset) => {
+            const card = document.createElement("div");
+            card.className = "asset-card";
+
+            const header = document.createElement("header");
+            header.textContent = asset.fileName;
+            card.appendChild(header);
+
+            const meta = document.createElement("div");
+            meta.className = "asset-meta";
+            meta.textContent = createMetaText(asset);
+            card.appendChild(meta);
+
+            const actions = document.createElement("div");
+            actions.className = "asset-actions";
+            const downloadBtn = document.createElement("button");
+            downloadBtn.type = "button";
+            downloadBtn.textContent = "保存";
+            downloadBtn.addEventListener("click", () => downloadAsset(asset));
+            actions.appendChild(downloadBtn);
+            card.appendChild(actions);
+
+            assetListEl.appendChild(card);
+          });
+        }
+
+        function downloadLayout() {
+          if (!state.layout) {
+            return;
+          }
+          const pretty = JSON.stringify(state.layout, null, 2);
+          const blob = new Blob([pretty], { type: "application/json" });
+          const name = (state.layout.meta && state.layout.meta.layoutName) || "layout";
+          triggerDownload(blob, `${slugify(name)}.layout.json`);
+        }
+
+        async function downloadBundle() {
+          if (!state.layout) {
+            return;
+          }
+          if (typeof JSZip === "undefined") {
+            showTemporaryMessage("Zip������Ɏ��s���܂����B", true);
+            return;
+          }
+          const meta = state.layout.meta || {};
+          const slug = slugify(meta.layoutName || "layout");
+          const zip = new JSZip();
+          zip.file(`${slug}.layout.json`, JSON.stringify(state.layout, null, 2));
+          const folder = zip.folder("assets");
+          state.assets.forEach((asset) => {
+            const data = asset && asset.data ? asset.data : new Uint8Array();
+            folder.file(asset.fileName, data, { binary: true });
+          });
+          try {
+            const blob = await zip.generateAsync({ type: "blob" });
+            triggerDownload(blob, state.bundleName || `${slug}.ui-assets.zip`);
+            showTemporaryMessage("Zip���ۑ����܂����B");
+          } catch (error) {
+            console.error("[ui] bundle error", error);
+            showTemporaryMessage("Zip������Ɏ��s���܂����B", true);
+          }
+        }
+
+        function downloadAsset(asset) {
+          if (!asset || !asset.data) {
+            return;
+          }
+          const mime = guessMime(asset.format);
+          const blob = new Blob([asset.data], { type: mime });
+          triggerDownload(blob, asset.fileName);
+        }
+
+        function copySummary() {
+          if (!state.layout) {
+            return;
+          }
+          const meta = state.layout.meta || {};
+          const lines = [
+            `layoutName: ${meta.layoutName || "-"}` ,
+            `canvas: ${meta.canvasWidth || "-"} x ${meta.canvasHeight || "-"}` ,
+            `objects: ${Array.isArray(state.layout.objects) ? state.layout.objects.length : 0}` ,
+            `assets: ${state.assets.length}`
+          ];
+          const text = lines.join("
+");
+          copyText(text, "�T�v���R�s�[���܂����B");
+        }
+
+        function copyCommand() {
+          if (!syncCommandEl || !syncCommandEl.textContent) {
+            return;
+          }
+          copyText(syncCommandEl.textContent.trim(), "��������R�s�[���܂����B");
+        }
+
+        function copyText(text, successMessage) {
+          if (!text) {
+            return;
+          }
+          if (!navigator.clipboard) {
+            fallbackCopy(text, successMessage);
+            return;
+          }
+          navigator.clipboard
+            .writeText(text)
+            .then(() => showTemporaryMessage(successMessage || "�R�s�[���܂����B"))
+            .catch(() => fallbackCopy(text, successMessage));
+        }
+
+        function fallbackCopy(text, successMessage) {
+          const textarea = document.createElement("textarea");
+          textarea.value = text;
+          textarea.style.position = "fixed";
+          textarea.style.opacity = "0";
+          document.body.appendChild(textarea);
+          textarea.select();
+          try {
+            document.execCommand("copy");
+            showTemporaryMessage(successMessage || "�R�s�[���܂����B");
+          } catch (_error) {
+            showTemporaryMessage("�R�s�[�ł��܂���ł����B", true);
+          } finally {
+            document.body.removeChild(textarea);
+          }
+        }
+
+        function showTemporaryMessage(text, isError) {
+          statusEl.textContent = text;
+          statusEl.className = "status " + (isError ? "status--error" : "status--success");
+          window.setTimeout(() => {
+            if (state.layout) {
+              statusEl.textContent = "エクスポート結果を確認できます。";
+              statusEl.className = "status status--success";
+            }
+          }, 2000);
+        }
+
+        function createMetaText(asset) {
+          const parts = [];
+          if (asset.format) {
+            parts.push(`形式: ${asset.format}`);
+          }
+          if (asset.section) {
+            parts.push(`セクション: ${asset.section}`);
+          }
+          if (asset.area && asset.area !== asset.section) {
+            parts.push(`エリア: ${asset.area}`);
+          }
+          if (asset.baseName) {
+            parts.push(`名称: ${asset.baseName}`);
+          }
+          return parts.join(" / ") || "メタデータなし";
+        }
+
+        function triggerDownload(blob, filename) {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          window.setTimeout(() => {
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+          }, 100);
+        }
+
+        function guessMime(format) {
+          switch ((format || "").toUpperCase()) {
+            case "PNG":
+              return "image/png";
+            case "JPG":
+            case "JPEG":
+              return "image/jpeg";
+            case "SVG":
+              return "image/svg+xml";
+            default:
+              return "application/octet-stream";
+          }
+        }
+
+        // Base64文字列をUint8Arrayに変換
+        function base64ToUint8Array(base64) {
+          if (!base64 || typeof base64 !== "string") {
+            return new Uint8Array();
+          }
+          try {
+            const binaryString = atob(base64);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+              bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes;
+          } catch (error) {
+            console.error("[ui] Base64デコードエラー:", error);
+            return new Uint8Array();
+          }
+        }
+
+        function generateDefaultFileName(asset) {
+          const base = slugify(asset && asset.baseName ? asset.baseName : asset && asset.id ? asset.id : "asset");
+          const ext = (asset && asset.format ? asset.format : "png").toLowerCase();
+          return `${base}.${ext}`;
+        }
+
+        function slugify(value) {
+          if (!value) {
+            return "export";
+          }
+          return String(value)
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "_")
+            .replace(/^_+|_+$/g, "") || "export";
+        }
+
+        function round(value) {
+          return Math.round(Number(value) * 10) / 10;
+        }
+      })();
+    </script>
+  </body>
+</html>
