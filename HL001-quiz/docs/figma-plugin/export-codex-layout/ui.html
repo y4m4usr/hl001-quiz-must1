@@ -182,15 +182,15 @@
         </ul>
         <div class="actions">
           <button id="download-layout" type="button" disabled>layout.json を保存</button>
-          <button id="download-bundle" type="button" disabled>Zip��ۑ�</button>
+          <button id="download-bundle" type="button" disabled>Zipを保存</button>
           <button id="copy-summary" type="button" class="secondary" disabled>概要をコピー</button>
           <button id="close-plugin" type="button" class="secondary">閉じる</button>
         </div>
                 <section id="sync-section" hidden>
-          <h2>Codex / CloudCode �ڍs</h2>
-          <p>Zip ��ۑ������́A�ȉ��̑��������s���Ă��������B</p>
+          <h2>Codex / CloudCode 連携</h2>
+          <p>Zip を保存した後は、以下の操作を実行してください。</p>
           <pre id="sync-command" class="command-line">codex ui-assets sync ./exports/layout.ui-assets.zip</pre>
-          <button id="copy-command" type="button" class="secondary" disabled>��������R�s�[</button>
+          <button id="copy-command" type="button" class="secondary" disabled>操作をコピー</button>
         </section>
 <h2>画像アセット</h2>
         <p id="no-assets" hidden>エクスポート対象の画像は見つかりませんでした。</p>
@@ -248,6 +248,7 @@
         closeBtn.addEventListener("click", () => {
           parent.postMessage({ pluginMessage: { type: "CLOSE" } }, "*");
         });
+        parent.postMessage({ pluginMessage: { type: "READY" } }, "*");
 
         function showError(text) {
           errorEl.textContent = text;
@@ -351,7 +352,7 @@
             return;
           }
           if (typeof JSZip === "undefined") {
-            showTemporaryMessage("Zip������Ɏ��s���܂����B", true);
+            showTemporaryMessage("Zip生成に失敗しました。", true);
             return;
           }
           const meta = state.layout.meta || {};
@@ -366,10 +367,10 @@
           try {
             const blob = await zip.generateAsync({ type: "blob" });
             triggerDownload(blob, state.bundleName || `${slug}.ui-assets.zip`);
-            showTemporaryMessage("Zip���ۑ����܂����B");
+            showTemporaryMessage("Zipを保存しました。");
           } catch (error) {
             console.error("[ui] bundle error", error);
-            showTemporaryMessage("Zip������Ɏ��s���܂����B", true);
+            showTemporaryMessage("Zip生成に失敗しました。", true);
           }
         }
 
@@ -393,16 +394,15 @@
             `objects: ${Array.isArray(state.layout.objects) ? state.layout.objects.length : 0}` ,
             `assets: ${state.assets.length}`
           ];
-          const text = lines.join("
-");
-          copyText(text, "�T�v���R�s�[���܂����B");
+          const text = lines.join("\n");
+          copyText(text, "概要をコピーしました。");
         }
 
         function copyCommand() {
           if (!syncCommandEl || !syncCommandEl.textContent) {
             return;
           }
-          copyText(syncCommandEl.textContent.trim(), "��������R�s�[���܂����B");
+          copyText(syncCommandEl.textContent.trim(), "操作をコピーしました。");
         }
 
         function copyText(text, successMessage) {
@@ -415,7 +415,7 @@
           }
           navigator.clipboard
             .writeText(text)
-            .then(() => showTemporaryMessage(successMessage || "�R�s�[���܂����B"))
+            .then(() => showTemporaryMessage(successMessage || "コピーしました。"))
             .catch(() => fallbackCopy(text, successMessage));
         }
 
@@ -428,9 +428,9 @@
           textarea.select();
           try {
             document.execCommand("copy");
-            showTemporaryMessage(successMessage || "�R�s�[���܂����B");
+            showTemporaryMessage(successMessage || "コピーしました。");
           } catch (_error) {
-            showTemporaryMessage("�R�s�[�ł��܂���ł����B", true);
+            showTemporaryMessage("コピーできませんでした。", true);
           } finally {
             document.body.removeChild(textarea);
           }

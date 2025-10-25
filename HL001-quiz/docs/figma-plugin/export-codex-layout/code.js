@@ -15,14 +15,24 @@
  */
 "use strict";
 figma.showUI(__html__, { width: 360, height: 340 });
+let exportInProgress = false;
 figma.ui.onmessage = (msg) => {
-    if ((msg === null || msg === void 0 ? void 0 : msg.type) === "CLOSE") {
+    var _a;
+    const type = (_a = msg === null || msg === void 0 ? void 0 : msg.type) !== null && _a !== void 0 ? _a : "";
+    if (type === "CLOSE") {
         figma.closePlugin();
+        return;
+    }
+    if (type === "READY" && !exportInProgress) {
+        void runExport();
     }
 };
 const assetCounters = new Map();
-void run();
-async function run() {
+async function runExport() {
+    if (exportInProgress) {
+        return;
+    }
+    exportInProgress = true;
     const frame = pickTargetFrame();
     if (!frame) {
         figma.notify("フレームを1つ選択してください。");
@@ -30,15 +40,33 @@ async function run() {
             type: "EXPORT_ERROR",
             message: "フレームが選択されていません。",
         });
+        exportInProgress = false;
         return;
     }
-    assetCounters.clear();
-    const { layout, assets } = await buildExport(frame);
-    const payload = sanitizeForUi({ layout, assets });
-    figma.ui.postMessage({
-        type: "EXPORT_RESULT",
-        payload,
-    });
+    try {
+        assetCounters.clear();
+        const { layout, assets } = await buildExport(frame);
+        const payload = sanitizeForUi({ layout, assets });
+        figma.ui.postMessage({
+            type: "EXPORT_RESULT",
+            payload,
+        });
+    }
+    catch (error) {
+        console.error("[export] Unexpected failure:", error);
+        const fallbackMessage = "エクスポートに失敗しました。";
+        const detail = (error === null || error === void 0 ? void 0 : error.message)
+            ? fallbackMessage + "\n" + error.message
+            : fallbackMessage;
+        figma.notify("エクスポートに失敗しました。エラー内容はコンソールをチェックしてください。");
+        figma.ui.postMessage({
+            type: "EXPORT_ERROR",
+            message: detail,
+        });
+    }
+    finally {
+        exportInProgress = false;
+    }
 }
 async function buildExport(frame) {
     var _a, _b;

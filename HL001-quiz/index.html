@@ -647,6 +647,34 @@
 
       window.addEventListener('resize', function(){ try { applyBackground(window.UI_BASE || 'images/'); } catch(_){ } });
     })();
+        /**
+         * @typedef {Object} QuizState
+         * @property {Array} questions
+         * @property {number} currentIndex
+         * @property {number} score
+         * @property {number} correctCount
+         * @property {Array} answers
+         * @property {number} timeLeft
+         * @property {?number} timerInterval
+         * @property {boolean} finished
+         * @property {?number} feedbackTimeoutId
+         * @property {number} hintsUsed
+         * @property {Array} currentHints
+         */
+
+        /**
+         * @typedef {Object} AppStateShape
+         * @property {?Object} user
+         * @property {'practice'|'daily'} mode
+         * @property {QuizState|null} quiz
+         */
+
+        /** @type {AppStateShape} */
+        const AppState = {
+            user: null,
+            mode: 'practice',
+            quiz: null
+        };
         // ========== グローバル変数 ==========
         let currentUser = null;
         
@@ -684,6 +712,7 @@
             
             if (result.success) {
                 currentUser = result;
+                AppState.user = currentUser;
                 localStorage.setItem('currentUser', JSON.stringify(result));
                 showHomePage();
             } else {
@@ -723,6 +752,8 @@
             
             if (result.success) {
                 const user = result.user;
+                currentUser = Object.assign({}, currentUser || {}, user);
+                AppState.user = currentUser;
                 document.getElementById('displayName').textContent = user.name;
                 document.getElementById('displayStore').textContent = user.store;
                 try {
@@ -761,6 +792,7 @@
         
         function handleLogout() {
             currentUser = null;
+            AppState.user = null;
             localStorage.removeItem('currentUser');
             
             document.getElementById('homePage').classList.remove('active');
@@ -782,6 +814,7 @@
             if (saved) {
                 try {
                     currentUser = JSON.parse(saved);
+                    AppState.user = currentUser;
                     showHomePage();
                 } catch (error) {
                     console.error('自動ログイン失敗:', error);
@@ -791,24 +824,29 @@
         });
 
         // ========== クイズ機能（バージョン11から完全コピー） ==========
-        let quizState = {
-            questions: [],
-            currentIndex: 0,
-            score: 0,
-            correctCount: 0,
-            answers: [],
-            timeLeft: 20,
-            timerInterval: null,
-            finished: false,
-            feedbackTimeoutId: null,
-            hintsUsed: 0,
-            currentHints: []
-        };
+        function createQuizState() {
+            return {
+                questions: [],
+                currentIndex: 0,
+                score: 0,
+                correctCount: 0,
+                answers: [],
+                timeLeft: 20,
+                timerInterval: null,
+                finished: false,
+                feedbackTimeoutId: null,
+                hintsUsed: 0,
+                currentHints: []
+            };
+        }
+        let quizState = createQuizState();
+        AppState.quiz = quizState;
 
         let currentMode = 'practice';
 
         function startQuiz(mode) {
             currentMode = mode || 'practice';
+            AppState.mode = currentMode;
             // 本番モードの1日1回チェック
             if (currentMode === 'daily') {
                 const key = `lastDailyQuiz_${currentUser && currentUser.userId ? currentUser.userId : ''}`;
@@ -827,19 +865,8 @@
             try { showLoading('問題を読み込んでいます...'); } catch(_) {}
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('quizPage').classList.add('active');
-            quizState = {
-                questions: [],
-                currentIndex: 0,
-                score: 0,
-                correctCount: 0,
-                answers: [],
-                timeLeft: 20,
-                timerInterval: null,
-                finished: false,
-                feedbackTimeoutId: null,
-                hintsUsed: 0,
-                currentHints: []
-            };
+            quizState = createQuizState();
+            AppState.quiz = quizState;
             google.script.run
                 .withSuccessHandler(onQuizQuestionsSuccess)
                 .withFailureHandler(onQuizQuestionsFailure)
@@ -1455,4 +1482,3 @@
     }
     </script></body>
 </html>
-
