@@ -1,21 +1,21 @@
 # 実装タスクリスト
 
 ## セクション1：データモデル実装
-- [ ] 1.1 AppStateとクイズ/履歴ペイロードの型を定義する
+- [x] 1.1 AppStateとクイズ/履歴ペイロードの型を定義する
   - design.md「データ構造」「フロントエンド」記載のAppState（user/quiz/mode）とQuestionPayload（questionId, imageUrls, options, hints, answerKey）を実装
   - HISTORYメタデータ（JSON）とUSERSプロファイル（streak/level/points）について、取り込み時の整合性チェックを実装
-- [ ] 1.2 Google Sheetsアクセス層を実装する
+- [x] 1.2 Google Sheetsアクセス層を実装する
   - DataAccess/Config周りでUSERS/HISTORY/RANKINGSシートをID経由で参照する処理をdesign.md「データモデル」「データフロー」に沿って整備
   - 取得・書き込み時に列定義とバリデーションを行い、欠損データはエラーとして扱う
 
 ## セクション2：ビジネスロジック実装
-- [ ] 2.1 QuizLogicのクイズ生成フローを実装する
+- [x] 2.1 QuizLogicのクイズ生成フローを実装する
   - design.md「データフロー > クイズ」「QuizLogic」の処理フロー1-3に対応し、generateQuestions_/buildQuestionPayloadでdaily/practice両方の出題を構築
   - タイマー（20秒）制御・ヒント/スコア計算に必要なUI連携フックをquizControllerに組み込む
-- [ ] 2.2 HistoryAPIと経験値更新ロジックを実装する
+- [x] 2.2 HistoryAPIと経験値更新ロジックを実装する
   - design.md「データフロー > 履歴」「HistoryAPI」「awardExperienceAndRank」の処理フロー4-6を満たすsubmitQuizAnswers/calculateScoreBreakdown/awardExperienceAndRankを実装
   - sessionId重複検知、streakブースト、EXP/RP算出を設計通りに反映しUSERS/HISTORYへ書き戻す
-- [ ] 2.3 エラーハンドリングを実装する
+- [x] 2.3 エラーハンドリングを実装する
   - design.md「エラーハンドリング」記載のtry-catchとwithFailureHandler戦略を全API/Routerに組み込み、ログ出力とユーザー通知を実装
 
 ## セクション3：インターフェース実装

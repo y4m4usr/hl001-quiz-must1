@@ -25,7 +25,7 @@
           /* スマホ幅に応じたスケール（基準390px） */
           --s: clamp(0.95, 100vw / 390, 1.15);
           --stage-w: clamp(320px, 92vw, 393px); /* ログイン基準幅 */
-          --login-bg-image: url("images/screen_login.ui-assets/assets/global_screen_login_login_haikei_01.png");
+          /* 背景画像はJavaScriptで動的に設定 */
         }
 
         /* 基本設定 */
@@ -81,18 +81,7 @@
           padding: clamp(20px, 5vw, 32px) clamp(10px, 5vw, 18px) clamp(36px, 8vw, 56px);
           position: relative;
         }
-        .login-stage::before{
-          content:"";
-          position:absolute;
-          inset:-20px;
-          background-image: var(--login-bg-image);
-          background-size:cover;
-          background-position:center;
-          filter: drop-shadow(0 32px 60px rgba(0,0,0,0.35));
-          opacity:0.95;
-          border-radius:48px;
-          z-index:0;
-        }
+        /* ログインステージ背景はJavaScriptで設定 */
         .login-card{
           width: clamp(300px, calc(var(--stage-w) + 12px), 360px);
           margin: 0 auto;
@@ -191,7 +180,7 @@
           position:absolute;
           inset:0;
           border-radius:22px;
-          background-image:url("images/screen_login.ui-assets/assets/global_inputtextbase_inputtextbase_01.png");
+          background-image:url("images/screen_login.ui-assets/assets/global_input_text_inputtextbase_01.png");
           background-size:cover;
           opacity:0.95;
           pointer-events:none;
@@ -210,17 +199,20 @@
         }
         #loginBtn{
           width:100%;
-          height:135px;
+          padding: 18px 32px;
           border:none;
-          background:url("images/screen_login.ui-assets/assets/global_screen_login_login_btn_01.png") center/cover no-repeat;
-          text-indent:-9999px;
-          margin-top:6px;
+          background: linear-gradient(135deg, #FF6EC7 0%, #C093FF 100%);
+          color: #fff;
+          font-size: 20px;
+          font-weight: 800;
+          letter-spacing: 0.1em;
+          margin-top:16px;
           cursor:pointer;
-          transition: transform .2s ease, filter .2s ease;
+          transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
           border-radius:40px;
-          box-shadow:0 18px 32px rgba(0,0,0,0.35);
+          box-shadow:0 18px 32px rgba(255,110,199,0.45);
         }
-        #loginBtn:hover{ filter: brightness(1.05); }
+        #loginBtn:hover{ filter: brightness(1.08); box-shadow:0 22px 38px rgba(255,110,199,0.55); }
         #loginBtn:active{ transform: translateY(2px); }
 
         /* ボタン（角丸28px） */
@@ -476,7 +468,7 @@
                   </div>
                 </div>
                 <div class="login-actions">
-                  <button id="loginBtn" onclick="handleLogin()" aria-label="ログイン"><span class="sr-only">ログイン</span></button>
+                  <button id="loginBtn" onclick="handleLogin()" aria-label="ログイン">ログイン</button>
                 </div>
                 <div class="error" id="errorMsg" role="alert" aria-live="polite"></div>
                 <div class="loading" id="loginLoading" aria-live="polite"><p style="text-align:center;margin-top:8px;">ログイン中...</p></div>
@@ -638,127 +630,137 @@
     </div>
 
   <script>
-    // UI 画像のベースURLを取得して背景/アセットを設定
+    // 🎯 画像アセット読み込み（シンプル版）
     (function(){
-      var REQUIRED_LAYOUT_ASSETS = {
-        screen_login: {
-          source: 'images/screen_login.json',
-          assets: [
-            'global_screen_login_rogo_01',
-            'global_screen_login_l_login_btn_01'
-          ]
-        },
-        screen_home: {
-          source: 'images/screen_home.json',
-          assets: [
-            'global_screen_home_image_01',
-            'global_screen_home_h_btn_daily_01',
-            'global_screen_home_h_btn_practice_01',
-            'global_screen_home_h_btn_ranking_01',
-            'global_screen_home_h_btn_stats_01',
-            'global_screen_home_icon_01'
-          ]
-        }
-      };
+      'use strict';
 
-      function verifyLayoutAssets(){
-        try {
-          if (typeof fetch !== 'function') {
-            console.warn('[layout] fetch API is unavailable in this environment');
-            return;
-          }
-          Object.keys(REQUIRED_LAYOUT_ASSETS).forEach(function(key){
-            var cfg = REQUIRED_LAYOUT_ASSETS[key];
-            fetch(cfg.source)
-              .then(function(res){
-                if (!res.ok) throw new Error('HTTP ' + res.status);
-                return res.json();
-              })
-              .then(function(layout){
-                if (!layout || !Array.isArray(layout.objects)) {
-                  console.warn('[layout] unexpected format for ' + cfg.source);
-                  return;
-                }
-                var found = {};
-                layout.objects.forEach(function(obj){
-                  if (obj && obj.image && obj.image.id) {
-                    found[obj.image.id] = true;
-                  }
-                });
-                cfg.assets.forEach(function(id){
-                  if (!found[id]) {
-                    console.warn('[layout] asset "' + id + '" not present in ' + cfg.source);
-                  }
-                });
-              })
-              .catch(function(err){
-                console.warn('[layout] failed to load ' + cfg.source, err);
-              });
-          });
-        } catch(err) {
-          console.warn('[layout] verification error', err);
-        }
+      // グローバル変数：GitHub Raw URLのベース
+      window.UI_BASE = 'images/'; // デフォルトはローカル
+
+      /**
+       * 画像パスを解決（GitHub Raw URL優先、ローカルフォールバック）
+       * @param {string} relativePath - 相対パス（例: "screen_login.ui-assets/assets/xxx.png"）
+       * @returns {string} 完全なURL
+       */
+      function resolveImagePath(relativePath) {
+        var base = window.UI_BASE || 'images/';
+        if (!base.endsWith('/')) base += '/';
+        return base + relativePath;
       }
 
-      function applyBackground(base){
+      /**
+       * 画像要素にsrcを設定（エラーハンドリング付き）
+       */
+      function setImageSrc(elementId, relativePath) {
+        var el = document.getElementById(elementId);
+        if (!el) return;
+
+        var fullPath = resolveImagePath(relativePath);
+        el.src = fullPath;
+
+        // エラー時のフォールバック
+        el.onerror = function() {
+          console.warn('[画像読み込み失敗]', elementId, '→', fullPath);
+          // ローカルパスで再試行
+          if (window.UI_BASE !== 'images/') {
+            el.src = 'images/' + relativePath;
+          }
+        };
+      }
+
+      /**
+       * 背景画像を設定
+       */
+      function applyBackgrounds() {
         try {
-          var normalizedBase = base && base.endsWith('/') ? base : (base ? base + '/' : '');
-          var bg = normalizedBase + 'screene_home/global_screen_home_image_01.png';
-          document.body.style.backgroundImage = 'url(' + bg + ')';
+          // body背景（ホーム画面の背景）
+          var homeBg = resolveImagePath('screen_home.ui-assets/assets/global_screen_home_home_haikei_01.png');
+          document.body.style.backgroundImage = 'url("' + homeBg + '")';
           document.body.style.backgroundSize = 'cover';
           document.body.style.backgroundPosition = 'center';
           document.body.style.backgroundAttachment = 'fixed';
-        } catch(e){ console.warn(e); }
+        } catch(e) {
+          console.warn('[背景設定エラー]', e);
+        }
       }
-      function applyUiAssets(base){
+
+      /**
+       * ログイン画面のアセットを設定
+       */
+      function applyLoginAssets() {
+        setImageSrc('loginPanel', 'screen_login.ui-assets/assets/global_screen_login_login_01.png');
+        setImageSrc('loginHero', 'screen_login.ui-assets/assets/global_screen_login_image_01.png');
+        setImageSrc('appLogo', 'screen_login.ui-assets/assets/global_screen_login_login_rogo_01.png');
+      }
+
+      /**
+       * ホーム画面のアセットを設定
+       */
+      function applyHomeAssets() {
+        setImageSrc('homeMiniLogo', 'screen_home.ui-assets/assets/global_screen_home_icon_01.png');
+
+        // ボタン画像（存在する場合のみ）
+        // 注意：現在これらのファイルは存在しないため、CSSグラデーション背景を使用
+        // setImageSrc('btnDailyImg', 'screen_home.ui-assets/assets/global_screen_home_h_btn_daily_01.png');
+        // setImageSrc('btnPracticeImg', 'screen_home.ui-assets/assets/global_screen_home_h_btn_practice_01.png');
+        // setImageSrc('btnRankingImg', 'screen_home.ui-assets/assets/global_screen_home_h_btn_ranking_01.png');
+        // setImageSrc('btnStatsImg', 'screen_home.ui-assets/assets/global_screen_home_h_btn_stats_01.png');
+      }
+
+      // 初期化
+      function init() {
+        applyBackgrounds();
+        applyLoginAssets();
+        applyHomeAssets();
+
+        console.log('[画像アセット] 初期化完了（ベース: ' + window.UI_BASE + '）');
+      }
+
+      // Google Apps ScriptからGitHub Raw URLを取得
+      function fetchGitHubBaseUrl() {
         try {
-          var normalizedBase = base && base.endsWith('/') ? base : (base ? base + '/' : '');
-          var root = document.documentElement;
-          if (root) {
-            root.style.setProperty('--login-bg-image', 'url(' + normalizedBase + 'global_screen_login_login_haikei_01.png)');
+          if (typeof google === 'undefined' || !google.script || !google.script.run) {
+            console.info('[GAS未検出] ローカルモードで動作します');
+            return;
           }
-          var set = function(id, file){
-            var el = document.getElementById(id); if(!el) return;
-            el.src = normalizedBase + file;
-          };
-          set('loginPanel','global_screen_login_login_01.png');
-          set('loginHero','global_screen_login_image_01.png');
-          set('appLogo','global_screen_login_login_rogo_01.png');
-          set('homeMiniLogo','screene_home/global_screen_home_icon_01.png');
-          set('btnDailyImg','screene_home/global_screen_home_h_btn_daily_01.png');
-          set('btnPracticeImg','screene_home/global_screen_home_h_btn_practice_01.png');
-          set('btnRankingImg','screene_home/global_screen_home_h_btn_ranking_01.png');
-          set('btnStatsImg','screene_home/global_screen_home_h_btn_stats_01.png');
-          try {
-            var loginBtn = document.getElementById('loginBtn');
-            if (loginBtn) {
-              loginBtn.style.backgroundImage = 'url(' + normalizedBase + 'global_screen_login_login_btn_01.png)';
-              loginBtn.style.backgroundSize = 'cover';
-              loginBtn.style.backgroundPosition = 'center';
-              loginBtn.style.backgroundRepeat = 'no-repeat';
-            }
-          } catch(_){ }
-        } catch(e){ console.warn(e); }
+
+          google.script.run
+            .withSuccessHandler(function(res){
+              if (!res || !res.success || !res.base) {
+                console.warn('[getUiBase] 無効なレスポンス', res);
+                return;
+              }
+
+              var base = String(res.base).trim();
+              if (!base) return;
+
+              console.log('[getUiBase] GitHub Raw URL取得成功:', base);
+              window.UI_BASE = base;
+
+              // 画像を再設定
+              applyBackgrounds();
+              applyLoginAssets();
+              applyHomeAssets();
+            })
+            .withFailureHandler(function(e){
+              console.warn('[getUiBase] 取得失敗（ローカルモードで継続）', e);
+            })
+            .getUiBase();
+        } catch(e) {
+          console.warn('[getUiBase] 呼び出しエラー', e);
+        }
       }
 
-      verifyLayoutAssets();
-      applyBackground('images/');
-      applyUiAssets('images/');
-
-      try {
-        google.script.run
-          .withSuccessHandler(function(res){
-            if(!res || !res.success) return;
-            var base = String(res.base || '');
-            window.UI_BASE = base;
-            applyBackground(base);
-            applyUiAssets(base);
-          })
-          .withFailureHandler(function(e){ console.warn('getUiBase failed', e); })
-          .getUiBase();
-      } catch(_){ }
-
-      window.addEventListener('resize', function(){ try { applyBackground(window.UI_BASE || 'images/'); } catch(_){ } });
+      // DOMContentLoaded時に実行
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          init();
+          fetchGitHubBaseUrl();
+        });
+      } else {
+        init();
+        fetchGitHubBaseUrl();
+      }
     })();
         /**
          * @typedef {Object} QuizState

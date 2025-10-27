@@ -1,0 +1,980 @@
+{
+  "meta": {
+    "layoutName": "screen_home",
+    "canvasWidth": 390,
+    "canvasHeight": 844,
+    "generatedAt": "2025-10-27T09:21:33.909Z"
+  },
+  "objects": [
+    {
+      "id": "home_haikei_1",
+      "type": "image",
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844,
+      "name": "home_haikei 1",
+      "opacity": 1,
+      "imageId": "global_screen_home_home_haikei_01",
+      "image": {
+        "id": "global_screen_home_home_haikei_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_home_haikei_01",
+        "rasterized": true,
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "rectangle_863",
+      "type": "shape",
+      "x": 41,
+      "y": 115,
+      "width": 307.70306396484375,
+      "height": 177,
+      "name": "Rectangle 863",
+      "opacity": 1,
+      "fill": "#d9d9d966",
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_2",
+      "type": "text",
+      "x": 180,
+      "y": 187,
+      "width": 172.9691925048828,
+      "height": 24.65671730041504,
+      "name": "カラコンルーキー",
+      "opacity": 1,
+      "characters": "カラコンルーキー",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 13,
+          "fontName": {
+            "family": "Noto Sans JP",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 6
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "icon_2",
+      "type": "image",
+      "x": 59,
+      "y": 128,
+      "width": 80,
+      "height": 80,
+      "name": "icon 2",
+      "opacity": 1,
+      "imageId": "global_screen_home_icon_01",
+      "image": {
+        "id": "global_screen_home_icon_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_icon_01",
+        "rasterized": true,
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "group_831",
+      "type": "group",
+      "x": 54.40057373046875,
+      "y": 226.31344604492188,
+      "width": 276.7507019042969,
+      "height": 59,
+      "name": "Group 831",
+      "opacity": 1
+    },
+    {
+      "id": "node_5",
+      "type": "text",
+      "x": 78.98037719726562,
+      "y": 256.2537536621094,
+      "width": 40.96638870239258,
+      "height": 26.417911529541016,
+      "name": "レベル",
+      "opacity": 1,
+      "characters": "レベル",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 13,
+          "fontName": {
+            "family": "Roboto",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 28
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 0
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "rp",
+      "type": "text",
+      "x": 166.37535095214844,
+      "y": 257.13427734375,
+      "width": 40.96638870239258,
+      "height": 26.417911529541016,
+      "name": "RP",
+      "opacity": 1,
+      "characters": "RP",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 13,
+          "fontName": {
+            "family": "Roboto",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 28
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 0
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_7",
+      "type": "text",
+      "x": 251.9495849609375,
+      "y": 262.4179382324219,
+      "width": 62.81512451171875,
+      "height": 14.089552879333496,
+      "name": "ログイン",
+      "opacity": 1,
+      "characters": "ログイン",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 13,
+          "fontName": {
+            "family": "Roboto",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 28
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 0
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "7",
+      "type": "text",
+      "x": 211.8935546875,
+      "y": 230.7164306640625,
+      "width": 141.1064453125,
+      "height": 29.059701919555664,
+      "name": "7日",
+      "opacity": 1,
+      "characters": "7日",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 20,
+          "fontName": {
+            "family": "Inter",
+            "style": "Extra Bold"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 6
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_9",
+      "type": "text",
+      "x": 146.24371337890625,
+      "y": 161.149169921875,
+      "width": 68.27730560302734,
+      "height": 20.25373077392578,
+      "name": "渋谷店",
+      "opacity": 1,
+      "characters": "渋谷店",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 16,
+          "fontName": {
+            "family": "Noto Sans JP",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 6
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_10",
+      "type": "text",
+      "x": 134.3193359375,
+      "y": 187.5672607421875,
+      "width": 68.27730560302734,
+      "height": 20.25373077392578,
+      "name": "称号",
+      "opacity": 1,
+      "characters": "称号",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 14,
+          "fontName": {
+            "family": "Noto Sans JP",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 6
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_11",
+      "type": "text",
+      "x": 145.4229736328125,
+      "y": 130.328369140625,
+      "width": 182.0728302001953,
+      "height": 28.179105758666992,
+      "name": "ホテル ラバーズ",
+      "opacity": 1,
+      "characters": "ホテル ラバーズ",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 18,
+          "fontName": {
+            "family": "Noto Sans JP",
+            "style": "Regular"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 6
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "5",
+      "type": "text",
+      "x": 28,
+      "y": 230.7164306640625,
+      "width": 141.1064453125,
+      "height": 29.059701919555664,
+      "name": "5",
+      "opacity": 1,
+      "characters": "5",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 20,
+          "fontName": {
+            "family": "Inter",
+            "style": "Extra Bold"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 3
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "900",
+      "type": "text",
+      "x": 116.30532836914062,
+      "y": 229.8357696533203,
+      "width": 141.1064453125,
+      "height": 29.059701919555664,
+      "name": "900",
+      "opacity": 1,
+      "characters": "900",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 20,
+          "fontName": {
+            "family": "Inter",
+            "style": "Extra Bold"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 2
+          }
+        },
+        "textColor": "#ffffff",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "component_4",
+      "type": "group",
+      "x": 0,
+      "y": 761,
+      "width": 390,
+      "height": 83,
+      "name": "Component 4",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "icon_logout_6",
+      "type": "image",
+      "x": 28,
+      "y": 48,
+      "width": 40,
+      "height": 40,
+      "name": "icon_logout 6",
+      "opacity": 1,
+      "imageId": "global_screen_home_icon_logout_01",
+      "image": {
+        "id": "global_screen_home_icon_logout_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_icon_logout_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "icon_bell_5",
+      "type": "image",
+      "x": 263,
+      "y": 52,
+      "width": 40,
+      "height": 40,
+      "name": "icon_bell 5",
+      "opacity": 1,
+      "imageId": "global_screen_home_icon_bell_01",
+      "image": {
+        "id": "global_screen_home_icon_bell_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_icon_bell_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "20",
+      "type": "image",
+      "x": 315,
+      "y": 51,
+      "width": 40,
+      "height": 40,
+      "name": "20",
+      "opacity": 1,
+      "imageId": "global_screen_home_image_01",
+      "image": {
+        "id": "global_screen_home_image_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_image_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "2",
+      "type": "image",
+      "x": 193,
+      "y": 343,
+      "width": 189,
+      "height": 189,
+      "name": "2",
+      "opacity": 1,
+      "imageId": "global_screen_home_image_02",
+      "image": {
+        "id": "global_screen_home_image_02",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_image_02",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "1",
+      "type": "image",
+      "x": 10,
+      "y": 337,
+      "width": 215,
+      "height": 216,
+      "name": "1",
+      "opacity": 1,
+      "imageId": "global_screen_home_image_03",
+      "image": {
+        "id": "global_screen_home_image_03",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_image_03",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "4_55",
+      "type": "image",
+      "x": 10,
+      "y": 529,
+      "width": 198,
+      "height": 198,
+      "name": "4 55",
+      "opacity": 1,
+      "imageId": "global_screen_home_image_04",
+      "image": {
+        "id": "global_screen_home_image_04",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_image_04",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "3_91",
+      "type": "image",
+      "x": 193,
+      "y": 538,
+      "width": 189,
+      "height": 189,
+      "name": "3 91",
+      "opacity": 1,
+      "imageId": "global_screen_home_image_05",
+      "image": {
+        "id": "global_screen_home_image_05",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_image_05",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "1_1",
+      "type": "text",
+      "x": 38,
+      "y": 330,
+      "width": 139,
+      "height": 19,
+      "name": "1日1回チャレンジ!",
+      "opacity": 1,
+      "characters": "1日1回チャレンジ!",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 13,
+          "fontName": {
+            "family": "Noto Sans JP",
+            "style": "ExtraBold"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 3
+          }
+        },
+        "textColor": "#ed28a8",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "node_23",
+      "type": "text",
+      "x": 237,
+      "y": 330,
+      "width": 100,
+      "height": 19,
+      "name": "回数無制限!",
+      "opacity": 1,
+      "characters": "回数無制限!",
+      "metadata": {
+        "textStyle": {
+          "fontSize": 13,
+          "fontName": {
+            "family": "Noto Sans JP",
+            "style": "ExtraBold"
+          },
+          "textAlignHorizontal": "CENTER",
+          "textAlignVertical": "CENTER",
+          "lineHeight": {
+            "unit": "AUTO"
+          },
+          "letterSpacing": {
+            "unit": "PIXELS",
+            "value": 6
+          }
+        },
+        "textColor": "#28edea",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "home_hero_1",
+      "type": "image",
+      "x": 23,
+      "y": 90,
+      "width": 343,
+      "height": 241,
+      "name": "home_hero 1",
+      "opacity": 1,
+      "imageId": "global_screen_home_home_hero_01",
+      "image": {
+        "id": "global_screen_home_home_hero_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_home_hero_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "login_rogo2_5",
+      "type": "image",
+      "x": 116,
+      "y": -6,
+      "width": 147,
+      "height": 106,
+      "name": "login_rogo2 5",
+      "opacity": 1,
+      "imageId": "global_screen_home_login_rogo_01",
+      "image": {
+        "id": "global_screen_home_login_rogo_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "screen_home",
+        "assetName": "global_screen_home_login_rogo_01",
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "group_803",
+      "type": "image",
+      "x": 54.40057373046875,
+      "y": 226.31344604492188,
+      "width": 276.7507019042969,
+      "height": 59,
+      "name": "Group 803",
+      "opacity": 1,
+      "imageId": "global_group_831_group_01",
+      "image": {
+        "id": "global_group_831_group_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "group_831",
+        "assetName": "global_group_831_group_01",
+        "rasterized": true
+      }
+    },
+    {
+      "id": "vector",
+      "type": "shape",
+      "x": 0,
+      "y": 761,
+      "width": 390,
+      "height": 83,
+      "name": "Vector",
+      "opacity": 1,
+      "fill": "#b899eb",
+      "metadata": {
+        "constraints": {
+          "horizontal": "SCALE",
+          "vertical": "SCALE"
+        }
+      }
+    },
+    {
+      "id": "icon_ranking_5",
+      "type": "image",
+      "x": 29,
+      "y": 771,
+      "width": 40,
+      "height": 40,
+      "name": "icon_ranking 5",
+      "opacity": 1,
+      "imageId": "global_component_4_icon_ranking_01",
+      "image": {
+        "id": "global_component_4_icon_ranking_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "component_4",
+        "assetName": "global_component_4_icon_ranking_01",
+        "constraints": {
+          "horizontal": "SCALE",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "icon_my_6",
+      "type": "image",
+      "x": 102,
+      "y": 771,
+      "width": 40,
+      "height": 40,
+      "name": "icon_my 6",
+      "opacity": 1,
+      "imageId": "global_component_4_icon_my_01",
+      "image": {
+        "id": "global_component_4_icon_my_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "component_4",
+        "assetName": "global_component_4_icon_my_01",
+        "constraints": {
+          "horizontal": "SCALE",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "icon_help_8",
+      "type": "image",
+      "x": 248,
+      "y": 771,
+      "width": 40,
+      "height": 40,
+      "name": "icon_help 8",
+      "opacity": 1,
+      "imageId": "global_component_4_icon_help_01",
+      "image": {
+        "id": "global_component_4_icon_help_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "component_4",
+        "assetName": "global_component_4_icon_help_01",
+        "constraints": {
+          "horizontal": "SCALE",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "icon_home",
+      "type": "image",
+      "x": 321,
+      "y": 771,
+      "width": 40,
+      "height": 40,
+      "name": "icon_home",
+      "opacity": 1,
+      "imageId": "global_component_4_icon_home_01",
+      "image": {
+        "id": "global_component_4_icon_home_01",
+        "extension": "png",
+        "sources": []
+      },
+      "metadata": {
+        "section": "global",
+        "area": "component_4",
+        "assetName": "global_component_4_icon_home_01",
+        "constraints": {
+          "horizontal": "SCALE",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "liquid_glass_clear_light",
+      "type": "group",
+      "x": 54.40057373046875,
+      "y": 226.31344604492188,
+      "width": 276.7507019042969,
+      "height": 59,
+      "name": "Liquid Glass - Clear/Light",
+      "opacity": 0.8999999761581421,
+      "metadata": {
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        }
+      }
+    },
+    {
+      "id": "shadow",
+      "type": "group",
+      "x": 28.40057373046875,
+      "y": 200.31344604492188,
+      "width": 329,
+      "height": 111,
+      "name": "Shadow",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      }
+    },
+    {
+      "id": "glass_effect",
+      "type": "group",
+      "x": 54.40057373046875,
+      "y": 226.31344604492188,
+      "width": 277,
+      "height": 59,
+      "name": "Glass Effect",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      },
+      "fill": "#ffffff12"
+    },
+    {
+      "id": "mask",
+      "type": "group",
+      "x": -21.59942626953125,
+      "y": 150.31344604492188,
+      "width": 429,
+      "height": 211,
+      "name": "Mask",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      },
+      "fill": "#ffffff"
+    },
+    {
+      "id": "blur",
+      "type": "group",
+      "x": 54.40057373046875,
+      "y": 231.31344604492188,
+      "width": 277,
+      "height": 59,
+      "name": "Blur",
+      "opacity": 1,
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      },
+      "fill": "#00000014"
+    },
+    {
+      "id": "shape",
+      "type": "shape",
+      "x": 54.40057373046875,
+      "y": 226.31344604492188,
+      "width": 277,
+      "height": 59,
+      "name": "Shape",
+      "opacity": 1,
+      "fill": "#000000",
+      "metadata": {
+        "constraints": {
+          "horizontal": "STRETCH",
+          "vertical": "STRETCH"
+        }
+      }
+    }
+  ]
+}

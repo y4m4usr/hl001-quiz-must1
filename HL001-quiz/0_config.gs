@@ -6,33 +6,31 @@
 const CONFIG = {
   // スプレッドシートID
   SHEET_IDS: {
-    USERS: '1X0TyeI_1zER6xIceUDSbJX-GFbqvi2orAiSWHRXlC7M',  
+    USERS: '1X0TyeI_1zER6xIceUDSbJX-GFbqvi2orAiSWHRXlC7M',
     '20251005_HL001_master': '1Uf2e0eXwcsQGjFtTtEeAWuYh74lh4fFE4NdjmyKHrj0',
     MASTER: '1Uf2e0eXwcsQGjFtTtEeAWuYh74lh4fFE4NdjmyKHrj0',
     HISTORY: '1ShWXLvY9RimRYfsAkwoRyM2Bfwj4a3zVmr5bQc33-o0',
     RANKINGS: '1I2REcy2v5OpyzoY3k61kCzJ3SYKOBBCMxTLCeHWutT8',
-        // [追加] ダッシュボード用スプレッドシート
+    // ダッシュボード集計用スプレッドシート
     DASHBOARD: '1cfL0smJHoOAMp_H4IRsoUksoA0gBjksOKDfzJQjsjkc'
   },
-  
+
   // UI/UX画像（このリポジトリから取得）
   GITHUB_UI: {
     USER: 'y4m4usr',
     REPO: 'hl001-quiz-must1', // 拡張子 .git は不要
     BRANCH: 'main',
-    UI_PATH: 'HL001-quiz/images/' // 末尾スラッシュ必須
+    UI_PATH: 'images/' // 末尾スラッシュ必須
   },
-    
+
   // 参照用: 基本情報シート（外部にID一覧がある場合に上書きする）
   INFO: {
-    // ユーザーから指定: 「基本情報」タブ8〜22行に各シートのURL/IDを記載
     INFO_SHEET_ID: '1QtwI1VF-RtHmVQdPA1IttDtRAJaOj4FJHN6meCIbEEk',
     SHEET_NAME: '基本情報',
     RANGE_A1: 'A8:B22' // ラベル, 値
   },
-  
-  // 列定義（masterシート）
-  // masterシートの列構成変更不可のため、列番号を定数化
+
+  // 列定義
   COLS: {
     MASTER: {
       E: 5,   // 元品番
@@ -44,9 +42,46 @@ const CONFIG = {
       R: 18,  // BC
       AK: 37, // コメント
       AJ: 36  // カラーカテゴリ
+    },
+    USERS: {
+      USER_ID: 1,
+      NAME: 2,
+      STORE: 3,
+      LEVEL: 4,
+      POINTS: 5,
+      STREAK: 6,
+      TOTAL_PRACTICE: 7,
+      TOTAL_DAILY: 8,
+      LAST_DAILY_DATE: 9
+    },
+    HISTORY_V11: {
+      HISTORY_ID: 1,
+      TIMESTAMP: 2,
+      USER_ID: 3,
+      MODE: 4,
+      QUESTION_ID: 5,
+      USER_ANSWER: 6,
+      IS_CORRECT: 7,
+      HINTS_USED: 8,
+      TIME_SPENT: 9,
+      SCORE: 10,
+      TOTAL_SCORE: 11,
+      METADATA_JSON: 12
+    },
+    RANKINGS: {
+      USER_ID: 1,
+      USER_NAME: 2,
+      STORE: 3,
+      BEST_TOTAL_SCORE: 4,
+      ACCURACY: 5,
+      BONUS_POINTS: 6,
+      TIME_BONUS: 7,
+      TOTAL_PRACTICE: 8,
+      TOTAL_DAILY: 9,
+      UPDATED_AT: 10
     }
   },
-  
+
   // GitHub画像設定（クイズ用レンズ/サムネは別リポジトリ）
   GITHUB: {
     USER: 'y4m4usr',
@@ -59,13 +94,9 @@ const CONFIG = {
 
 /**
  * 基本情報シートからIDを読み取り、CONFIG.SHEET_IDS を上書き
- * - ラベルの例（大文字小文字/全角半角/スペース無視）
- *   USERS, ユーザー, USER
- *   MASTER, マスター, 商品マスタ
- *   HISTORY, 履歴, QUIZ_HISTORY
- *   RANKINGS, ランキング, RANK
+ * - ラベル例: USERS, MASTER, HISTORY, RANKINGS など（大文字小文字/全角半角/スペース無視）
  */
-(function tryOverrideSheetIdsFromInfo_(){
+(function tryOverrideSheetIdsFromInfo_() {
   try {
     var info = CONFIG.INFO || {};
     if (!info.INFO_SHEET_ID) return; // 設定なし
@@ -76,29 +107,31 @@ const CONFIG = {
     var range = sh.getRange(info.RANGE_A1 || 'A8:B22');
     var values = range.getValues();
 
-    var normalize = function(s){
+    var normalize = function (s) {
       try {
         return String(s || '')
           .trim()
           .toUpperCase()
-          .replace(/[\s_\-　]+/g,'')
-          .replace(/（.*?）/g,'');
-      } catch(e){ return ''; }
+          .replace(/[\s_\-　]+/g, '')
+          .replace(/（.*?）/g, '');
+      } catch (e) {
+        return '';
+      }
     };
-    var extractId = function(v){
+    var extractId = function (v) {
       var s = String(v || '').trim();
       var m = s.match(/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
       return m ? m[1] : s; // URL or plain ID
     };
 
     var ids = {};
-    values.forEach(function(row){
+    values.forEach(function (row) {
       var k = normalize(row[0]);
       var id = extractId(row[1]);
       if (!k || !id) return;
-      if (k.indexOf('USER') !== -1 || k.indexOf('ﾕｰｻﾞ') !== -1 || k.indexOf('ﾕｰｻﾞｰ') !== -1 || k.indexOf('ユーザ') !== -1) {
+      if (k.indexOf('USER') !== -1 || k.indexOf('ﾕｰｻﾞ') !== -1 || k.indexOf('ユーザ') !== -1) {
         ids.USERS = id;
-      } else if (k.indexOf('MASTER') !== -1 || k.indexOf('ﾏｽﾀ') !== -1 || k.indexOf('商品ﾏｽﾀ') !== -1 || k.indexOf('商品マスタ') !== -1) {
+      } else if (k.indexOf('MASTER') !== -1 || k.indexOf('商品ﾏｽﾀ') !== -1 || k.indexOf('商品マスタ') !== -1) {
         ids.MASTER = id;
       } else if (k.indexOf('HISTORY') !== -1 || k.indexOf('履歴') !== -1 || k.indexOf('QUIZHISTORY') !== -1) {
         ids.HISTORY = id;
@@ -109,21 +142,23 @@ const CONFIG = {
 
     var S = CONFIG.SHEET_IDS;
     if (ids.USERS) {
-      S.USERS = ids.USERS; S.HL001_USERS = ids.USERS;
+      S.USERS = ids.USERS;
+      S.HL001_USERS = ids.USERS;
     }
     if (ids.MASTER) {
-      S.MASTER = ids.MASTER; S['20251005_HL001_master'] = ids.MASTER;
+      S.MASTER = ids.MASTER;
+      S['20251005_HL001_master'] = ids.MASTER;
     }
     if (ids.HISTORY) {
-      S.HISTORY = ids.HISTORY; S.HL001_QUIZ_HISTORY = ids.HISTORY;
+      S.HISTORY = ids.HISTORY;
+      S.HL001_QUIZ_HISTORY = ids.HISTORY;
     }
     if (ids.RANKINGS) {
-      S.RANKINGS = ids.RANKINGS; S.HL001_RANKINGS = ids.RANKINGS;
+      S.RANKINGS = ids.RANKINGS;
+      S.HL001_RANKINGS = ids.RANKINGS;
     }
-
   } catch (e) {
-    // 読み取りに失敗しても静かにスキップ（既定値を使用）
-    try { Logger.log('CONFIG override skipped: ' + e.message); } catch(_) {}
+    try { Logger.log('CONFIG override skipped: ' + e.message); } catch (_) { }
   }
 })();
 
@@ -137,7 +172,16 @@ function getUiBase() {
       + g.USER + '/' + g.REPO + '/' + g.BRANCH + '/' + g.UI_PATH;
     return { success: true, base: base };
   } catch (e) {
-    try { Logger.log('getUiBase error: ' + (e && e.message || e)); } catch(_){}
+    try { Logger.log('getUiBase error: ' + (e && e.message || e)); } catch (_) { }
     return { success: false, base: '' };
   }
+}
+
+/**
+ * UI_BASE を確認するためのユーティリティ
+ */
+function testGetUiBase() {
+  var result = getUiBase();
+  Logger.log(result);
+  return result;
 }
