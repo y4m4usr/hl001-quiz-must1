@@ -105,3 +105,13 @@
 - 練習/本番モード分離、本番は当日2回目をブロック（localStorage）
 - デプロイは clasp による push→version→redeploy 運用
 
+## 2025-10-28 ログイン画面と UI アセットの是正内容
+- index.html に `getUiBase()` 連携を復活させ、取得した UI_BASE から Noto Sans JP（woff2）と Figma エクスポート画像を一括適用する初期化フロー（bootUiBase）を実装。`fontNotoSansJP` スタイルタグ経由でプロジェクト規約のフォント要件を満たす。
+- 本番クイズの「1日1回制限」を `toDateKey()/markDailyPlayed()` で実装し、localStorage のキー形式を ISO（日付）へ統一。結果確定時にも再記録してダブル起動を防止。
+- 画像のフォールバックは従来どおり `images/` を使用しつつ、GAS から返る `{ success, base }` / 素の URL どちらにも対応するよう `updateUiBase()` を導入。
+- UI ベース未設定時にフォントが読み込めない課題は残るため、Script Properties の `UI_BASE_URL` を必須で設定することを明文化（要: 管理者作業）。
+
+### 他の AI が見落としていた原因
+- 既存コードに `applyBackgrounds/applyHomeAssets` が残っていたため「UI連携済み」と誤認しやすかったが、`window.UI_BASE` が常に `'images/'` のまま上書きされておらず、GitHub Raw への接続が機能していなかった。
+- Noto Sans JP は CSS の font-family に文字列だけが残っており、@font-face が無いことに気付きにくい。今回、ベース URL 決定後にスタイルシートへ注入する手順を追加した。
+- daily 制限は旧 v10 系の toDateString 実装がコメントで残っていたため、実装済みと錯覚されていた。ISO 形式キーとラッパー関数を導入して、処理箇所を一元化した。

@@ -8,13 +8,7 @@
 function getRankings(limit) {
   try {
     var n = Number(limit || 3);
-    var ss = SpreadsheetApp.openById(CONFIG.SHEET_IDS.RANKINGS);
-    // 柔軟なシート名解決
-    var sheet = ss.getSheetByName('rankings')
-            || ss.getSheetByName('RANKINGS')
-            || ss.getSheetByName('ランキング')
-            || ss.getSheets()[0];
-    if (!sheet) return { success: true, rankings: [], message: 'rankingsシートが見つかりません' };
+    var sheet = getRankingsSheet_();
 
     var data = sheet.getDataRange().getValues();
     if (data.length <= 1) {
@@ -51,14 +45,7 @@ function getRankings(limit) {
  */
 function getRanking(scope) {
   try {
-    const ss = SpreadsheetApp.openById(CONFIG.SHEET_IDS.HISTORY);
-    const sheet = ss.getSheetByName('history')
-               || ss.getSheetByName('HISTORY')
-               || ss.getSheetByName('quiz_history')
-               || ss.getSheetByName('QUIZ_HISTORY')
-               || ss.getSheets()[0];
-    if (!sheet) throw new Error('HISTORY内の履歴シートが見つかりません');
-
+    const sheet = getHistorySheet_();
     const values = sheet.getDataRange().getValues();
     if (values.length <= 1) return { success: true, rankings: [] };
 
@@ -125,7 +112,7 @@ function getRanking(scope) {
     });
 
     // USERS 情報
-    const usersSh = SpreadsheetApp.openById(CONFIG.SHEET_IDS.USERS);
+    const usersSh = getUsersSheet_();
     const sheetUsers = usersSh.getSheetByName('USERS') || usersSh.getSheetByName('users');
     const info = {};
     if (sheetUsers) {

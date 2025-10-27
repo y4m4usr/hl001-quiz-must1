@@ -55,7 +55,7 @@ function generateQuestions_(count) {
   // 各問題に誤答3件を生成
   return questions.map(function(correct, idx){
     var wrongs = selectWrongAnswers_(correct, allItems);
-    return makeQuestion_(correct, wrongs, idx + 1);
+    return buildQuestionPayload(correct, wrongs, idx + 1);
   });
 }
 
@@ -120,7 +120,10 @@ function selectWrongAnswers_(correct, pool, n) {
  * @param {number} qNum - 問題番号
  * @return {Object} 問題オブジェクト
  */
-function makeQuestion_(correct, wrongs, qNum) {
+function buildQuestionPayload(correct, wrongs, qNum) {
+  var questionId = [correct.E, correct.I, correct.J, correct.K].join('|');
+  var lensUrl = buildImageUrl_(correct.E, correct.I, correct.J, correct.K, 'lens');
+  var thumbUrl = buildImageUrl_(correct.E, correct.I, correct.J, correct.K, 'samune');
   var options = [
     { id: 1, brandName: correct.I, colorName: correct.J, isCorrect: true }
   ].concat(wrongs.map(function(w, i){
@@ -128,13 +131,23 @@ function makeQuestion_(correct, wrongs, qNum) {
   })).sort(function(){ return Math.random() - 0.5; });
   
   return {
+    questionId: questionId,
     questionNumber: qNum,
-    lensImageUrl: buildImageUrl_(correct.E, correct.I, correct.J, correct.K, 'lens'),
-    thumbnailImageUrl: buildImageUrl_(correct.E, correct.I, correct.J, correct.K, 'samune'),
+    imageUrls: {
+      lens: lensUrl,
+      thumbnail: thumbUrl
+    },
+    lensImageUrl: lensUrl,
+    thumbnailImageUrl: thumbUrl,
     correctAnswer: { E: correct.E, I: correct.I, J: correct.J, K: correct.K },
     options: options,
     hint1: { dia: correct.P || "", gdia: correct.Q || "", bc: correct.R || "" },
-    hint2: { comment: correct.AK || "" }
+    hint2: { comment: correct.AK || "" },
+    answerKey: {
+      sheetKey: questionId,
+      brandName: correct.I,
+      colorName: correct.J
+    }
   };
 }
 
@@ -152,4 +165,3 @@ function calculateScore_(correct, total, hints) {
   var score = 100 - (incorrect * 10) - (hints * 3);
   return Math.max(0, Math.min(100, score));
 }
-

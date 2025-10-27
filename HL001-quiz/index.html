@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <title>カラコンアカデミア</title>
+    <style id="fontNotoSansJP"></style>
     <style>
         /* デザイントークン */
         :root{
@@ -42,12 +43,27 @@
           background: linear-gradient(180deg, var(--bg-start), var(--bg-end)); /* 初期。実画像はJSで差し替え */
           background-attachment: fixed;
         }
-        /* 背景の上にうっすらグラデ被せ（可読性向上） */
+        /* 背景：ログインページではアーケード筐体（390×844px固定）、他ページではグラデーション */
         body::before{
           content: "";
-          position: fixed; inset: 0;
+          position: fixed;
+          inset: 0;
           background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.12));
-          pointer-events: none; z-index: 0;
+          pointer-events: none;
+          z-index: 0;
+        }
+        /* ログインページのみ：アーケード筐体背景 */
+        body.login-active::before{
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 390px;
+          height: 844px;
+          background-image: var(--login-bg-url, none);
+          background-size: contain;
+          background-position: center;
+          background-repeat: no-repeat;
+          inset: auto;
         }
 
         .container{
@@ -76,21 +92,26 @@
 
                 /* ログインカード */
         .login-stage{
-          width: var(--stage-w);
+          width: 390px;
+          height: 844px;
           margin: 0 auto;
-          padding: clamp(20px, 5vw, 32px) clamp(10px, 5vw, 18px) clamp(36px, 8vw, 56px);
+          padding: 0;
           position: relative;
         }
         /* ログインステージ背景はJavaScriptで設定 */
         .login-card{
-          width: clamp(300px, calc(var(--stage-w) + 12px), 360px);
+          width: 90%;
+          max-width: 340px;
           margin: 0 auto;
           padding: 0;
-          border-radius:32px;
-          overflow:hidden;
-          position:relative;
+          border-radius: 0;
+          overflow: visible;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
           background: transparent;
-          z-index:1;
+          z-index: 1;
         }
         .login-card.frame{
           border: none;
@@ -98,26 +119,19 @@
           background: transparent;
         }
         .login-card::after{
-          content:"";
-          position:absolute;
-          inset:0;
-          background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.35) 85%);
-          z-index:0;
+          display: none; /* アーケード筐体背景を使うため不要 */
         }
         .login-card__panel{
-          width:100%;
-          height:auto;
-          display:block;
+          display: none; /* 背景は body::before で表示 */
         }
         .login-card__content{
-          position:absolute;
-          inset:0;
+          position: relative;
           padding: clamp(24px,6vw,32px);
-          display:flex;
-          flex-direction:column;
-          justify-content:flex-end;
-          gap:18px;
-          z-index:1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 18px;
+          z-index: 1;
         }
         .logo-wrap{ display:flex; justify-content:center; margin: 0 0 12px; }
         .app-logo{ width: clamp(200px, 68vw, 320px); height: auto; object-fit: contain; filter: drop-shadow(0 12px 26px rgba(0,0,0,0.45)); }
@@ -126,6 +140,10 @@
         .login-actions{ display:flex; justify-content:center; align-items:center; margin-top:4px; }
         .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
         .initial-hero{
+          display: none; /* アーケード筐体デザインでは不要 */
+        }
+        body:not(.login-active) .initial-hero{
+          display: block; /* ログイン以外のページでは表示 */
           margin: 0 auto 20px;
           padding: clamp(18px, 5vw, 28px);
           max-width: clamp(280px, calc(var(--stage-w) + 48px), 420px);
@@ -198,22 +216,43 @@
           font-weight:600;
         }
         #loginBtn{
-          width:100%;
-          padding: 18px 32px;
-          border:none;
-          background: linear-gradient(135deg, #FF6EC7 0%, #C093FF 100%);
+          width: 100%;
+          padding: 16px 32px;
+          border: none;
+          background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #06b6d4 100%);
           color: #fff;
-          font-size: 20px;
-          font-weight: 800;
-          letter-spacing: 0.1em;
-          margin-top:16px;
-          cursor:pointer;
+          font-size: 24px;
+          font-weight: 900;
+          letter-spacing: 0.15em;
+          margin-top: 24px;
+          cursor: pointer;
           transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
-          border-radius:40px;
-          box-shadow:0 18px 32px rgba(255,110,199,0.45);
+          border-radius: 50px;
+          box-shadow: 0 0 20px rgba(139, 92, 246, 0.6), 0 0 40px rgba(236, 72, 153, 0.4);
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          position: relative;
+          overflow: hidden;
         }
-        #loginBtn:hover{ filter: brightness(1.08); box-shadow:0 22px 38px rgba(255,110,199,0.55); }
-        #loginBtn:active{ transform: translateY(2px); }
+        #loginBtn::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+          transform: translateX(-100%);
+          transition: transform 0.6s ease;
+        }
+        #loginBtn:hover::before {
+          transform: translateX(100%);
+        }
+        #loginBtn:hover{
+          filter: brightness(1.15);
+          box-shadow: 0 0 30px rgba(139, 92, 246, 0.8), 0 0 60px rgba(236, 72, 153, 0.6);
+          transform: translateY(-2px);
+        }
+        #loginBtn:active{
+          transform: translateY(1px);
+          box-shadow: 0 0 15px rgba(139, 92, 246, 0.6), 0 0 30px rgba(236, 72, 153, 0.4);
+        }
 
         /* ボタン（角丸28px） */
         button{ width:100%; padding: calc(14px * var(--s)) calc(16px * var(--s)); border:none; cursor:pointer; border-radius:28px; font-size: calc(18px * var(--s)); font-weight:700; transition:filter .2s ease, transform .05s ease, box-shadow .2s ease; }
@@ -635,7 +674,9 @@
       'use strict';
 
       // グローバル変数：GitHub Raw URLのベース
-      window.UI_BASE = 'images/'; // デフォルトはローカル
+      var FALLBACK_ASSET_BASE = 'images/';
+      window.UI_BASE = FALLBACK_ASSET_BASE; // デフォルトはローカル
+      var fontInjected = false;
 
       /**
        * 画像パスを解決（GitHub Raw URL優先、ローカルフォールバック）
@@ -669,16 +710,55 @@
       }
 
       /**
+       * Noto Sans JP を UI アセットベースから動的に読み込む
+       * @param {string} baseUrl
+       */
+      function injectNotoSans(baseUrl) {
+        if (fontInjected) return;
+        var cleanBase = (baseUrl || '').replace(/\/+$/, '');
+        if (!cleanBase) return;
+        var styleEl = document.getElementById('fontNotoSansJP');
+        if (!styleEl) return;
+        var fontUrl = cleanBase + '/assets/fonts/NotoSansJP-Regular.woff2';
+        var css = [
+          '@font-face{',
+          '  font-family:"Noto Sans JP";',
+          '  src:url("' + fontUrl + '") format("woff2");',
+          '  font-weight:400;',
+          '  font-style:normal;',
+          '  font-display:swap;',
+          '}',
+          ':root{',
+          '  --font-sans:"Noto Sans JP", system-ui, -apple-system, "Segoe UI",',
+          '               "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;',
+          '}',
+          'html,body{ font-family:var(--font-sans); }'
+        ].join('');
+        styleEl.textContent = css;
+        fontInjected = true;
+        try {
+          document.documentElement.style.setProperty('--font-sans', '"Noto Sans JP", system-ui, -apple-system, "Segoe UI","Hiragino Kaku Gothic ProN","Meiryo",sans-serif');
+        } catch (_) {}
+      }
+
+      /**
        * 背景画像を設定
        */
       function applyBackgrounds() {
         try {
-          // body背景（ホーム画面の背景）
-          var homeBg = resolveImagePath('screen_home.ui-assets/assets/global_screen_home_home_haikei_01.png');
-          document.body.style.backgroundImage = 'url("' + homeBg + '")';
-          document.body.style.backgroundSize = 'cover';
-          document.body.style.backgroundPosition = 'center';
-          document.body.style.backgroundAttachment = 'fixed';
+          // ログインページの場合：body::before に背景設定（CSS経由）
+          if (document.body.classList.contains('login-active')) {
+            var loginBg = resolveImagePath('screen_login.ui-assets/assets/global_screen_login_login_01.png');
+            // CSS変数を設定して body::before で使用
+            document.documentElement.style.setProperty('--login-bg-url', 'url("' + loginBg + '")');
+          } else {
+            // ホーム画面の背景
+            var homeBg = resolveImagePath('screen_home.ui-assets/assets/global_screen_home_home_haikei_01.png');
+            document.body.style.backgroundImage = 'url("' + homeBg + '")';
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundPosition = 'center';
+            document.body.style.backgroundAttachment = 'fixed';
+          }
         } catch(e) {
           console.warn('[背景設定エラー]', e);
         }
@@ -716,6 +796,17 @@
         console.log('[画像アセット] 初期化完了（ベース: ' + window.UI_BASE + '）');
       }
 
+      function updateUiBase(base) {
+        if (!base) return;
+        var normalized = String(base).trim();
+        if (!normalized) return;
+        window.UI_BASE = normalized;
+        injectNotoSans(normalized);
+        applyBackgrounds();
+        applyLoginAssets();
+        applyHomeAssets();
+      }
+
       // Google Apps ScriptからGitHub Raw URLを取得
       function fetchGitHubBaseUrl() {
         try {
@@ -726,21 +817,24 @@
 
           google.script.run
             .withSuccessHandler(function(res){
-              if (!res || !res.success || !res.base) {
-                console.warn('[getUiBase] 無効なレスポンス', res);
+              var base = null;
+              if (res && typeof res === 'object') {
+                if (res.success === false) {
+                  console.warn('[getUiBase] 無効なレスポンス', res);
+                  return;
+                }
+                base = res.base || res.url || res.UI_BASE || null;
+              } else {
+                base = res;
+              }
+
+              if (!base) {
+                console.warn('[getUiBase] ベースURLが空です', res);
                 return;
               }
 
-              var base = String(res.base).trim();
-              if (!base) return;
-
               console.log('[getUiBase] GitHub Raw URL取得成功:', base);
-              window.UI_BASE = base;
-
-              // 画像を再設定
-              applyBackgrounds();
-              applyLoginAssets();
-              applyHomeAssets();
+              updateUiBase(base);
             })
             .withFailureHandler(function(e){
               console.warn('[getUiBase] 取得失敗（ローカルモードで継続）', e);
@@ -755,10 +849,12 @@
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
           init();
+          injectNotoSans(window.UI_BASE);
           fetchGitHubBaseUrl();
         });
       } else {
         init();
+        injectNotoSans(window.UI_BASE);
         fetchGitHubBaseUrl();
       }
     })();
@@ -801,6 +897,34 @@
             mode: 'practice',
             quiz: null
         };
+        const DAILY_LIMIT_KEY_PREFIX = 'lastDailyQuiz_';
+
+        function toDateKey(date) {
+            var base = date instanceof Date ? new Date(date.getTime()) : new Date();
+            base.setHours(0, 0, 0, 0);
+            var tzOffset = base.getTimezoneOffset();
+            var utcMs = base.getTime() - (tzOffset * 60000);
+            return new Date(utcMs).toISOString().slice(0, 10);
+        }
+
+        function buildDailyKey(userId) {
+            return DAILY_LIMIT_KEY_PREFIX + String(userId || '');
+        }
+
+        function hasPlayedDailyToday(userId) {
+            try {
+                var stored = localStorage.getItem(buildDailyKey(userId));
+                return stored === toDateKey();
+            } catch (_) {
+                return false;
+            }
+        }
+
+        function markDailyPlayed(userId) {
+            try {
+                localStorage.setItem(buildDailyKey(userId), toDateKey());
+            } catch (_) {}
+        }
         // ========== グローバル変数 ==========
         let currentUser = null;
         
@@ -860,11 +984,12 @@
         function showHomePage() {
             document.getElementById('loginPage').classList.remove('active');
             document.getElementById('homePage').classList.add('active');
-            
+            document.body.classList.remove('login-active'); // ログイン背景を解除
+
             const loading = document.getElementById('homeLoading');
             loading.classList.add('show');
             try { showLoading('データ読み込み中...'); } catch(_) {}
-            
+
             google.script.run
                 .withSuccessHandler(onHomeDataSuccess)
                 .withFailureHandler(onHomeDataFailure)
@@ -920,10 +1045,11 @@
             currentUser = null;
             AppState.user = null;
             localStorage.removeItem('currentUser');
-            
+
             document.getElementById('homePage').classList.remove('active');
             document.getElementById('loginPage').classList.add('active');
-            
+            document.body.classList.add('login-active'); // ログイン背景を表示
+
             document.getElementById('userId').value = '';
             document.getElementById('userName').value = '';
             document.getElementById('errorMsg').style.display = 'none';
@@ -936,12 +1062,15 @@
         }
         
         window.addEventListener('DOMContentLoaded', () => {
+            // 初期状態：ログインページ表示
+            document.body.classList.add('login-active');
+
             const saved = localStorage.getItem('currentUser');
             if (saved) {
                 try {
                     currentUser = JSON.parse(saved);
                     AppState.user = currentUser;
-                    showHomePage();
+                    showHomePage(); // この中で login-active を削除
                 } catch (error) {
                     console.error('自動ログイン失敗:', error);
                     localStorage.removeItem('currentUser');
@@ -975,15 +1104,14 @@
             AppState.mode = currentMode;
             // 本番モードの1日1回チェック
             if (currentMode === 'daily') {
-                const key = `lastDailyQuiz_${currentUser && currentUser.userId ? currentUser.userId : ''}`;
-                try {
-                    const lastPlayed = localStorage.getItem(key);
-                    const today = new Date().toDateString();
-                    if (lastPlayed === today) {
-                        alert('本番モードは1日1回までです。明日またチャレンジしてください！');
-                        return;
-                    }
-                } catch (_) {}
+                if (!currentUser || !currentUser.userId) {
+                    showError('ユーザー情報を再取得できませんでした。ログインし直してください。');
+                    return;
+                }
+                if (hasPlayedDailyToday(currentUser.userId)) {
+                    alert('本番モードは1日1回までです。明日またチャレンジしてください！');
+                    return;
+                }
             }
 
             const loading = document.getElementById('quizLoading');
@@ -1251,9 +1379,8 @@
             }
 
             // 本番モードの場合は今日の日付を記録
-            if (currentMode === 'daily') {
-                const key = `lastDailyQuiz_${currentUser && currentUser.userId ? currentUser.userId : ''}`;
-                try { localStorage.setItem(key, new Date().toDateString()); } catch(_) {}
+            if (currentMode === 'daily' && currentUser && currentUser.userId) {
+                markDailyPlayed(currentUser.userId);
             }
 
             // 履歴保存（モード含む）
@@ -1586,7 +1713,7 @@
                 });
             }
             if ((currentMode || 'practice') === 'daily' && currentUser && currentUser.userId) {
-              try { localStorage.setItem('lastDailyQuiz_' + currentUser.userId, new Date().toDateString()); } catch(_){}
+              markDailyPlayed(currentUser.userId);
             }
             try { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('resultPage').classList.add('active'); } catch(_){}
           } catch (e) { console.error(e); }

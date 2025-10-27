@@ -30,6 +30,10 @@ const CONFIG = {
     RANGE_A1: 'A8:B22' // ラベル, 値
   },
 
+  RANKING_DASHBOARD: {
+    LOOKBACK_MONTHS: 18
+  },
+
   // 列定義
   COLS: {
     MASTER: {
