@@ -802,3 +802,9 @@ clasp deploy -i AKfycbw_pqYq6-ckNmiN9cGa6-XFg_3ZURAOZ0EfghWIu_ukFHCH7TpQXqKOfbOy
 
 ### �e�X�g
 - ���s���Ă��܂���B
+## Figma plugin & login UI (2025-10-27)
+- Exporter now attaches each Figma layer description to metadata.designNote, so designer comments survive inside screen_*.layout.json.
+- Layers named or described with css-template skip PNG output (only layout metadata is kept) which keeps bundles light and tells Codex to rebuild them in HTML/CSS.
+- Added <layout>.preview.png plus JSZip DEFLATE compression to every bundle so reviewers can confirm the entire screen quickly.
+- index.html consumes the exported screen_login.ui-assets (background/panel/hero/logo/button) while keeping the inputs as HTML for accessibility.
+- AppState.user/mode/quiz syncs across login→auto-login→home→quiz to prevent stale view state.
