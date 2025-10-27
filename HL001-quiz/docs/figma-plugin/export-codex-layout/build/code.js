@@ -1,18 +1,3 @@
-/**
- * HL001 Figma Export Plugin Guideline
- * -----------------------------------
- * 1. すべてのアセットは layout JSON の `imageId` と同じ命名規則
- *    (例: global_screen_home_h_btn_daily_01) にリネームして書き出す。
- * 2. layout JSON には参照画像 ID / section / area を必ず記録し、
- *    Codex / CloudCode が座標と PNG を 1:1 で突き合わせられる形にする。
- * 3. エクスポート完了時に UI は
- *      `codex ui-assets sync ./exports/<layout>.zip`
- *    を実行するよう案内し、Zip 内に JSON + PNG を格納する。
- *    Codex / CloudCode 側はこのコマンドを受け取ったら GitHub への push と
- *    GAS デプロイまで自動で行う前提でワークフローを設計している。
- * 4. ユーザーの確認は最終チェックのみ。差し戻しが出ないレベルで
- *    プラグインと Codex が連携して成果物を渡す。
- */
 "use strict";
 figma.showUI(__html__, { width: 360, height: 340 });
 let exportInProgress = false;
@@ -44,13 +29,11 @@ async function runExport() {
         return;
     }
     try {
-    assetCounters.clear();
-    const { layout, assets } = await buildExport(frame);
-    const preview = await exportFramePreview(frame, layout.meta.layoutName);
-    const payload = sanitizeForUi({ layout, assets, preview });
-    figma.ui.postMessage({
-        type: "EXPORT_RESULT",
-        payload,
+        assetCounters.clear();
+        const { layout, assets } = await buildExport(frame);
+        figma.ui.postMessage({
+            type: "EXPORT_RESULT",
+            payload: { layout, assets },
         });
     }
     catch (error) {
@@ -126,17 +109,15 @@ async function buildExport(frame) {
         if (isCssTemplate) {
             layoutObject.metadata = Object.assign(Object.assign({}, ((_a = layoutObject.metadata) !== null && _a !== void 0 ? _a : {})), { cssTemplate: true });
         }
-        const shouldRasterize = determineRasterizationNeed(node, geometry, originX, originY);
-        if ((layoutObject.type === "image" && !isCssTemplate) || (shouldRasterize && !isCssTemplate)) {
+        if (layoutObject.type === "image" && !isCssTemplate) {
             const naming = deriveAssetNaming(node, frame);
-            layoutObject.type = "image";
             layoutObject.imageId = naming.fullName;
             layoutObject.image = {
                 id: naming.fullName,
                 extension: "png",
                 sources: [],
             };
-            layoutObject.metadata = Object.assign(Object.assign({}, ((_a = layoutObject.metadata) !== null && _a !== void 0 ? _a : {})), { section: naming.section, area: naming.area, assetName: naming.fullName, rasterized: shouldRasterize || undefined });
+            layoutObject.metadata = Object.assign(Object.assign({}, ((_a = layoutObject.metadata) !== null && _a !== void 0 ? _a : {})), { section: naming.section, area: naming.area, assetName: naming.fullName });
             if (!assetRequests.has(naming.fullName) && "exportAsync" in node) {
                 assetRequests.set(naming.fullName, {
                     id: assetFactory(naming.fullName, index),
@@ -307,41 +288,6 @@ function extractConstraints(node) {
     const { horizontal, vertical } = node.constraints;
     return { horizontal, vertical };
 }
-async function exportFramePreview(frame, layoutName) {
-    try {
-        const bytes = await frame.exportAsync({
-            format: "PNG",
-            useAbsoluteBounds: true,
-        });
-        return {
-            id: `${layoutName}_preview`,
-            fileName: `${layoutName || "layout"}.preview.png`,
-            format: "PNG",
-            base64: uint8ArrayToBase64(bytes),
-        };
-    }
-    catch (error) {
-        console.warn("[export] Failed to export frame preview:", error);
-        return null;
-    }
-}
-function determineRasterizationNeed(node, geometry, originX, originY) {
-    if (!geometry || typeof originX !== "number" || typeof originY !== "number") {
-        return false;
-    }
-    if (!("exportAsync" in node) || node.type === "TEXT" || node.type === "LINE") {
-        return false;
-    }
-    if (Array.isArray(node.exportSettings) && node.exportSettings.length > 0) {
-        return true;
-    }
-    const nearOrigin = Math.abs(geometry.x - originX) < 1 && Math.abs(geometry.y - originY) < 1;
-    if (!nearOrigin) {
-        return false;
-    }
-    const area = Number(geometry.width) * Number(geometry.height);
-    return Number.isFinite(area) && area >= 5000;
-}
 function isCssTemplateNode(node) {
     if (!node) {
         return false;
@@ -439,13 +385,11 @@ async function exportAssets(requests) {
                 format: request.format,
                 useAbsoluteBounds: true,
             });
-            // Uint8Array を Base64 文字列に変換（postMessage でシリアライズ可能）
-            const base64 = uint8ArrayToBase64(bytes);
             assets.push({
                 id: request.id,
                 fileName: request.fileName,
                 format: request.format,
-                base64: base64,
+                bytes: Array.from(bytes),
                 section: request.section,
                 area: request.area,
                 baseName: request.baseName,
@@ -456,48 +400,6 @@ async function exportAssets(requests) {
         }
     }
     return assets;
-}
-
-// Uint8Array を Base64 文字列に変換
-function uint8ArrayToBase64(bytes) {
-    if (typeof Buffer !== "undefined") {
-        return Buffer.from(bytes).toString("base64");
-    }
-    let binary = '';
-    const len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-        binary += String.fromCharCode(bytes[i]);
-    }
-    if (typeof btoa === "function") {
-        return btoa(binary);
-    }
-    return manualBase64(binary);
-}
-const BASE64_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-function manualBase64(binary) {
-    let base64 = '';
-    let i = 0;
-    while (i < binary.length) {
-        const c1 = binary.charCodeAt(i++);
-        const c2 = binary.charCodeAt(i++);
-        const c3 = binary.charCodeAt(i++);
-        const e1 = c1 >> 2;
-        const e2 = ((c1 & 3) << 4) | (c2 >> 4);
-        let e3 = ((c2 & 15) << 2) | (c3 >> 6);
-        let e4 = c3 & 63;
-        if (isNaN(c2)) {
-            e3 = 64;
-            e4 = 64;
-        }
-        else if (isNaN(c3)) {
-            e4 = 64;
-        }
-        base64 += BASE64_CHARS.charAt(e1)
-            + BASE64_CHARS.charAt(e2)
-            + BASE64_CHARS.charAt(e3)
-            + BASE64_CHARS.charAt(e4);
-    }
-    return base64;
 }
 function rgbaToHex(color, opacity) {
     const r = Math.round(color.r * 255);
@@ -550,12 +452,4 @@ function slugify(value) {
         .replace(/[^a-z0-9]+/g, "_")
         .replace(/^_+|_+$/g, "");
 }
-function sanitizeForUi(data) {
-    try {
-        return JSON.parse(JSON.stringify(data));
-    }
-    catch (error) {
-        console.warn('[export] sanitize failed:', error);
-        return data;
-    }
-}
+

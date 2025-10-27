@@ -1,0 +1,12 @@
+{
+  "name": "Codex Layout Exporter",
+  "id": "1564290291107280052",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": ["https://cdn.jsdelivr.net"]
+  }
+}

@@ -25,6 +25,7 @@
           /* スマホ幅に応じたスケール（基準390px） */
           --s: clamp(0.95, 100vw / 390, 1.15);
           --stage-w: clamp(320px, 92vw, 393px); /* ログイン基準幅 */
+          --login-bg-image: url("images/screen_login.ui-assets/assets/global_screen_login_login_haikei_01.png");
         }
 
         /* 基本設定 */
@@ -73,13 +74,68 @@
           backdrop-filter: blur(8px);
         }
 
-        /* ログインカード */
-        .login-stage{ width: var(--stage-w); margin: 0 auto; }
-        .login-card{ width: clamp(280px, calc(var(--stage-w) - 48px), 320px); margin: 0 auto; padding: 16px 16px 18px; }
-        .login-card.frame{ border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 14px 34px rgba(0,0,0,0.22); background: rgba(255,255,255,0.75); }
-        .logo-wrap{ display:flex; justify-content:center; margin: 14px 0 12px; }
-        /* ロゴは端末幅に応じて控えめに拡大。実機で大きすぎ問題の対処 */
-        .app-logo{ width: clamp(220px, 68vw, 280px); height: auto; object-fit: contain; }
+                /* ログインカード */
+        .login-stage{
+          width: var(--stage-w);
+          margin: 0 auto;
+          padding: clamp(20px, 5vw, 32px) clamp(10px, 5vw, 18px) clamp(36px, 8vw, 56px);
+          position: relative;
+        }
+        .login-stage::before{
+          content:"";
+          position:absolute;
+          inset:-20px;
+          background-image: var(--login-bg-image);
+          background-size:cover;
+          background-position:center;
+          filter: drop-shadow(0 32px 60px rgba(0,0,0,0.35));
+          opacity:0.95;
+          border-radius:48px;
+          z-index:0;
+        }
+        .login-card{
+          width: clamp(300px, calc(var(--stage-w) + 12px), 360px);
+          margin: 0 auto;
+          padding: 0;
+          border-radius:32px;
+          overflow:hidden;
+          position:relative;
+          background: transparent;
+          z-index:1;
+        }
+        .login-card.frame{
+          border: none;
+          box-shadow: none;
+          background: transparent;
+        }
+        .login-card::after{
+          content:"";
+          position:absolute;
+          inset:0;
+          background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.35) 85%);
+          z-index:0;
+        }
+        .login-card__panel{
+          width:100%;
+          height:auto;
+          display:block;
+        }
+        .login-card__content{
+          position:absolute;
+          inset:0;
+          padding: clamp(24px,6vw,32px);
+          display:flex;
+          flex-direction:column;
+          justify-content:flex-end;
+          gap:18px;
+          z-index:1;
+        }
+        .logo-wrap{ display:flex; justify-content:center; margin: 0 0 12px; }
+        .app-logo{ width: clamp(200px, 68vw, 320px); height: auto; object-fit: contain; filter: drop-shadow(0 12px 26px rgba(0,0,0,0.45)); }
+        .login-hero{ width: clamp(180px, 70%, 260px); margin: 0 auto 6px; display:block; filter: drop-shadow(0 12px 26px rgba(0,0,0,0.35)); }
+        .login-copy{ text-align:center; color:#fff; font-weight:600; letter-spacing:.08em; text-shadow:0 8px 20px rgba(0,0,0,0.55); }
+        .login-actions{ display:flex; justify-content:center; align-items:center; margin-top:4px; }
+        .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
         .initial-hero{
           margin: 0 auto 20px;
           padding: clamp(18px, 5vw, 28px);
@@ -123,6 +179,50 @@
         input::placeholder{ color:#9AA0A6; }
         input:focus{ outline:none; border-color: var(--accent-pink); box-shadow: 0 0 0 3px rgba(255,110,199,0.15), 0 10px 24px rgba(0,0,0,0.12); }
         
+        .input-shell{
+          position:relative;
+          border-radius:24px;
+          padding:8px;
+          margin-top:4px;
+          background: rgba(255,255,255,0.25);
+        }
+        .input-shell::before{
+          content:"";
+          position:absolute;
+          inset:0;
+          border-radius:22px;
+          background-image:url("images/screen_login.ui-assets/assets/global_inputtextbase_inputtextbase_01.png");
+          background-size:cover;
+          opacity:0.95;
+          pointer-events:none;
+        }
+        .input-shell[data-skin="alt"]::before{
+          background-image:url("images/screen_login.ui-assets/assets/global_input_text_inputtextbase_02.png");
+        }
+        .input-shell input{
+          background: transparent;
+          border:none;
+          position:relative;
+          padding:16px 18px;
+          font-size:16px;
+          color:#1f1f1f;
+          font-weight:600;
+        }
+        #loginBtn{
+          width:100%;
+          height:135px;
+          border:none;
+          background:url("images/screen_login.ui-assets/assets/global_screen_login_login_btn_01.png") center/cover no-repeat;
+          text-indent:-9999px;
+          margin-top:6px;
+          cursor:pointer;
+          transition: transform .2s ease, filter .2s ease;
+          border-radius:40px;
+          box-shadow:0 18px 32px rgba(0,0,0,0.35);
+        }
+        #loginBtn:hover{ filter: brightness(1.05); }
+        #loginBtn:active{ transform: translateY(2px); }
+
         /* ボタン（角丸28px） */
         button{ width:100%; padding: calc(14px * var(--s)) calc(16px * var(--s)); border:none; cursor:pointer; border-radius:28px; font-size: calc(18px * var(--s)); font-weight:700; transition:filter .2s ease, transform .05s ease, box-shadow .2s ease; }
         .btn-primary{
@@ -349,34 +449,41 @@
         
         <!-- ログイン画面 -->
         <div class="page active" id="loginPage" aria-label="ログインページ">
-          <section class="initial-hero" id="initialHero" aria-label="アプリ概要">
-            <h1 class="initial-hero__title">毎日のコアクイズでスキルを伸ばそう</h1>
-            <p class="initial-hero__subtitle">ログインすればデイリー出題とランキング更新をすぐにチェックできます。</p>
-          </section>
-          <div class="login-stage">
-          <div class="login-card glass-card frame" role="group" aria-labelledby="login-title">
-            <div class="logo-wrap">
-              <img id="appLogo" class="app-logo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 120'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23FF80C0'/%3E%3Cstop offset='100%25' stop-color='%237DB9FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='120' rx='24' fill='url(%23g)'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='Segoe UI, sans-serif' font-size='28' fill='%23FFFFFF'%3EHL001 Quiz%3C/text%3E%3C/svg%3E" alt="アプリロゴ" width="320" height="120" fetchpriority="high" decoding="async" loading="eager" onerror="console.warn('logo not found:', this.src)">
-            </div>
-            <h1 id="login-title" class="title" style="margin-bottom:8px;">カラコンアカデミア</h1>
-            <div class="input-group">
-              <label for="userId">ユーザーID</label>
-              <input type="text" id="userId" placeholder="ユーザーID" autocomplete="off" aria-label="ユーザーID入力">
-            </div>
-            <div class="input-group">
-              <label for="userName">ユーザーネーム</label>
-              <input type="text" id="userName" placeholder="ユーザーネーム" autocomplete="off" aria-label="ユーザーネーム入力">
-            </div>
-            <div style="display:flex;justify-content:center;align-items:center;">
-              <button id="loginBtn" class="btn-image" onclick="handleLogin()" aria-label="ログイン">ログイン</button>
-            </div>
-            <div class="error" id="errorMsg" role="alert" aria-live="polite"></div>
-            <div class="loading" id="loginLoading" aria-live="polite"><p style="text-align:center;margin-top:8px;">ログイン中...</p></div>
+          <div class="initial-hero glass-card" aria-hidden="true">
+            <div class="initial-hero__title">目指せ「1日1回の達成」</div>
+            <p class="initial-hero__subtitle">IDとニックネームでログイン。今日の10問を解いてランキングに挑戦！</p>
           </div>
+          <div class="login-stage">
+            <div class="login-card glass-card frame" role="group" aria-labelledby="login-title">
+              <img id="loginPanel" class="login-card__panel" src="images/screen_login.ui-assets/assets/global_screen_login_login_01.png" alt="ログインカード背景" loading="eager" decoding="async" onerror="console.warn('panel not found:', this.src)">
+              <div class="login-card__content">
+                <img id="loginHero" class="login-hero" src="images/screen_login.ui-assets/assets/global_screen_login_image_01.png" alt="キャンペーンイメージ" loading="lazy" decoding="async" onerror="console.warn('hero not found:', this.src)">
+                <div class="logo-wrap">
+                  <img id="appLogo" class="app-logo" src="images/screen_login.ui-assets/assets/global_screen_login_login_rogo_01.png" alt="アプリロゴ" width="320" height="120" fetchpriority="high" decoding="async" loading="eager" onerror="console.warn('logo not found:', this.src)">
+                </div>
+                <h1 id="login-title" class="title" style="color:#fff;text-shadow:0 6px 18px rgba(0,0,0,0.45);">カラコンアカデミア</h1>
+                <p class="login-copy">スタッフIDと表示名を入力してログインしてください</p>
+                <div class="input-group">
+                  <label for="userId">ユーザーID</label>
+                  <div class="input-shell">
+                    <input type="text" id="userId" placeholder="ユーザーID" autocomplete="off" aria-label="ユーザーID入力">
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label for="userName">ユーザー名称</label>
+                  <div class="input-shell" data-skin="alt">
+                    <input type="text" id="userName" placeholder="ユーザー名称" autocomplete="off" aria-label="ユーザー名称入力">
+                  </div>
+                </div>
+                <div class="login-actions">
+                  <button id="loginBtn" onclick="handleLogin()" aria-label="ログイン"><span class="sr-only">ログイン</span></button>
+                </div>
+                <div class="error" id="errorMsg" role="alert" aria-live="polite"></div>
+                <div class="loading" id="loginLoading" aria-live="polite"><p style="text-align:center;margin-top:8px;">ログイン中...</p></div>
+              </div>
+            </div>
           </div>
         </div>
-        
-        <!-- ホーム画面 -->
         <div class="page" id="homePage" aria-label="ホームページ">
           <div class="glass-card profile-card" role="group" aria-label="プロフィール">
             <div class="user-avatar" aria-hidden="true">👤</div>
@@ -606,11 +713,17 @@
       function applyUiAssets(base){
         try {
           var normalizedBase = base && base.endsWith('/') ? base : (base ? base + '/' : '');
+          var root = document.documentElement;
+          if (root) {
+            root.style.setProperty('--login-bg-image', 'url(' + normalizedBase + 'global_screen_login_login_haikei_01.png)');
+          }
           var set = function(id, file){
             var el = document.getElementById(id); if(!el) return;
             el.src = normalizedBase + file;
           };
-          set('appLogo','global_screen_login_rogo_01.png');
+          set('loginPanel','global_screen_login_login_01.png');
+          set('loginHero','global_screen_login_image_01.png');
+          set('appLogo','global_screen_login_login_rogo_01.png');
           set('homeMiniLogo','screene_home/global_screen_home_icon_01.png');
           set('btnDailyImg','screene_home/global_screen_home_h_btn_daily_01.png');
           set('btnPracticeImg','screene_home/global_screen_home_h_btn_practice_01.png');
@@ -619,7 +732,7 @@
           try {
             var loginBtn = document.getElementById('loginBtn');
             if (loginBtn) {
-              loginBtn.style.backgroundImage = 'url(' + normalizedBase + 'global_screen_login_l_login_btn_01.png)';
+              loginBtn.style.backgroundImage = 'url(' + normalizedBase + 'global_screen_login_login_btn_01.png)';
               loginBtn.style.backgroundSize = 'cover';
               loginBtn.style.backgroundPosition = 'center';
               loginBtn.style.backgroundRepeat = 'no-repeat';
@@ -660,6 +773,17 @@
          * @property {?number} feedbackTimeoutId
          * @property {number} hintsUsed
          * @property {Array} currentHints
+         */
+
+        /**
+         * @typedef {Object} QuestionPayload
+         * @property {string} questionId
+         * @property {number} questionNumber
+         * @property {{lens: string, thumbnail: string}} imageUrls
+         * @property {Array<{id:number,brandName:string,colorName:string,isCorrect:boolean}>} options
+         * @property {{dia:string,gdia:string,bc:string}} hint1
+         * @property {{comment:string}} hint2
+         * @property {{sheetKey:string,brandName:string,colorName:string}} answerKey
          */
 
         /**
@@ -910,8 +1034,10 @@
             const hintDisplay = document.getElementById('hintDisplay');
             if (hintDisplay) { hintDisplay.classList.remove('show'); hintDisplay.textContent = ''; }
 
-            displayLensImage('leftLens', q.lensImageUrl);
-            displayLensImage('rightLens', q.lensImageUrl);
+            const lensUrl = (q.imageUrls && q.imageUrls.lens) || q.lensImageUrl;
+            const thumbUrl = (q.imageUrls && (q.imageUrls.thumbnail || q.imageUrls.lens)) || q.thumbnailImageUrl || lensUrl;
+            displayLensImage('leftLens', lensUrl);
+            displayLensImage('rightLens', thumbUrl);
 
             displayOptions(q.options, q);
 
@@ -1019,12 +1145,15 @@
             const isCorrect = selectedOption ? selectedOption.isCorrect : false;
             const timeSpent = Math.max(0, 20 - (quizState.timeLeft || 0));
             const perAnswerScore = isCorrect ? 10 : 0;
+            const answerKeyLabel = question.answerKey
+              ? `${question.answerKey.brandName} ${question.answerKey.colorName}`
+              : `${question.correctAnswer.I} ${question.correctAnswer.J}`;
             quizState.answers.push({
                 questionNumber: quizState.currentIndex + 1,
-                questionId: 'Q' + (quizState.currentIndex + 1),
+                questionId: question.questionId || ('Q' + (quizState.currentIndex + 1)),
                 userAnswer: selectedOption ? `${selectedOption.brandName} ${selectedOption.colorName}` : '未回答',
                 selected: selectedOption ? `${selectedOption.brandName} ${selectedOption.colorName}` : '未回答',
-                correct: `${question.correctAnswer.I} ${question.correctAnswer.J}`,
+                correct: answerKeyLabel,
                 isCorrect,
                 hintsUsed: quizState.currentHints.length,
                 timeSpent: timeSpent,
@@ -1033,7 +1162,7 @@
             if (isCorrect) { quizState.correctCount++; quizState.score += 10; updateScoreDisplay(); }
             document.querySelectorAll('.answer-option').forEach(opt => {
                 const text = opt.textContent;
-                const correctText = `${question.correctAnswer.I} ${question.correctAnswer.J}`;
+                const correctText = answerKeyLabel;
                 if (text === correctText) opt.classList.add('correct');
                 else if (selectedOption && text === `${selectedOption.brandName} ${selectedOption.colorName}` && !isCorrect) opt.classList.add('incorrect');
             });

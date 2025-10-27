@@ -65,16 +65,6 @@
         cursor: default;
         opacity: 0.6;
       }
-      .command-line {
-        background: rgba(77, 115, 255, 0.08);
-        border: 1px dashed rgba(77, 115, 255, 0.4);
-        padding: 8px 10px;
-        border-radius: 4px;
-        font-family: "Consolas", "SFMono-Regular", monospace;
-        font-size: 12px;
-        overflow-x: auto;
-        margin-bottom: 8px;
-      }
       button.secondary {
         background: transparent;
         color: #4d73ff;
@@ -165,7 +155,6 @@
         }
       }
     </style>
-      <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   </head>
   <body>
     <main>
@@ -182,17 +171,10 @@
         </ul>
         <div class="actions">
           <button id="download-layout" type="button" disabled>layout.json を保存</button>
-          <button id="download-bundle" type="button" disabled>Zipを保存</button>
           <button id="copy-summary" type="button" class="secondary" disabled>概要をコピー</button>
           <button id="close-plugin" type="button" class="secondary">閉じる</button>
         </div>
-                <section id="sync-section" hidden>
-          <h2>Codex / CloudCode 連携</h2>
-          <p>Zip を保存した後は、以下の操作を実行してください。</p>
-          <pre id="sync-command" class="command-line">codex ui-assets sync ./exports/layout.ui-assets.zip</pre>
-          <button id="copy-command" type="button" class="secondary" disabled>操作をコピー</button>
-        </section>
-<h2>画像アセット</h2>
+        <h2>画像アセット</h2>
         <p id="no-assets" hidden>エクスポート対象の画像は見つかりませんでした。</p>
         <div id="asset-list" class="assets"></div>
       </section>
@@ -202,8 +184,7 @@
       (function () {
         const state = {
           layout: null,
-          assets: [],
-          bundleName: ""
+          assets: []
         };
 
         const statusEl = document.getElementById("status");
@@ -217,12 +198,8 @@
         const noAssetsEl = document.getElementById("no-assets");
         const assetListEl = document.getElementById("asset-list");
         const downloadLayoutBtn = document.getElementById("download-layout");
-        const downloadBundleBtn = document.getElementById("download-bundle");
         const copySummaryBtn = document.getElementById("copy-summary");
-        const copyCommandBtn = document.getElementById("copy-command");
         const closeBtn = document.getElementById("close-plugin");
-        const syncSection = document.getElementById("sync-section");
-        const syncCommandEl = document.getElementById("sync-command");
 
         window.addEventListener("message", (event) => {
           const message = event.data && event.data.pluginMessage;
@@ -234,7 +211,7 @@
               showError(String(message.message || "エクスポートに失敗しました。"));
               break;
             case "EXPORT_RESULT":
-              void renderExportResult(message.payload);
+              renderExportResult(message.payload);
               break;
             default:
               break;
@@ -242,9 +219,7 @@
         });
 
         downloadLayoutBtn.addEventListener("click", () => downloadLayout());
-        downloadBundleBtn.addEventListener("click", () => downloadBundle());
         copySummaryBtn.addEventListener("click", () => copySummary());
-        copyCommandBtn.addEventListener("click", () => copyCommand());
         closeBtn.addEventListener("click", () => {
           parent.postMessage({ pluginMessage: { type: "CLOSE" } }, "*");
         });
@@ -260,7 +235,7 @@
           copySummaryBtn.disabled = true;
         }
 
-        async function renderExportResult(payload) {
+        function renderExportResult(payload) {
           if (!payload || !payload.layout) {
             showError("レイアウト情報を取得できませんでした。");
             return;
@@ -274,31 +249,16 @@
                 section: asset.section || "",
                 area: asset.area || "",
                 baseName: asset.baseName || "",
-                data: base64ToUint8Array(asset.base64)
+                data: toUint8Array(asset.bytes)
               }))
             : [];
-          await appendPressedVariants();
-          if (payload.preview && payload.preview.base64) {
-            state.assets.unshift({
-              id: payload.preview.id || "layout_preview",
-              fileName: payload.preview.fileName || "layout.preview.png",
-              format: payload.preview.format || "PNG",
-              section: "",
-              area: "",
-              baseName: payload.preview.fileName || "layout_preview",
-              data: base64ToUint8Array(payload.preview.base64),
-              preview: true
-            });
-          }
 
           statusEl.textContent = "エクスポート結果を確認できます。";
           statusEl.className = "status status--success";
           errorEl.hidden = true;
           resultSection.hidden = false;
           downloadLayoutBtn.disabled = false;
-          downloadBundleBtn.disabled = false;
           copySummaryBtn.disabled = false;
-          copyCommandBtn.disabled = false;
 
           const meta = state.layout.meta || {};
           layoutNameEl.textContent = meta.layoutName || "-";
@@ -308,11 +268,6 @@
           objectCountEl.textContent = Array.isArray(state.layout.objects) ? String(state.layout.objects.length) : "0";
           assetCountEl.textContent = String(state.assets.length);
           generatedAtEl.textContent = meta.generatedAt || new Date().toISOString();
-
-          const slug = slugify(meta.layoutName || "layout");
-          state.bundleName = `${slug}.ui-assets.zip`;
-          syncCommandEl.textContent = `codex ui-assets sync ./exports/${state.bundleName}`;
-          syncSection.hidden = false;
 
           renderAssetList(state.assets);
         }
@@ -350,106 +305,6 @@
           });
         }
 
-        async function appendPressedVariants() {
-          const variants = [];
-          for (const asset of state.assets) {
-            if (!shouldCreatePressedVariant(asset)) {
-              continue;
-            }
-            try {
-              const data = await generatePressedVariantBytes(asset);
-              variants.push({
-                ...asset,
-                id: `${asset.id}_dim`,
-                fileName: derivePressedFileName(asset.fileName),
-                data,
-                variantOf: asset.id
-              });
-            } catch (error) {
-              console.warn("[ui] failed to create pressed variant:", asset.fileName, error);
-            }
-          }
-          if (variants.length > 0) {
-            state.assets.push(...variants);
-          }
-        }
-
-        function shouldCreatePressedVariant(asset) {
-          if (!asset || !(asset.data instanceof Uint8Array)) {
-            return false;
-          }
-          const name = (asset.fileName || "").toLowerCase();
-          if (!name || name.includes("_dim")) {
-            return false;
-          }
-          const format = (asset.format || "png").toUpperCase();
-          return format === "PNG";
-        }
-
-        function derivePressedFileName(fileName) {
-          if (!fileName) {
-            return "asset_dim.png";
-          }
-          const idx = fileName.lastIndexOf(".");
-          if (idx === -1) {
-            return `${fileName}_dim`;
-          }
-          const base = fileName.slice(0, idx);
-          const ext = fileName.slice(idx);
-          return `${base}_dim${ext}`;
-        }
-
-        async function generatePressedVariantBytes(asset) {
-          const mime = guessMime(asset.format);
-          const blob = new Blob([asset.data], { type: mime || "image/png" });
-          const bitmap = await decodeImageBlob(blob);
-          const width = bitmap && typeof bitmap.width === "number" ? bitmap.width : bitmap.naturalWidth || 0;
-          const height = bitmap && typeof bitmap.height === "number" ? bitmap.height : bitmap.naturalHeight || 0;
-          if (!width || !height) {
-            throw new Error("Invalid bitmap dimensions");
-          }
-          const canvas = document.createElement("canvas");
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext("2d");
-          ctx.drawImage(bitmap, 0, 0);
-          ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          const dimBlob = await new Promise((resolve, reject) => {
-            canvas.toBlob((result) => {
-              if (result) {
-                resolve(result);
-              } else {
-                reject(new Error("canvas.toBlob failed"));
-              }
-            }, "image/png");
-          });
-          if (bitmap && typeof bitmap.close === "function") {
-            bitmap.close();
-          }
-          const buffer = await dimBlob.arrayBuffer();
-          return new Uint8Array(buffer);
-        }
-
-        async function decodeImageBlob(blob) {
-          if (typeof createImageBitmap === "function") {
-            return createImageBitmap(blob);
-          }
-          return new Promise((resolve, reject) => {
-            const url = URL.createObjectURL(blob);
-            const image = new Image();
-            image.onload = () => {
-              URL.revokeObjectURL(url);
-              resolve(image);
-            };
-            image.onerror = (error) => {
-              URL.revokeObjectURL(url);
-              reject(error);
-            };
-            image.src = url;
-          });
-        }
-
         function downloadLayout() {
           if (!state.layout) {
             return;
@@ -458,37 +313,6 @@
           const blob = new Blob([pretty], { type: "application/json" });
           const name = (state.layout.meta && state.layout.meta.layoutName) || "layout";
           triggerDownload(blob, `${slugify(name)}.layout.json`);
-        }
-
-        async function downloadBundle() {
-          if (!state.layout) {
-            return;
-          }
-          if (typeof JSZip === "undefined") {
-            showTemporaryMessage("Zip生成に失敗しました。", true);
-            return;
-          }
-          const meta = state.layout.meta || {};
-          const slug = slugify(meta.layoutName || "layout");
-          const zip = new JSZip();
-          zip.file(`${slug}.layout.json`, JSON.stringify(state.layout, null, 2));
-          const folder = zip.folder("assets");
-          state.assets.forEach((asset) => {
-            const data = asset && asset.data ? asset.data : new Uint8Array();
-            folder.file(asset.fileName, data, { binary: true });
-          });
-          try {
-            const blob = await zip.generateAsync({
-              type: "blob",
-              compression: "DEFLATE",
-              compressionOptions: { level: 6 }
-            });
-            triggerDownload(blob, state.bundleName || `${slug}.ui-assets.zip`);
-            showTemporaryMessage("Zipを保存しました。");
-          } catch (error) {
-            console.error("[ui] bundle error", error);
-            showTemporaryMessage("Zip生成に失敗しました。", true);
-          }
         }
 
         function downloadAsset(asset) {
@@ -506,37 +330,23 @@
           }
           const meta = state.layout.meta || {};
           const lines = [
-            `layoutName: ${meta.layoutName || "-"}` ,
-            `canvas: ${meta.canvasWidth || "-"} x ${meta.canvasHeight || "-"}` ,
-            `objects: ${Array.isArray(state.layout.objects) ? state.layout.objects.length : 0}` ,
+            `layoutName: ${meta.layoutName || "-"}`,
+            `canvas: ${meta.canvasWidth || "-"} x ${meta.canvasHeight || "-"}`,
+            `objects: ${Array.isArray(state.layout.objects) ? state.layout.objects.length : 0}`,
             `assets: ${state.assets.length}`
           ];
           const text = lines.join("\n");
-          copyText(text, "概要をコピーしました。");
-        }
-
-        function copyCommand() {
-          if (!syncCommandEl || !syncCommandEl.textContent) {
-            return;
-          }
-          copyText(syncCommandEl.textContent.trim(), "操作をコピーしました。");
-        }
-
-        function copyText(text, successMessage) {
-          if (!text) {
-            return;
-          }
           if (!navigator.clipboard) {
-            fallbackCopy(text, successMessage);
+            fallbackCopy(text);
             return;
           }
           navigator.clipboard
             .writeText(text)
-            .then(() => showTemporaryMessage(successMessage || "コピーしました。"))
-            .catch(() => fallbackCopy(text, successMessage));
+            .then(() => showTemporaryMessage("概要をコピーしました。"))
+            .catch(() => fallbackCopy(text));
         }
 
-        function fallbackCopy(text, successMessage) {
+        function fallbackCopy(text) {
           const textarea = document.createElement("textarea");
           textarea.value = text;
           textarea.style.position = "fixed";
@@ -545,7 +355,7 @@
           textarea.select();
           try {
             document.execCommand("copy");
-            showTemporaryMessage(successMessage || "コピーしました。");
+            showTemporaryMessage("概要をコピーしました。");
           } catch (_error) {
             showTemporaryMessage("コピーできませんでした。", true);
           } finally {
@@ -608,22 +418,20 @@
           }
         }
 
-        // Base64文字列をUint8Arrayに変換
-        function base64ToUint8Array(base64) {
-          if (!base64 || typeof base64 !== "string") {
+        function toUint8Array(bytes) {
+          if (!bytes) {
             return new Uint8Array();
           }
-          try {
-            const binaryString = atob(base64);
-            const bytes = new Uint8Array(binaryString.length);
-            for (let i = 0; i < binaryString.length; i++) {
-              bytes[i] = binaryString.charCodeAt(i);
-            }
+          if (bytes instanceof Uint8Array) {
             return bytes;
-          } catch (error) {
-            console.error("[ui] Base64デコードエラー:", error);
-            return new Uint8Array();
           }
+          if (Array.isArray(bytes)) {
+            return new Uint8Array(bytes);
+          }
+          if (typeof bytes === "object" && typeof bytes.length === "number") {
+            return new Uint8Array(bytes);
+          }
+          return new Uint8Array();
         }
 
         function generateDefaultFileName(asset) {
@@ -649,3 +457,4 @@
     </script>
   </body>
 </html>
+
