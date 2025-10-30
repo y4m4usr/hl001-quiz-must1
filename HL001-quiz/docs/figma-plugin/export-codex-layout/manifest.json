@@ -2,8 +2,8 @@
   "name": "Codex Layout Exporter",
   "id": "1564290291107280052",
   "api": "1.0.0",
-  "main": "code.js",
-  "ui": "ui.html",
+  "main": "build/code.js",
+  "ui": "build/ui.html",
   "editorType": ["figma"],
   "documentAccess": "dynamic-page",
   "networkAccess": {

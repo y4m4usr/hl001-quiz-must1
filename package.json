@@ -9,7 +9,10 @@
     "clasp:version": "clasp version \"auto: update\"",
     "deploy:stable": "clasp deploy -i AKfycbw_pqYq6-ckNmiN9cGa6-XFg_3ZURAOZ0EfghWIu_ukFHCH7TpQXqKOfbOyzWZMnmuB8A -d \"auto: stable deploy\"",
     "deploy:gas": "node scripts/deploy-gas.js",
-    "deploy:all": "node scripts/deploy-all.js"
+    "deploy:all": "node scripts/deploy-all.js",
+    "manifest:dry": "DRY_RUN=1 node tools/auto_update_manifest.js",
+    "manifest:update": "node tools/auto_update_manifest.js",
+    "rebase:urls": "node tools/rebase_urls_repo_wide.js"
   },
   "keywords": [],
   "author": "",

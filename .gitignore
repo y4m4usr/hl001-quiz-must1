@@ -23,3 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 # Misc
 *.swp
+
+
+#Ignore vscode AI rules
+.github\instructions\codacy.instructions.md

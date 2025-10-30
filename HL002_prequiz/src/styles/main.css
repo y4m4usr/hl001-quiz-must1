@@ -1,0 +1,14 @@
+/* TODO: サイバーパンクデザインを適用 */
+body.placeholder {
+  font-family: "Yu Gothic", sans-serif;
+  background: #f6f6f6;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+}
+.section-placeholder {
+  text-align: center;
+}
+

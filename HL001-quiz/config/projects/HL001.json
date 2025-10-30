@@ -1,0 +1,13 @@
+{
+  "projectId": "HL001",
+  "dataDir": "data",
+  "manifestPath": "manifest/manifest.json",
+  "ckColumns": ["E列", "I列", "J列", "K列", "X列"],
+  "lensDir": "imagesnew1/lens/lens1",
+  "samuneDir": "imagesnew1/samune/samune1",
+  "manifestUrl": "",
+  "cdn": {
+    "from": "",
+    "to": ""
+  }
+}

@@ -65,6 +65,16 @@
         cursor: default;
         opacity: 0.6;
       }
+      .command-line {
+        background: rgba(77, 115, 255, 0.08);
+        border: 1px dashed rgba(77, 115, 255, 0.4);
+        padding: 8px 10px;
+        border-radius: 4px;
+        font-family: "Consolas", "SFMono-Regular", monospace;
+        font-size: 12px;
+        overflow-x: auto;
+        margin-bottom: 8px;
+      }
       button.secondary {
         background: transparent;
         color: #4d73ff;
@@ -155,6 +165,7 @@
         }
       }
     </style>
+      <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   </head>
   <body>
     <main>
@@ -171,10 +182,17 @@
         </ul>
         <div class="actions">
           <button id="download-layout" type="button" disabled>layout.json を保存</button>
+          <button id="download-bundle" type="button" disabled>Zipを保存</button>
           <button id="copy-summary" type="button" class="secondary" disabled>概要をコピー</button>
           <button id="close-plugin" type="button" class="secondary">閉じる</button>
         </div>
-        <h2>画像アセット</h2>
+                <section id="sync-section" hidden>
+          <h2>Codex / CloudCode 連携</h2>
+          <p>Zip を保存した後は、以下の操作を実行してください。</p>
+          <pre id="sync-command" class="command-line">codex ui-assets sync ./exports/layout.ui-assets.zip</pre>
+          <button id="copy-command" type="button" class="secondary" disabled>操作をコピー</button>
+        </section>
+<h2>画像アセット</h2>
         <p id="no-assets" hidden>エクスポート対象の画像は見つかりませんでした。</p>
         <div id="asset-list" class="assets"></div>
       </section>
@@ -184,7 +202,8 @@
       (function () {
         const state = {
           layout: null,
-          assets: []
+          assets: [],
+          bundleName: ""
         };
 
         const statusEl = document.getElementById("status");
@@ -198,8 +217,12 @@
         const noAssetsEl = document.getElementById("no-assets");
         const assetListEl = document.getElementById("asset-list");
         const downloadLayoutBtn = document.getElementById("download-layout");
+        const downloadBundleBtn = document.getElementById("download-bundle");
         const copySummaryBtn = document.getElementById("copy-summary");
+        const copyCommandBtn = document.getElementById("copy-command");
         const closeBtn = document.getElementById("close-plugin");
+        const syncSection = document.getElementById("sync-section");
+        const syncCommandEl = document.getElementById("sync-command");
 
         window.addEventListener("message", (event) => {
           const message = event.data && event.data.pluginMessage;
@@ -211,7 +234,7 @@
               showError(String(message.message || "エクスポートに失敗しました。"));
               break;
             case "EXPORT_RESULT":
-              renderExportResult(message.payload);
+              void renderExportResult(message.payload);
               break;
             default:
               break;
@@ -219,7 +242,9 @@
         });
 
         downloadLayoutBtn.addEventListener("click", () => downloadLayout());
+        downloadBundleBtn.addEventListener("click", () => downloadBundle());
         copySummaryBtn.addEventListener("click", () => copySummary());
+        copyCommandBtn.addEventListener("click", () => copyCommand());
         closeBtn.addEventListener("click", () => {
           parent.postMessage({ pluginMessage: { type: "CLOSE" } }, "*");
         });
@@ -235,30 +260,68 @@
           copySummaryBtn.disabled = true;
         }
 
-        function renderExportResult(payload) {
+        async function renderExportResult(payload) {
           if (!payload || !payload.layout) {
             showError("レイアウト情報を取得できませんでした。");
             return;
           }
           state.layout = payload.layout;
           state.assets = Array.isArray(payload.assets)
-            ? payload.assets.map((asset) => ({
-                id: asset.id || asset.fileName || "asset",
-                fileName: asset.fileName || generateDefaultFileName(asset),
-                format: asset.format || "PNG",
-                section: asset.section || "",
-                area: asset.area || "",
-                baseName: asset.baseName || "",
-                data: toUint8Array(asset.bytes)
-              }))
+            ? payload.assets.map((asset) => {
+                const data = base64ToUint8Array(asset.base64);
+                const format = (asset.format || "PNG").toUpperCase();
+                const available = Array.isArray(asset.availableFormats) && asset.availableFormats.length
+                  ? asset.availableFormats.map((fmt) => String(fmt).toUpperCase())
+                  : ["PNG"];
+                const fileName = asset.fileName || generateDefaultFileName({
+                  baseName: asset.baseName || asset.id || "asset",
+                  format
+                });
+                return {
+                  id: asset.layoutId || asset.id || fileName || "asset",
+                  layoutId: asset.layoutId || asset.id || "",
+                  fileName,
+                  format,
+                  section: asset.section || "",
+                  area: asset.area || "",
+                  baseName: asset.baseName || "",
+                  hash: asset.hash || "",
+                  autoFormatReason: asset.autoFormatReason || "",
+                  availableFormats: available,
+                  data,
+                  originalData: cloneUint8Array(data),
+                  originalFormat: format,
+                  originalHash: asset.hash || ""
+                };
+              })
             : [];
+          await appendPressedVariants();
+          if (payload.preview && payload.preview.base64) {
+            state.assets.unshift({
+              id: payload.preview.id || "layout_preview",
+              fileName: payload.preview.fileName || "layout.preview.png",
+              format: payload.preview.format || "PNG",
+              section: "",
+              area: "",
+              baseName: payload.preview.fileName || "layout_preview",
+              data: base64ToUint8Array(payload.preview.base64),
+              originalData: base64ToUint8Array(payload.preview.base64),
+              originalFormat: (payload.preview.format || "PNG").toUpperCase(),
+              originalHash: payload.preview.hash || "",
+              hash: payload.preview.hash || "",
+              availableFormats: ["PNG"],
+              preview: true
+            });
+          }
 
           statusEl.textContent = "エクスポート結果を確認できます。";
           statusEl.className = "status status--success";
           errorEl.hidden = true;
           resultSection.hidden = false;
           downloadLayoutBtn.disabled = false;
+          downloadBundleBtn.disabled = false;
           copySummaryBtn.disabled = false;
+          copyCommandBtn.disabled = false;
 
           const meta = state.layout.meta || {};
           layoutNameEl.textContent = meta.layoutName || "-";
@@ -269,6 +332,12 @@
           assetCountEl.textContent = String(state.assets.length);
           generatedAtEl.textContent = meta.generatedAt || new Date().toISOString();
 
+          const slug = slugify(meta.layoutName || "layout");
+          state.bundleName = `${slug}.ui-assets.zip`;
+          syncCommandEl.textContent = `codex ui-assets sync ./exports/${state.bundleName}`;
+          syncSection.hidden = false;
+
+          updateCommentSummary(meta);
           renderAssetList(state.assets);
         }
 
@@ -294,6 +363,37 @@
 
             const actions = document.createElement("div");
             actions.className = "asset-actions";
+            if (!asset.preview && Array.isArray(asset.availableFormats) && asset.availableFormats.length > 0) {
+              const select = document.createElement("select");
+              select.title = "書き出し形式を変更";
+              asset.availableFormats.forEach((format) => {
+                const option = document.createElement("option");
+                option.value = format;
+                option.textContent = format;
+                select.appendChild(option);
+              });
+              select.value = asset.format;
+              select.addEventListener("change", (event) => {
+                const value = String(event.target.value || "").toUpperCase();
+                select.disabled = true;
+                updateAssetFormat(asset, value)
+                  .then(() => {
+                    select.value = asset.format;
+                    meta.textContent = createMetaText(asset);
+                    showTemporaryMessage(`${asset.fileName} を ${value} に変換しました。`);
+                    renderAssetList(state.assets);
+                  })
+                  .catch((error) => {
+                    console.error("[ui] format change error", error);
+                    select.value = asset.format;
+                    showTemporaryMessage("変換に失敗しました。", true);
+                  })
+                  .finally(() => {
+                    select.disabled = false;
+                  });
+              });
+              actions.appendChild(select);
+            }
             const downloadBtn = document.createElement("button");
             downloadBtn.type = "button";
             downloadBtn.textContent = "保存";
@@ -305,6 +405,114 @@
           });
         }
 
+        async function appendPressedVariants() {
+          const variants = [];
+          for (const asset of state.assets) {
+            if (!shouldCreatePressedVariant(asset)) {
+              continue;
+            }
+            try {
+              const data = await generatePressedVariantBytes(asset);
+              const hash = await computeSha256(data);
+              variants.push({
+                ...asset,
+                id: `${asset.id}_dim`,
+                fileName: derivePressedFileName(asset.fileName),
+                data,
+                originalData: cloneUint8Array(data),
+                originalFormat: "PNG",
+                format: "PNG",
+                availableFormats: ["PNG"],
+                hash,
+                originalHash: hash,
+                autoFormatReason: "auto-generated pressed variant",
+                variantOf: asset.id
+              });
+            } catch (error) {
+              console.warn("[ui] failed to create pressed variant:", asset.fileName, error);
+            }
+          }
+          if (variants.length > 0) {
+            state.assets.push(...variants);
+          }
+        }
+
+        function shouldCreatePressedVariant(asset) {
+          if (!asset || asset.preview || !(asset.data instanceof Uint8Array)) {
+            return false;
+          }
+          const name = (asset.fileName || "").toLowerCase();
+          if (!name || name.includes("_dim")) {
+            return false;
+          }
+          const format = (asset.format || "png").toUpperCase();
+          return format === "PNG";
+        }
+
+        function derivePressedFileName(fileName) {
+          if (!fileName) {
+            return "asset_dim.png";
+          }
+          const idx = fileName.lastIndexOf(".");
+          if (idx === -1) {
+            return `${fileName}_dim`;
+          }
+          const base = fileName.slice(0, idx);
+          const ext = fileName.slice(idx);
+          return `${base}_dim${ext}`;
+        }
+
+        async function generatePressedVariantBytes(asset) {
+          const mime = guessMime(asset.format);
+          const blob = new Blob([asset.data], { type: mime || "image/png" });
+          const bitmap = await decodeImageBlob(blob);
+          const width = bitmap && typeof bitmap.width === "number" ? bitmap.width : bitmap.naturalWidth || 0;
+          const height = bitmap && typeof bitmap.height === "number" ? bitmap.height : bitmap.naturalHeight || 0;
+          if (!width || !height) {
+            throw new Error("Invalid bitmap dimensions");
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(bitmap, 0, 0);
+          ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          const dimBlob = await new Promise((resolve, reject) => {
+            canvas.toBlob((result) => {
+              if (result) {
+                resolve(result);
+              } else {
+                reject(new Error("canvas.toBlob failed"));
+              }
+            }, "image/png");
+          });
+          if (bitmap && typeof bitmap.close === "function") {
+            bitmap.close();
+          }
+          const buffer = await dimBlob.arrayBuffer();
+          return new Uint8Array(buffer);
+        }
+
+        async function decodeImageBlob(blob) {
+          if (typeof createImageBitmap === "function") {
+            return createImageBitmap(blob);
+          }
+          return new Promise((resolve, reject) => {
+            const url = URL.createObjectURL(blob);
+            const image = new Image();
+            image.onload = () => {
+              URL.revokeObjectURL(url);
+              resolve(image);
+            };
+            image.onerror = (error) => {
+              URL.revokeObjectURL(url);
+              reject(error);
+            };
+            image.src = url;
+          });
+        }
+
         function downloadLayout() {
           if (!state.layout) {
             return;
@@ -313,6 +521,37 @@
           const blob = new Blob([pretty], { type: "application/json" });
           const name = (state.layout.meta && state.layout.meta.layoutName) || "layout";
           triggerDownload(blob, `${slugify(name)}.layout.json`);
+        }
+
+        async function downloadBundle() {
+          if (!state.layout) {
+            return;
+          }
+          if (typeof JSZip === "undefined") {
+            showTemporaryMessage("Zip生成に失敗しました。", true);
+            return;
+          }
+          const meta = state.layout.meta || {};
+          const slug = slugify(meta.layoutName || "layout");
+          const zip = new JSZip();
+          zip.file(`${slug}.layout.json`, JSON.stringify(state.layout, null, 2));
+          const folder = zip.folder("assets");
+          state.assets.forEach((asset) => {
+            const data = asset && asset.data ? asset.data : new Uint8Array();
+            folder.file(asset.fileName, data, { binary: true });
+          });
+          try {
+            const blob = await zip.generateAsync({
+              type: "blob",
+              compression: "DEFLATE",
+              compressionOptions: { level: 6 }
+            });
+            triggerDownload(blob, state.bundleName || `${slug}.ui-assets.zip`);
+            showTemporaryMessage("Zipを保存しました。");
+          } catch (error) {
+            console.error("[ui] bundle error", error);
+            showTemporaryMessage("Zip生成に失敗しました。", true);
+          }
         }
 
         function downloadAsset(asset) {
@@ -330,23 +569,37 @@
           }
           const meta = state.layout.meta || {};
           const lines = [
-            `layoutName: ${meta.layoutName || "-"}`,
-            `canvas: ${meta.canvasWidth || "-"} x ${meta.canvasHeight || "-"}`,
-            `objects: ${Array.isArray(state.layout.objects) ? state.layout.objects.length : 0}`,
+            `layoutName: ${meta.layoutName || "-"}` ,
+            `canvas: ${meta.canvasWidth || "-"} x ${meta.canvasHeight || "-"}` ,
+            `objects: ${Array.isArray(state.layout.objects) ? state.layout.objects.length : 0}` ,
             `assets: ${state.assets.length}`
           ];
           const text = lines.join("\n");
+          copyText(text, "概要をコピーしました。");
+        }
+
+        function copyCommand() {
+          if (!syncCommandEl || !syncCommandEl.textContent) {
+            return;
+          }
+          copyText(syncCommandEl.textContent.trim(), "操作をコピーしました。");
+        }
+
+        function copyText(text, successMessage) {
+          if (!text) {
+            return;
+          }
           if (!navigator.clipboard) {
-            fallbackCopy(text);
+            fallbackCopy(text, successMessage);
             return;
           }
           navigator.clipboard
             .writeText(text)
-            .then(() => showTemporaryMessage("概要をコピーしました。"))
-            .catch(() => fallbackCopy(text));
+            .then(() => showTemporaryMessage(successMessage || "コピーしました。"))
+            .catch(() => fallbackCopy(text, successMessage));
         }
 
-        function fallbackCopy(text) {
+        function fallbackCopy(text, successMessage) {
           const textarea = document.createElement("textarea");
           textarea.value = text;
           textarea.style.position = "fixed";
@@ -355,7 +608,7 @@
           textarea.select();
           try {
             document.execCommand("copy");
-            showTemporaryMessage("概要をコピーしました。");
+            showTemporaryMessage(successMessage || "コピーしました。");
           } catch (_error) {
             showTemporaryMessage("コピーできませんでした。", true);
           } finally {
@@ -388,6 +641,12 @@
           if (asset.baseName) {
             parts.push(`名称: ${asset.baseName}`);
           }
+          if (asset.hash) {
+            parts.push(`ハッシュ: ${formatHash(asset.hash)}`);
+          }
+          if (asset.autoFormatReason && !asset.preview) {
+            parts.push(`理由: ${asset.autoFormatReason}`);
+          }
           return parts.join(" / ") || "メタデータなし";
         }
 
@@ -411,6 +670,8 @@
             case "JPG":
             case "JPEG":
               return "image/jpeg";
+            case "WEBP":
+              return "image/webp";
             case "SVG":
               return "image/svg+xml";
             default:
@@ -418,26 +679,150 @@
           }
         }
 
-        function toUint8Array(bytes) {
-          if (!bytes) {
+        // Base64文字列をUint8Arrayに変換
+        function base64ToUint8Array(base64) {
+          if (!base64 || typeof base64 !== "string") {
             return new Uint8Array();
           }
-          if (bytes instanceof Uint8Array) {
+          try {
+            const binaryString = atob(base64);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+              bytes[i] = binaryString.charCodeAt(i);
+            }
             return bytes;
+          } catch (error) {
+            console.error("[ui] Base64デコードエラー:", error);
+            return new Uint8Array();
           }
-          if (Array.isArray(bytes)) {
-            return new Uint8Array(bytes);
+        }
+
+        async function updateAssetFormat(asset, targetFormat) {
+          if (!asset || !asset.originalData) {
+            return;
           }
-          if (typeof bytes === "object" && typeof bytes.length === "number") {
-            return new Uint8Array(bytes);
+          const normalized = (targetFormat || "").toUpperCase();
+          if (!normalized) {
+            throw new Error("format is empty");
           }
-          return new Uint8Array();
+          const originalFormat = (asset.originalFormat || "").toUpperCase();
+          if (normalized === originalFormat) {
+            asset.data = cloneUint8Array(asset.originalData);
+            asset.format = normalized;
+            asset.fileName = generateFileNameWithFormat(asset.baseName || asset.id || "asset", normalized);
+            asset.hash = asset.originalHash || asset.hash || "";
+            return;
+          }
+          if (normalized === (asset.format || "").toUpperCase()) {
+            return;
+          }
+          const sourceData = cloneUint8Array(asset.originalData);
+          const sourceMime = guessMime(originalFormat || asset.format || "PNG");
+          const blob = new Blob([sourceData], { type: sourceMime || "image/png" });
+          const bitmap = await decodeImageBlob(blob);
+          const width = bitmap && typeof bitmap.width === "number" ? bitmap.width : bitmap.naturalWidth || 0;
+          const height = bitmap && typeof bitmap.height === "number" ? bitmap.height : bitmap.naturalHeight || 0;
+          if (!width || !height) {
+            throw new Error("変換対象の画像サイズが無効です");
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.clearRect(0, 0, width, height);
+          ctx.drawImage(bitmap, 0, 0);
+          const mime = normalized === "PNG" ? "image/png" : normalized === "WEBP" ? "image/webp" : "image/jpeg";
+          const quality = normalized === "PNG" ? undefined : 0.92;
+          const convertedBlob = await new Promise((resolve, reject) => {
+            canvas.toBlob((result) => {
+              if (result) {
+                resolve(result);
+              } else {
+                reject(new Error("canvas.toBlob failed"));
+              }
+            }, mime, quality);
+          });
+          if (bitmap && typeof bitmap.close === "function") {
+            bitmap.close();
+          }
+          const buffer = await convertedBlob.arrayBuffer();
+          const uint8 = new Uint8Array(buffer);
+          asset.data = uint8;
+          asset.format = normalized;
+          asset.fileName = generateFileNameWithFormat(asset.baseName || asset.id || "asset", normalized);
+          asset.hash = await computeSha256(uint8);
+        }
+
+        function cloneUint8Array(data) {
+          if (!(data instanceof Uint8Array)) {
+            return new Uint8Array();
+          }
+          const clone = new Uint8Array(data.length);
+          clone.set(data);
+          return clone;
+        }
+
+        function generateFileNameWithFormat(baseName, format) {
+          const base = slugify(baseName || "asset");
+          return `${base}.${format.toLowerCase()}`;
         }
 
         function generateDefaultFileName(asset) {
-          const base = slugify(asset && asset.baseName ? asset.baseName : asset && asset.id ? asset.id : "asset");
-          const ext = (asset && asset.format ? asset.format : "png").toLowerCase();
-          return `${base}.${ext}`;
+          const base = asset && asset.baseName ? asset.baseName : asset && asset.id ? asset.id : "asset";
+          const format = asset && asset.format ? asset.format : "PNG";
+          return generateFileNameWithFormat(base, format);
+        }
+
+        async function computeSha256(data) {
+          if (!(data instanceof Uint8Array)) {
+            return "";
+          }
+          try {
+            const digest = await crypto.subtle.digest("SHA-256", data);
+            const view = new Uint8Array(digest);
+            return Array.from(view).map((value) => value.toString(16).padStart(2, "0")).join("");
+          } catch (error) {
+            console.warn("[ui] hash calculation failed", error);
+            return "";
+          }
+        }
+
+        function formatHash(hash) {
+          if (!hash) {
+            return "-";
+          }
+          return hash.length > 12 ? `${hash.slice(0, 12)}…` : hash;
+        }
+
+        function updateCommentSummary(meta) {
+          const summary = meta && meta.commentSummary;
+          if (!summary || typeof summary.total !== "number") {
+            return;
+          }
+          const summaryList = resultSection.querySelector(".summary");
+          if (!summaryList) {
+            return;
+          }
+          let existing = summaryList.querySelector('[data-summary="comments"]');
+          if (!existing) {
+            const labelItem = document.createElement("li");
+            const valueItem = document.createElement("li");
+            labelItem.dataset.summary = "comments";
+            const labelSpan = document.createElement("span");
+            labelSpan.className = "label";
+            labelSpan.textContent = "コメント";
+            const valueSpan = document.createElement("span");
+            valueSpan.id = "comment-summary";
+            labelItem.appendChild(labelSpan);
+            valueItem.appendChild(valueSpan);
+            summaryList.appendChild(labelItem);
+            summaryList.appendChild(valueItem);
+            existing = labelItem;
+          }
+          const value = resultSection.querySelector("#comment-summary");
+          if (value) {
+            value.textContent = `${summary.total} 件 / ノード ${summary.nodeCount}`;
+          }
         }
 
         function slugify(value) {
@@ -457,4 +842,3 @@
     </script>
   </body>
 </html>
-

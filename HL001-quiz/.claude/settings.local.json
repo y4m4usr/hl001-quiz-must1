@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(clasp push:*)",
+      "Bash(clasp version \"Fix: Dynamic login background with CSS variables (force pushed)\")",
+      "Bash(clasp deploy:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

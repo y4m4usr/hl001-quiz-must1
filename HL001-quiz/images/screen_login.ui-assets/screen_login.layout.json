@@ -3,11 +3,18 @@
     "layoutName": "screen_login",
     "canvasWidth": 390,
     "canvasHeight": 844,
-    "generatedAt": "2025-10-27T09:20:25.357Z"
+    "generatedAt": "2025-10-29T07:56:57.620Z",
+    "frameId": "395:78",
+    "pageName": "完成イメージ正",
+    "commentSummary": {
+      "nodeCount": 0,
+      "total": 0
+    }
   },
   "objects": [
     {
       "id": "login_1",
+      "nodeId": "355:56942",
       "type": "image",
       "x": -2,
       "y": 0,
@@ -15,57 +22,123 @@
       "height": 844,
       "name": "login 1",
       "opacity": 1,
-      "imageId": "global_screen_login_login_01",
-      "image": {
-        "id": "global_screen_login_login_01",
-        "extension": "png",
-        "sources": []
-      },
       "metadata": {
-        "section": "global",
-        "area": "screen_login",
-        "assetName": "global_screen_login_login_01",
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED"
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
-        }
-      }
+        },
+        "section": "global",
+        "area": "screen_login",
+        "assetName": "global_screen_login_login_01",
+        "assetFormat": "PNG",
+        "assetAutoFormatReason": "default",
+        "assetAvailableFormats": [
+          "PNG",
+          "JPG",
+          "WEBP"
+        ],
+        "assetHash": ""
+      },
+      "image": {
+        "id": "global_screen_login_login_01",
+        "extension": "png",
+        "hash": "",
+        "availableFormats": [
+          "PNG",
+          "JPG",
+          "WEBP"
+        ]
+      },
+      "imageId": "global_screen_login_login_01"
     },
     {
       "id": "login_rogo2_2",
+      "nodeId": "355:56943",
       "type": "image",
       "x": 13,
-      "y": 142.9999999999999,
+      "y": 143,
       "width": 360,
       "height": 260,
       "name": "login_rogo2 2",
       "opacity": 1,
-      "imageId": "global_screen_login_login_rogo_01",
-      "image": {
-        "id": "global_screen_login_login_rogo_01",
-        "extension": "png",
-        "sources": []
-      },
       "metadata": {
-        "section": "global",
-        "area": "screen_login",
-        "assetName": "global_screen_login_login_rogo_01",
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED"
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
-        }
-      }
+        },
+        "section": "global",
+        "area": "screen_login",
+        "assetName": "global_screen_login_login_rogo_01",
+        "assetFormat": "PNG",
+        "assetAutoFormatReason": "default",
+        "assetAvailableFormats": [
+          "PNG",
+          "JPG",
+          "WEBP"
+        ],
+        "assetHash": ""
+      },
+      "image": {
+        "id": "global_screen_login_login_rogo_01",
+        "extension": "png",
+        "hash": "",
+        "availableFormats": [
+          "PNG",
+          "JPG",
+          "WEBP"
+        ]
+      },
+      "imageId": "global_screen_login_login_rogo_01"
     },
     {
       "id": "input_text",
+      "nodeId": "355:56944",
       "type": "group",
       "x": 57,
-      "y": 462.9999999999999,
+      "y": 463,
       "width": 276,
       "height": 72,
       "name": "Input Text",
       "opacity": 1,
       "metadata": {
+        "semanticRole": "input",
+        "responsiveSpec": {
+          "type": "autoLayout",
+          "layoutMode": "VERTICAL",
+          "primaryAxisSizingMode": "FIXED",
+          "counterAxisSizingMode": "FIXED",
+          "primaryAxisAlign": "MIN",
+          "counterAxisAlign": "MAX",
+          "padding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "itemSpacing": 6,
+          "layoutWrap": "NO_WRAP",
+          "overflowDirection": "NONE",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED",
+          "minWidth": null,
+          "maxWidth": null,
+          "minHeight": null,
+          "maxHeight": null
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
@@ -74,14 +147,39 @@
     },
     {
       "id": "node_3",
+      "nodeId": "355:56945",
       "type": "group",
       "x": 59,
-      "y": 415.9999999999999,
+      "y": 416,
       "width": 276,
       "height": 45,
       "name": "Input Text",
       "opacity": 1,
       "metadata": {
+        "semanticRole": "input",
+        "responsiveSpec": {
+          "type": "autoLayout",
+          "layoutMode": "VERTICAL",
+          "primaryAxisSizingMode": "FIXED",
+          "counterAxisSizingMode": "FIXED",
+          "primaryAxisAlign": "MIN",
+          "counterAxisAlign": "MAX",
+          "padding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "itemSpacing": 6,
+          "layoutWrap": "NO_WRAP",
+          "overflowDirection": "NONE",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED",
+          "minWidth": null,
+          "maxWidth": null,
+          "minHeight": null,
+          "maxHeight": null
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
@@ -90,15 +188,22 @@
     },
     {
       "id": "name",
+      "nodeId": "355:56946",
       "type": "text",
       "x": 61,
-      "y": 382.9999999999999,
+      "y": 383,
       "width": 315,
       "height": 20,
       "name": "Name",
       "opacity": 1,
-      "characters": "User  Id",
       "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED"
+        },
         "textStyle": {
           "fontSize": 14,
           "fontName": {
@@ -121,43 +226,89 @@
           "horizontal": "MIN",
           "vertical": "MIN"
         }
-      }
+      },
+      "characters": "User  Id"
     },
     {
-      "id": "2",
+      "id": "3",
+      "nodeId": "355:56953",
       "type": "image",
-      "x": 61,
-      "y": 516.9999999999999,
+      "x": 57,
+      "y": 517,
       "width": 272,
       "height": 164,
-      "name": "2",
+      "name": "3",
       "opacity": 1,
-      "imageId": "global_screen_login_image_01",
-      "image": {
-        "id": "global_screen_login_image_01",
-        "extension": "png",
-        "sources": []
-      },
       "metadata": {
-        "section": "global",
-        "area": "screen_login",
-        "assetName": "global_screen_login_image_01",
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED"
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
-        }
-      }
+        },
+        "section": "global",
+        "area": "screen_login",
+        "assetName": "global_screen_login_image_01",
+        "assetFormat": "PNG",
+        "assetAutoFormatReason": "default",
+        "assetAvailableFormats": [
+          "PNG",
+          "JPG",
+          "WEBP"
+        ],
+        "assetHash": ""
+      },
+      "image": {
+        "id": "global_screen_login_image_01",
+        "extension": "png",
+        "hash": "",
+        "availableFormats": [
+          "PNG",
+          "JPG",
+          "WEBP"
+        ]
+      },
+      "imageId": "global_screen_login_image_01"
     },
     {
       "id": "frame",
+      "nodeId": "I355:56944;5976:53792",
       "type": "group",
       "x": 57,
-      "y": 462.9999999999999,
+      "y": 463,
       "width": 276,
       "height": 66,
       "name": "Frame",
       "opacity": 1,
       "metadata": {
+        "responsiveSpec": {
+          "type": "autoLayout",
+          "layoutMode": "VERTICAL",
+          "primaryAxisSizingMode": "AUTO",
+          "counterAxisSizingMode": "FIXED",
+          "primaryAxisAlign": "MIN",
+          "counterAxisAlign": "MAX",
+          "padding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "itemSpacing": 6,
+          "layoutWrap": "NO_WRAP",
+          "overflowDirection": "NONE",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "minWidth": null,
+          "maxWidth": null,
+          "minHeight": null,
+          "maxHeight": null
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
@@ -166,14 +317,38 @@
     },
     {
       "id": "node_8",
+      "nodeId": "I355:56945;5976:53972",
       "type": "group",
       "x": 59,
-      "y": 415.9999999999999,
+      "y": 416,
       "width": 276,
       "height": 40,
       "name": "Frame",
       "opacity": 1,
       "metadata": {
+        "responsiveSpec": {
+          "type": "autoLayout",
+          "layoutMode": "VERTICAL",
+          "primaryAxisSizingMode": "AUTO",
+          "counterAxisSizingMode": "FIXED",
+          "primaryAxisAlign": "MIN",
+          "counterAxisAlign": "MAX",
+          "padding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "itemSpacing": 6,
+          "layoutWrap": "NO_WRAP",
+          "overflowDirection": "NONE",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "minWidth": null,
+          "maxWidth": null,
+          "minHeight": null,
+          "maxHeight": null
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
@@ -182,15 +357,22 @@
     },
     {
       "id": "node_11",
+      "nodeId": "I355:56944;5976:53793",
       "type": "text",
       "x": 57,
-      "y": 462.9999999999999,
+      "y": 463,
       "width": 276,
       "height": 20,
       "name": "Name",
       "opacity": 1,
-      "characters": "User  Name",
       "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG"
+        },
         "textStyle": {
           "fontSize": 14,
           "fontName": {
@@ -213,28 +395,44 @@
           "horizontal": "MIN",
           "vertical": "MIN"
         }
-      }
+      },
+      "characters": "User  Name"
     },
     {
       "id": "inputtextbase",
-      "type": "image",
+      "nodeId": "I355:56944;5976:53794",
+      "type": "group",
       "x": 57,
-      "y": 488.9999999999999,
+      "y": 489,
       "width": 276,
       "height": 40,
       "name": "_InputTextBase",
       "opacity": 1,
-      "imageId": "global_input_text_inputtextbase_01",
-      "image": {
-        "id": "global_input_text_inputtextbase_01",
-        "extension": "png",
-        "sources": []
-      },
       "metadata": {
-        "section": "global",
-        "area": "input_text",
-        "assetName": "global_input_text_inputtextbase_01",
-        "rasterized": true,
+        "semanticRole": "input",
+        "responsiveSpec": {
+          "type": "autoLayout",
+          "layoutMode": "HORIZONTAL",
+          "primaryAxisSizingMode": "FIXED",
+          "counterAxisSizingMode": "AUTO",
+          "primaryAxisAlign": "MIN",
+          "counterAxisAlign": "CENTER",
+          "padding": {
+            "top": 8,
+            "right": 12,
+            "bottom": 8,
+            "left": 12
+          },
+          "itemSpacing": 12,
+          "layoutWrap": "NO_WRAP",
+          "overflowDirection": "NONE",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "minWidth": null,
+          "maxWidth": null,
+          "minHeight": 40,
+          "maxHeight": null
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
@@ -244,24 +442,39 @@
     },
     {
       "id": "node_14",
-      "type": "image",
+      "nodeId": "I355:56945;5976:53974",
+      "type": "group",
       "x": 59,
-      "y": 415.9999999999999,
+      "y": 416,
       "width": 276,
       "height": 40,
       "name": "_InputTextBase",
       "opacity": 1,
-      "imageId": "global_input_text_inputtextbase_02",
-      "image": {
-        "id": "global_input_text_inputtextbase_02",
-        "extension": "png",
-        "sources": []
-      },
       "metadata": {
-        "section": "global",
-        "area": "input_text",
-        "assetName": "global_input_text_inputtextbase_02",
-        "rasterized": true,
+        "semanticRole": "input",
+        "responsiveSpec": {
+          "type": "autoLayout",
+          "layoutMode": "HORIZONTAL",
+          "primaryAxisSizingMode": "FIXED",
+          "counterAxisSizingMode": "AUTO",
+          "primaryAxisAlign": "MIN",
+          "counterAxisAlign": "CENTER",
+          "padding": {
+            "top": 8,
+            "right": 12,
+            "bottom": 8,
+            "left": 12
+          },
+          "itemSpacing": 12,
+          "layoutWrap": "NO_WRAP",
+          "overflowDirection": "NONE",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "minWidth": null,
+          "maxWidth": null,
+          "minHeight": 40,
+          "maxHeight": null
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
@@ -271,14 +484,22 @@
     },
     {
       "id": "progressbaratom",
+      "nodeId": "I355:56945;5976:53976",
       "type": "group",
       "x": 59,
-      "y": 487.9999999999999,
+      "y": 488,
       "width": 77,
       "height": 4,
       "name": "_ProgressBarAtom",
       "opacity": 1,
       "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "FIXED"
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
@@ -288,14 +509,22 @@
     },
     {
       "id": "node_16",
+      "nodeId": "I355:56945;5976:53977",
       "type": "group",
       "x": 140,
-      "y": 487.9999999999999,
+      "y": 488,
       "width": 77,
       "height": 4,
       "name": "_ProgressBarAtom",
       "opacity": 1,
       "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "FIXED"
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
@@ -305,14 +534,22 @@
     },
     {
       "id": "node_17",
+      "nodeId": "I355:56945;5976:53978",
       "type": "group",
       "x": 221,
-      "y": 487.9999999999999,
+      "y": 488,
       "width": 77,
       "height": 4,
       "name": "_ProgressBarAtom",
       "opacity": 1,
       "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "FIXED"
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
@@ -322,14 +559,22 @@
     },
     {
       "id": "node_18",
+      "nodeId": "I355:56945;5976:53979",
       "type": "group",
       "x": 302,
-      "y": 487.9999999999999,
+      "y": 488,
       "width": 77,
       "height": 4,
       "name": "_ProgressBarAtom",
       "opacity": 1,
       "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "FIXED"
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
@@ -339,14 +584,38 @@
     },
     {
       "id": "node_19",
+      "nodeId": "I355:56944;5976:53794;5976:52048",
       "type": "group",
       "x": 69,
-      "y": 497.9999999999999,
+      "y": 498,
       "width": 252,
       "height": 22,
       "name": "Frame",
       "opacity": 1,
       "metadata": {
+        "responsiveSpec": {
+          "type": "autoLayout",
+          "layoutMode": "HORIZONTAL",
+          "primaryAxisSizingMode": "FIXED",
+          "counterAxisSizingMode": "AUTO",
+          "primaryAxisAlign": "MIN",
+          "counterAxisAlign": "CENTER",
+          "padding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "itemSpacing": 8,
+          "layoutWrap": "NO_WRAP",
+          "overflowDirection": "NONE",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "minWidth": null,
+          "maxWidth": null,
+          "minHeight": null,
+          "maxHeight": null
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
@@ -356,14 +625,38 @@
     },
     {
       "id": "node_21",
+      "nodeId": "I355:56945;5976:53974;5976:52081",
       "type": "group",
       "x": 71,
-      "y": 425.9999999999999,
+      "y": 426,
       "width": 252,
       "height": 20,
       "name": "Frame",
       "opacity": 1,
       "metadata": {
+        "responsiveSpec": {
+          "type": "autoLayout",
+          "layoutMode": "HORIZONTAL",
+          "primaryAxisSizingMode": "FIXED",
+          "counterAxisSizingMode": "AUTO",
+          "primaryAxisAlign": "MIN",
+          "counterAxisAlign": "CENTER",
+          "padding": {
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          },
+          "itemSpacing": 8,
+          "layoutWrap": "NO_WRAP",
+          "overflowDirection": "NONE",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG",
+          "minWidth": null,
+          "maxWidth": null,
+          "minHeight": null,
+          "maxHeight": null
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
@@ -372,14 +665,22 @@
     },
     {
       "id": "user",
+      "nodeId": "I355:56944;5976:53794;5976:52049",
       "type": "group",
       "x": 69,
-      "y": 498.9999999999999,
+      "y": 499,
       "width": 20,
       "height": 20,
       "name": "User",
       "opacity": 1,
       "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED"
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
@@ -388,15 +689,22 @@
     },
     {
       "id": "text",
+      "nodeId": "I355:56944;5976:53794;5976:52050",
       "type": "text",
       "x": 97,
-      "y": 497.9999999999999,
+      "y": 498,
       "width": 224,
       "height": 22,
       "name": "Text",
       "opacity": 1,
-      "characters": "",
       "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FILL",
+          "layoutSizingVertical": "HUG"
+        },
         "textStyle": {
           "fontSize": 16,
           "textAlignHorizontal": "LEFT",
@@ -411,39 +719,65 @@
           }
         },
         "textColor": "#515253",
+        "a11y": {
+          "contrast": {
+            "value": 7.83,
+            "passesAA": true,
+            "passesAAA": true,
+            "textColor": "#515253",
+            "backgroundColor": "#ffffff"
+          }
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
         }
-      }
+      },
+      "characters": ""
     },
     {
       "id": "vector",
+      "nodeId": "I355:56944;5976:53794;5976:52051;5579:153183",
       "type": "shape",
       "x": 346.5625,
-      "y": 500.5624999999999,
+      "y": 500.5625,
       "width": 16.875001907348633,
       "height": 16.875001907348633,
       "name": "Vector",
       "opacity": 1,
-      "fill": "#cbd5e1",
       "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "SCALE",
+          "vertical": "SCALE",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED"
+        },
         "constraints": {
           "horizontal": "SCALE",
           "vertical": "SCALE"
         }
-      }
+      },
+      "fill": "#cbd5e1"
     },
     {
       "id": "icon",
+      "nodeId": "I355:56945;5976:53974;5976:52082",
       "type": "group",
       "x": 71,
-      "y": 425.9999999999999,
+      "y": 426,
       "width": 20,
       "height": 20,
       "name": "Icon",
       "opacity": 1,
       "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED"
+        },
         "constraints": {
           "horizontal": "MIN",
           "vertical": "MIN"
@@ -452,54 +786,78 @@
     },
     {
       "id": "node_28",
+      "nodeId": "I355:56945;5976:53974;5976:52084;5578:149158",
       "type": "shape",
       "x": 347.31005859375,
-      "y": 428.17916870117176,
+      "y": 428.1791687011719,
       "width": 19.378108978271484,
       "height": 15.627344131469727,
       "name": "Vector",
       "opacity": 1,
-      "fill": "#cbd5e1",
       "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "SCALE",
+          "vertical": "SCALE",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED"
+        },
         "constraints": {
           "horizontal": "SCALE",
           "vertical": "SCALE"
         }
-      }
+      },
+      "fill": "#cbd5e1"
     },
     {
       "id": "node_29",
+      "nodeId": "I355:56944;5976:53794;5976:52049;5579:152456",
       "type": "shape",
       "x": 70.54769897460938,
-      "y": 500.5601806640624,
+      "y": 500.5601806640625,
       "width": 16.874221801757812,
       "height": 16.278697967529297,
       "name": "Vector",
       "opacity": 1,
-      "fill": "#475569",
       "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "SCALE",
+          "vertical": "SCALE",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED"
+        },
         "constraints": {
           "horizontal": "SCALE",
           "vertical": "SCALE"
         }
-      }
+      },
+      "fill": "#475569"
     },
     {
       "id": "node_30",
+      "nodeId": "I355:56945;5976:53974;5976:52082;5579:153024",
       "type": "shape",
       "x": 73.1875,
-      "y": 426.3124999999999,
+      "y": 426.3125,
       "width": 15.625,
       "height": 17.5,
       "name": "Vector",
       "opacity": 1,
-      "fill": "#475569",
       "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "SCALE",
+          "vertical": "SCALE",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED"
+        },
         "constraints": {
           "horizontal": "SCALE",
           "vertical": "SCALE"
         }
-      }
+      },
+      "fill": "#475569"
     }
   ]
 }

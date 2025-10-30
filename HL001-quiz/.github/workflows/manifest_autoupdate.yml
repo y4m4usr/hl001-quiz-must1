@@ -1,0 +1,66 @@
+name: HL001 Manifest Auto Update
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ develop ]
+    paths:
+      - 'data/**'
+      - 'manifest/**'
+      - 'imagesnew1/**'
+      - 'tools/**'
+      - '.github/workflows/manifest_autoupdate.yml'
+  schedule:
+    - cron: '30 18 * * *' # 毎日 03:30 JST (exit_check の後)
+
+jobs:
+  manifest-update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    concurrency:
+      group: hl001-manifest-update-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps (if any)
+        run: |
+          if [ -f package.json ]; then
+            npm ci || npm i
+          fi
+
+      - name: Refresh exit criteria logs
+        run: |
+          node tools/check_exit_criteria.js
+
+      - name: Autofill manifest (dry-run preview)
+        run: |
+          node tools/auto_update_manifest.js
+        env:
+          DRY_RUN: '1'
+
+      - name: Autofill manifest (commit & PR)
+        run: |
+          node tools/auto_update_manifest.js
+        env:
+          DRY_RUN: '0'
+          BASE_BRANCH: main
+          BRANCH_NAME: chore/manifest-autofill
+          COMMIT_MSG: "chore: autofill manifest from validated suggestions + CDN rebase"
+          PR_TITLE: "[Auto] manifest autofill (200 only) + CDN rebase"
+          PR_BODY: "This PR adds manifest entries (HTTP 2xx) and rebases URLs to CDN."
+          PR_REVIEWERS: ""
+          REBASE_FROM: "https://raw.githubusercontent.com/<owner>/<repo>/<ref>"
+          REBASE_TO: "https://cdn.jsdelivr.net/gh/<owner>/<repo>@<ref>"
+          APPLY_REBASE_EXISTING: '1'
+          AUTO_PR_COMMENT: '1'

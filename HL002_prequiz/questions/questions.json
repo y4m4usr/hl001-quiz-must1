@@ -1,0 +1,8 @@
+[
+  {
+    "imageUrl": "https://raw.githubusercontent.com/your-account/hl002_prequiz-assets/main/sample1.png",
+    "choices": ["カラコンA", "カラコンB", "カラコンC", "カラコンD"],
+    "answer": "カラコンA"
+  }
+]
+
