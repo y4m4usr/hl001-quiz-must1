@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "layoutName": "screen_login",
+    "canvasWidth": 390,
+    "canvasHeight": 844,
+    "generatedAt": "2025-10-31T05:27:06.925Z",
+    "frameId": "423:77",
+    "pageName": "完成イメージ正",
+    "commentSummary": {
+      "nodeCount": 0,
+      "total": 0
+    }
+  },
+  "objects": [
+    {
+      "id": "login_1",
+      "nodeId": "423:78",
+      "type": "image",
+      "x": -2,
+      "y": 0,
+      "width": 390,
+      "height": 844,
+      "name": "login 1",
+      "opacity": 1,
+      "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED"
+        },
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        },
+        "section": "global",
+        "area": "screen_login",
+        "assetName": "global_screen_login_login_01",
+        "assetFormat": "PNG",
+        "assetAutoFormatReason": "default",
+        "assetAvailableFormats": [
+          "PNG",
+          "JPG",
+          "WEBP"
+        ],
+        "assetHash": ""
+      },
+      "image": {
+        "id": "global_screen_login_login_01",
+        "extension": "png",
+        "hash": "",
+        "availableFormats": [
+          "PNG",
+          "JPG",
+          "WEBP"
+        ]
+      },
+      "imageId": "global_screen_login_login_01"
+    },
+    {
+      "id": "login_rogo2_2",
+      "nodeId": "423:79",
+      "type": "image",
+      "x": 13,
+      "y": 162,
+      "width": 360,
+      "height": 260,
+      "name": "login_rogo2 2",
+      "opacity": 1,
+      "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED"
+        },
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        },
+        "section": "global",
+        "area": "screen_login",
+        "assetName": "global_screen_login_login_rogo_01",
+        "assetFormat": "PNG",
+        "assetAutoFormatReason": "default",
+        "assetAvailableFormats": [
+          "PNG",
+          "JPG",
+          "WEBP"
+        ],
+        "assetHash": ""
+      },
+      "image": {
+        "id": "global_screen_login_login_rogo_01",
+        "extension": "png",
+        "hash": "",
+        "availableFormats": [
+          "PNG",
+          "JPG",
+          "WEBP"
+        ]
+      },
+      "imageId": "global_screen_login_login_rogo_01"
+    }
+  ]
+}
