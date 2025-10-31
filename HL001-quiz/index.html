@@ -138,6 +138,85 @@
         .login-hero{ width: clamp(180px, 70%, 260px); margin: 0 auto 6px; display:block; filter: drop-shadow(0 12px 26px rgba(0,0,0,0.35)); }
         .login-copy{ text-align:center; color:#fff; font-weight:600; letter-spacing:.08em; text-shadow:0 8px 20px rgba(0,0,0,0.55); }
         .login-actions{ display:flex; justify-content:center; align-items:center; margin-top:4px; }
+        /* --- HL002 UI override --- */
+        .initial-hero{ display:none !important; }
+        #loginPanel,
+        #loginHero{ display:none !important; }
+        .login-stage{
+          width: min(400px, 92vw);
+          aspect-ratio: 568 / 1009;
+          margin: 0 auto;
+          position: relative;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          background: url("images/screen_login.ui-assets/assets/global_screen_login_global_screen_login_haikei_01.png") center/cover no-repeat;
+          border-radius: 28px;
+          box-shadow: 0 24px 60px rgba(10,6,24,0.55);
+          padding: clamp(28px, 6vw, 44px);
+        }
+        .login-card{
+          width: 100%;
+          max-width: 360px;
+          margin: 0;
+          padding: clamp(24px, 6vw, 36px);
+          border-radius: 24px;
+          position: static;
+          transform: none;
+          background: rgba(6,8,24,0.82);
+          box-shadow: 0 18px 42px rgba(0,0,0,0.45);
+        }
+        .login-card.frame{
+          border: none;
+          box-shadow: none;
+          background: rgba(6,8,24,0.82);
+        }
+        .login-card__content{
+          gap: clamp(14px,4vw,24px);
+          align-items:center;
+          text-align:center;
+        }
+        .logo-wrap{ margin:0 auto; }
+        .app-logo{
+          width: min(320px, 78%);
+          height:auto;
+          filter: drop-shadow(0 18px 42px rgba(0,0,0,0.55));
+        }
+        .login-copy{
+          color: rgba(235,235,255,0.85);
+          text-shadow: 0 10px 26px rgba(0,0,0,0.55);
+          font-size: clamp(14px,3.2vw,18px);
+        }
+        .login-actions{
+          width: 100%;
+          justify-content: center;
+          margin-top: 12px;
+        }
+        #loginBtn{
+          width: min(320px,78%);
+          aspect-ratio: 442 / 267;
+          border: none;
+          background: url("images/screen_login.ui-assets/assets/global_screen_login_global_screen_login_btn_01.png") center/contain no-repeat;
+          cursor: pointer;
+          color: transparent;
+          text-indent: -9999px;
+          overflow: hidden;
+          transition: transform .2s ease, filter .2s ease;
+        }
+        #loginBtn:hover{
+          transform: translateY(-4px) scale(1.02);
+          filter: drop-shadow(0 18px 30px rgba(0,0,0,0.45));
+        }
+        #loginBtn:active{
+          transform: translateY(2px) scale(0.98);
+        }
+        .login-status{
+          width:100%;
+          min-height:46px;
+          display:flex;
+          flex-direction:column;
+          gap:6px;
+        }
         .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
         .initial-hero{
           display: none; /* アーケード筐体デザインでは不要 */
@@ -215,45 +294,6 @@
           color:#1f1f1f;
           font-weight:600;
         }
-        #loginBtn{
-          width: 100%;
-          padding: 16px 32px;
-          border: none;
-          background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #06b6d4 100%);
-          color: #fff;
-          font-size: 24px;
-          font-weight: 900;
-          letter-spacing: 0.15em;
-          margin-top: 24px;
-          cursor: pointer;
-          transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
-          border-radius: 50px;
-          box-shadow: 0 0 20px rgba(139, 92, 246, 0.6), 0 0 40px rgba(236, 72, 153, 0.4);
-          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-          position: relative;
-          overflow: hidden;
-        }
-        #loginBtn::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
-          transform: translateX(-100%);
-          transition: transform 0.6s ease;
-        }
-        #loginBtn:hover::before {
-          transform: translateX(100%);
-        }
-        #loginBtn:hover{
-          filter: brightness(1.15);
-          box-shadow: 0 0 30px rgba(139, 92, 246, 0.8), 0 0 60px rgba(236, 72, 153, 0.6);
-          transform: translateY(-2px);
-        }
-        #loginBtn:active{
-          transform: translateY(1px);
-          box-shadow: 0 0 15px rgba(139, 92, 246, 0.6), 0 0 30px rgba(236, 72, 153, 0.4);
-        }
-
         /* ボタン（角丸28px） */
         button{ width:100%; padding: calc(14px * var(--s)) calc(16px * var(--s)); border:none; cursor:pointer; border-radius:28px; font-size: calc(18px * var(--s)); font-weight:700; transition:filter .2s ease, transform .05s ease, box-shadow .2s ease; }
         .btn-primary{
@@ -480,17 +520,13 @@
         
         <!-- ログイン画面 -->
         <div class="page active" id="loginPage" aria-label="ログインページ">
-          <div class="initial-hero glass-card" aria-hidden="true">
-            <div class="initial-hero__title">目指せ「1日1回の達成」</div>
-            <p class="initial-hero__subtitle">IDとニックネームでログイン。今日の10問を解いてランキングに挑戦！</p>
-          </div>
           <div class="login-stage">
             <div class="login-card glass-card frame" role="group" aria-labelledby="login-title">
               <img id="loginPanel" class="login-card__panel" src="images/screen_login.ui-assets/assets/global_screen_login_login_01.png" alt="ログインカード背景" loading="eager" decoding="async" onerror="console.warn('panel not found:', this.src)">
               <div class="login-card__content">
                 <img id="loginHero" class="login-hero" src="images/screen_login.ui-assets/assets/global_screen_login_image_01.png" alt="キャンペーンイメージ" loading="lazy" decoding="async" onerror="console.warn('hero not found:', this.src)">
                 <div class="logo-wrap">
-                  <img id="appLogo" class="app-logo" src="images/screen_login.ui-assets/assets/global_screen_login_login_rogo_01.png" alt="アプリロゴ" width="320" height="120" fetchpriority="high" decoding="async" loading="eager" onerror="console.warn('logo not found:', this.src)">
+                  <img id="appLogo" class="app-logo" src="images/screen_login.ui-assets/assets/global_screen_login_rogo_01.png" alt="アプリロゴ" width="320" height="120" fetchpriority="high" decoding="async" loading="eager" onerror="console.warn('logo not found:', this.src)">
                 </div>
                 <h1 id="login-title" class="title" style="color:#fff;text-shadow:0 6px 18px rgba(0,0,0,0.45);">カラコンアカデミア</h1>
                 <p class="login-copy">スタッフIDと表示名を入力してログインしてください</p>
@@ -507,10 +543,12 @@
                   </div>
                 </div>
                 <div class="login-actions">
-                  <button id="loginBtn" onclick="handleLogin()" aria-label="ログイン">ログイン</button>
+                  <button id="loginBtn" onclick="handleLogin()" aria-label="ログイン"><span class="sr-only">ログイン</span></button>
                 </div>
-                <div class="error" id="errorMsg" role="alert" aria-live="polite"></div>
-                <div class="loading" id="loginLoading" aria-live="polite"><p style="text-align:center;margin-top:8px;">ログイン中...</p></div>
+                <div class="login-status">
+                  <div class="error" id="errorMsg" role="alert" aria-live="polite"></div>
+                  <div class="loading" id="loginLoading" aria-live="polite"><p style="text-align:center;margin-top:8px;">ログイン中...</p></div>
+                </div>
               </div>
             </div>
           </div>
@@ -748,7 +786,7 @@
         try {
           // ログインページの場合：body::before に背景設定（CSS経由）
           if (document.body.classList.contains('login-active')) {
-            var loginBg = resolveImagePath('screen_login.ui-assets/assets/global_screen_login_login_01.png');
+            var loginBg = resolveImagePath('screen_login.ui-assets/assets/global_screen_login_global_screen_login_haikei_01.png');
             // CSS変数を設定して body::before で使用
             document.documentElement.style.setProperty('--login-bg-url', 'url("' + loginBg + '")');
           } else {
@@ -770,7 +808,7 @@
       function applyLoginAssets() {
         setImageSrc('loginPanel', 'screen_login.ui-assets/assets/global_screen_login_login_01.png');
         setImageSrc('loginHero', 'screen_login.ui-assets/assets/global_screen_login_image_01.png');
-        setImageSrc('appLogo', 'screen_login.ui-assets/assets/global_screen_login_login_rogo_01.png');
+        setImageSrc('appLogo', 'screen_login.ui-assets/assets/global_screen_login_rogo_01.png');
       }
 
       /**
@@ -1740,3 +1778,7 @@
     }
     </script></body>
 </html>
+
+
+
+

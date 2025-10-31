@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>カラコン名前当てクイズ（最小版）</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+  <!-- ホーム -->
+  <section id="homeSection" class="page active">
+    <div class="container">
+      <h1 class="app-title">カラコン名前当てクイズ</h1>
+      <p class="app-subtitle">10問の4択クイズに挑戦しよう</p>
+      <button id="startButton" class="primary-btn">ゲームを開始</button>
+    </div>
+  </section>
+
+  <!-- クイズ -->
+  <section id="quizSection" class="page">
+    <div class="container">
+      <div class="quiz-header">
+        <div id="progressText" class="progress">Question 1 / 10</div>
+      </div>
+      <div class="quiz-image-wrap">
+        <img id="quizImage" alt="問題画像" />
+      </div>
+      <div id="choices" class="choices"></div>
+      <div id="quizNotice" class="notice" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- 結果 -->
+  <section id="resultSection" class="page">
+    <div class="container">
+      <h2 class="result-title">結果</h2>
+      <p id="resultText" class="result-text">あなたの正解率 0%</p>
+      <button id="backHomeButton" class="secondary-btn">トップへ戻る</button>
+    </div>
+  </section>
+
+  <script src="./scripts/main.js"></script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>カラコン名前当てクイズ（簡易版）</title>
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body class="placeholder">
+  <!-- TODO: ChatGPT 生成のトップ画面HTMLをここに挿入 -->
+  <section id="homeSection" class="section-placeholder">
+    <h1>プレースホルダー</h1>
+    <p>ここにトップ画面を実装します。</p>
+  </section>
+  <script src="scripts/main.js"></script>
+</body>
+</html>

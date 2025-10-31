@@ -1,17 +1,46 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>カラコン名前当てクイズ（簡易版）</title>
-  <link rel="stylesheet" href="styles/main.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HL002 Prequiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles/main.css">
 </head>
-<body class="placeholder">
-  <!-- TODO: ChatGPT 生成のトップ画面HTMLをここに挿入 -->
-  <section id="homeSection" class="section-placeholder">
-    <h1>プレースホルダー</h1>
-    <p>ここにトップ画面を実装します。</p>
-  </section>
-  <script src="scripts/main.js"></script>
+<body>
+  <main class="app">
+    <section id="homeSection" class="page active">
+      <div class="container home-container">
+        <h1 class="sr-only">ログイン画面</h1>
+        <img class="home-logo" src="./assets/login_logo.png" alt="タイトルロゴ">
+        <button id="startButton" class="home-start" type="button" aria-label="クイズをはじめる"></button>
+      </div>
+    </section>
+
+    <section id="quizSection" class="page" aria-live="polite">
+      <div class="container">
+        <header class="quiz-header">
+          <p id="progressText" class="progress">1 / 10 問目</p>
+        </header>
+        <figure class="quiz-figure">
+          <img id="quizImage" src="" alt="ブランド画像" />
+        </figure>
+        <div id="choices" class="choices" role="group" aria-label="選択肢"></div>
+        <p id="quizNotice" class="notice" aria-live="assertive"></p>
+      </div>
+    </section>
+
+    <section id="resultSection" class="page" aria-live="polite">
+      <div class="container">
+        <h2 class="result-title">結果</h2>
+        <p id="resultText" class="result-text">正答率 0%</p>
+        <button id="backHomeButton" class="btn btn--secondary" type="button">トップに戻る</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="./scripts/main.js"></script>
 </body>
 </html>

@@ -9,3 +9,4 @@ docs/**
 *.backup*
 images/**
 DataModel.js
+tools/**

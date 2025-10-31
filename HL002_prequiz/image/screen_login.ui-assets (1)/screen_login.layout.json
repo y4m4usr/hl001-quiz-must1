@@ -1,0 +1,154 @@
+  {
+  "meta": {
+    "layoutName": "screen_login",
+    "canvasWidth": 568,
+    "canvasHeight": 1009,
+    "generatedAt": "2025-10-30T14:17:33.816Z",
+    "frameId": "417:88",
+    "pageName": "完成イメージ正",
+    "commentSummary": {
+      "nodeCount": 0,
+      "total": 0
+    }
+  },
+  "objects": [
+    {
+      "id": "global_screen_login_haikei_01",
+      "nodeId": "420:85",
+      "type": "image",
+      "x": 0,
+      "y": -1,
+      "width": 568,
+      "height": 1010,
+      "name": "global_screen_login_haikei_01",
+      "opacity": 1,
+      "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED"
+        },
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        },
+        "section": "global",
+        "area": "screen_login",
+        "assetName": "global_screen_login_global_screen_login_haikei_01",
+        "assetFormat": "PNG",
+        "assetAutoFormatReason": "default",
+        "assetAvailableFormats": [
+          "PNG",
+          "JPG",
+          "WEBP"
+        ],
+        "assetHash": ""
+      },
+      "image": {
+        "id": "global_screen_login_global_screen_login_haikei_01",
+        "extension": "png",
+        "hash": "",
+        "availableFormats": [
+          "PNG",
+          "JPG",
+          "WEBP"
+        ]
+      },
+      "imageId": "global_screen_login_global_screen_login_haikei_01"
+    },
+    {
+      "id": "global_screen_login_btn_01",
+      "nodeId": "420:83",
+      "type": "image",
+      "x": 63,
+      "y": 505,
+      "width": 442,
+      "height": 267,
+      "name": "global_screen_login_btn_01",
+      "opacity": 1,
+      "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED"
+        },
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        },
+        "section": "global",
+        "area": "screen_login",
+        "assetName": "global_screen_login_global_screen_login_btn_01",
+        "assetFormat": "PNG",
+        "assetAutoFormatReason": "default",
+        "assetAvailableFormats": [
+          "PNG",
+          "JPG",
+          "WEBP"
+        ],
+        "assetHash": ""
+      },
+      "image": {
+        "id": "global_screen_login_global_screen_login_btn_01",
+        "extension": "png",
+        "hash": "",
+        "availableFormats": [
+          "PNG",
+          "JPG",
+          "WEBP"
+        ]
+      },
+      "imageId": "global_screen_login_global_screen_login_btn_01"
+    },
+    {
+      "id": "rogo",
+      "nodeId": "420:77",
+      "type": "image",
+      "x": 46,
+      "y": 225,
+      "width": 476,
+      "height": 287,
+      "name": "rogo",
+      "opacity": 1,
+      "metadata": {
+        "responsiveSpec": {
+          "type": "constraints",
+          "horizontal": "MIN",
+          "vertical": "MIN",
+          "layoutSizingHorizontal": "FIXED",
+          "layoutSizingVertical": "FIXED"
+        },
+        "constraints": {
+          "horizontal": "MIN",
+          "vertical": "MIN"
+        },
+        "section": "global",
+        "area": "screen_login",
+        "assetName": "global_screen_login_rogo_01",
+        "assetFormat": "PNG",
+        "assetAutoFormatReason": "default",
+        "assetAvailableFormats": [
+          "PNG",
+          "JPG",
+          "WEBP"
+        ],
+        "assetHash": ""
+      },
+      "image": {
+        "id": "global_screen_login_rogo_01",
+        "extension": "png",
+        "hash": "",
+        "availableFormats": [
+          "PNG",
+          "JPG",
+          "WEBP"
+        ]
+      },
+      "imageId": "global_screen_login_rogo_01"
+    }
+  ]
+}
